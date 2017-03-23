@@ -35,4 +35,12 @@ public class DrugWebService {
     }
 
 
+    public static Drug getDrugByName(String name){
+    	for(Drug item : druglist){
+    		if(item.getName().equals(name)){
+    			return item;
+    		}
+    	}
+    	return null;
+    }
 }

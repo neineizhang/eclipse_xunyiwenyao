@@ -15,7 +15,7 @@ public class Prescription {
     private Patient patient;
     private Map<Drug, Integer> drugmap;
 
-    private Prescription(){
+    public Prescription(){
         setDrugmap(new HashMap<Drug, Integer>());
     }
 

@@ -43,4 +43,8 @@ public class PrescriptionTemplateWebService {
     public static List<PrescriptionTemplate> getAllTemplate(){
         return templatelt;
     }
+    
+    public static void addPrescriptionTemplate(PrescriptionTemplate item){
+    	templatelt.add(item);
+    }
 }
