@@ -137,6 +137,14 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 		mContext = this;
 		
+		save = (Button) findViewById(R.id.save);
+		savetotemplate = (Button) findViewById(R.id.savetotemplate);
+		commit = (Button) findViewById(R.id.commit);
+		chufangmingcheng = (EditText) findViewById(R.id.editText1);
+		patient_name_text = (EditText) findViewById(R.id.patient_name_text);
+		patient_sex_text = (EditText) findViewById(R.id.patient_sex_text);
+		patient_age_text = (EditText) findViewById(R.id.patient_age_text);
+		
 		///////////// add template data
 		Bundle extras = getIntent().getExtras(); 
 		String template_name = extras.getString("template_name");
@@ -171,13 +179,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 		
 		///////////// end add template data
 		
-		save = (Button) findViewById(R.id.save);
-		savetotemplate = (Button) findViewById(R.id.savetotemplate);
-		commit = (Button) findViewById(R.id.commit);
-		chufangmingcheng = (EditText) findViewById(R.id.editText1);
-		patient_name_text = (EditText) findViewById(R.id.patient_name_text);
-		patient_sex_text = (EditText) findViewById(R.id.patient_sex_text);
-		patient_age_text = (EditText) findViewById(R.id.patient_age_text);
 		
 		save.setOnClickListener(new OnClickListener() {
 
@@ -193,8 +194,8 @@ public class PrescriptionCreateMainActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				String prescription_name = chufangmingcheng.getText().toString();
-				
-				List<Drug> druglt = new ArrayList<Drug>();
+
+				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
 				for(Map<String, String> item : datas){
 					Drug drug = new Drug();
@@ -204,10 +205,12 @@ public class PrescriptionCreateMainActivity extends Activity {
 					drug.setName(item.get("data_1"));
 					drug.setSpecification(item.get("data_2"));
 					int count = Integer.valueOf(item.get("data_3"));
+					drugmap.put(drug, count);
 				}
 
 				PrescriptionTemplate prescriptionTemplate = new PrescriptionTemplate();
 				prescriptionTemplate.setName(prescription_name);
+				prescriptionTemplate.setDrugmap(drugmap);
 				PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
 
 				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
@@ -229,9 +232,25 @@ public class PrescriptionCreateMainActivity extends Activity {
 				patient.setAge(Integer.valueOf(patient_age));
 				patient.setName(patient_name);
 				patient.setSex(Integer.valueOf(patient_sex));
+				
+				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+				//List<Drug> druglt = new ArrayList<Drug>();
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
+				for(Map<String, String> item : datas){
+					Drug drug = new Drug();
+					drug.setId(Integer.parseInt(item.get("title")));
+					drug.setDescription(item.get("data_5"));
+					drug.setPrice(item.get("data_4"));
+					drug.setName(item.get("data_1"));
+					drug.setSpecification(item.get("data_2"));
+					int count = Integer.valueOf(item.get("data_3"));
+					drugmap.put(drug, count);
+				}
+				
 				Prescription prescription = new Prescription();
 				prescription.setPatient(patient);
 				prescription.setName(prescription_name);
+				prescription.setDrugmap(drugmap);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				
