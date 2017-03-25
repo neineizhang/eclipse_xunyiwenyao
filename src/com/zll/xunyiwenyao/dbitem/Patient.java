@@ -10,7 +10,19 @@ public class Patient {
     private int sex;
     private int age;
 
-    public int getId() {
+    public Patient() {
+		super();
+	}
+
+	public Patient(int id, String name, int sex, int age) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.sex = sex;
+		this.age = age;
+	}
+
+	public int getId() {
         return id;
     }
 
