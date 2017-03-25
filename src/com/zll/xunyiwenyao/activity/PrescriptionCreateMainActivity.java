@@ -136,6 +136,41 @@ public class PrescriptionCreateMainActivity extends Activity {
 		});
 
 		mContext = this;
+		
+		///////////// add template data
+		Bundle extras = getIntent().getExtras(); 
+		String template_name = extras.getString("template_name");
+		if(!template_name.trim().equals("")){
+			PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
+			if(prescriptionTemplate == null){
+				/////// zlladd TOAST
+				
+			}else{
+				chufangmingcheng.setText(template_name);
+				
+				Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
+				if(datas == null){
+					datas = new ArrayList<Map<String,String>>();
+				}
+				for(Drug drug : drugmap.keySet()){
+					Map<String, String> tempdata = new HashMap<String, String>();
+					tempdata.put("title", String.valueOf(drug.getId()));
+					tempdata.put("data_" + 1, drug.getName());
+					tempdata.put("data_" + 2, drug.getSpecification());
+					tempdata.put("data_" + 3, drugmap.get(drug)+"");
+					tempdata.put("data_" + 4, drug.getPrice());
+					tempdata.put("data_" + 5, drug.getDescription());
+					datas.add(tempdata);
+				}
+				((ScrollAdapter)drugs_lv.getAdapter()).setData(datas);
+				((ScrollAdapter)drugs_lv.getAdapter()).notifyDataSetChanged();
+			}
+			
+		}
+		
+		///////////// end add template data
+		
 		save = (Button) findViewById(R.id.save);
 		savetotemplate = (Button) findViewById(R.id.savetotemplate);
 		commit = (Button) findViewById(R.id.commit);

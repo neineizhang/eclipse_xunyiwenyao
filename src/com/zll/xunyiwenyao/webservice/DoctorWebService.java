@@ -12,6 +12,7 @@ import java.util.List;
 
 public class DoctorWebService {
 
+	private static int MAX_ID = 1;
     private static List<Doctor> dctorlist;
 
     static {
@@ -23,10 +24,15 @@ public class DoctorWebService {
         dctorlist.add(doctor);
         doctor = new Doctor(3, "doctor C", Utils.DOCTOR_TYPE.DOCTOR.ordinal(), "Hospital 3");
         dctorlist.add(doctor);
+        MAX_ID = 4;
     }
 
     public static List<Doctor> getAllDoctor(){
         return dctorlist;
     }
 
+    public static void addDoctor(Doctor item){
+    	item.setId(MAX_ID);
+    	MAX_ID++;
+    }
 }

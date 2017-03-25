@@ -47,4 +47,13 @@ public class PrescriptionTemplateWebService {
     public static void addPrescriptionTemplate(PrescriptionTemplate item){
     	templatelt.add(item);
     }
+    
+    public static PrescriptionTemplate getPrescriptionTemplateByName(String name){
+    	for(PrescriptionTemplate item : templatelt){
+    		if(item.getName().equals(name)){
+    			return item;
+    		}
+    	}
+    	return null;
+    }
 }

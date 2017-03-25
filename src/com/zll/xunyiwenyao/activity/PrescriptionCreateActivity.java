@@ -104,7 +104,9 @@ public class PrescriptionCreateActivity extends Activity   {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			String template_name = prescription_create_search_text.getText().toString();
 			Intent i2=new Intent(PrescriptionCreateActivity.this,PrescriptionCreateMainActivity.class);
+			i2.putExtra("template_name", template_name); 
 			startActivity(i2);
 		}
 	});
