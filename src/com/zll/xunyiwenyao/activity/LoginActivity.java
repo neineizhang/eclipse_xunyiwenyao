@@ -13,6 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.zll.xunyiwenyao.R;
+import com.zll.xunyiwenyao.dbitem.Doctor;
+import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -61,51 +64,50 @@ public class LoginActivity extends Activity {
 				String pwd = login_pwd.getText().toString();
 				
 				if (TextUtils.isEmpty(name) || TextUtils.isEmpty(pwd)) {
-					Toast.makeText(LoginActivity.this, "鐢ㄦ埛鍚嶆垨瀵嗙爜涓嶈兘涓虹┖", Toast.LENGTH_SHORT).show();
+					Toast.makeText(LoginActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
 				} else {
 					switch (doctor_id) {
 					case R.id.login_doctor_select1: {
-						if (name.equals("root") && pwd.equals("2222")) {
-							
+						
+						Doctor islogin = DoctorWebService.isSuccessLogin(name, pwd, Utils.DOCTOR_TYPE.DOCTOR.ordinal());
+						
+						if (islogin != null) {
+							Utils.LOGIN_DOCTOR = islogin;
 							Intent i=new Intent(LoginActivity.this,MainActivity.class);
 							startActivity(i);
 							login_name.setText(null);
 							login_pwd.setText(null);
 							
-						} else if (!name.equals("root")) {
-							Toast.makeText(LoginActivity.this, "涓嶅瓨鍦ㄨ鐢ㄦ埛", Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(LoginActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
 							login_name.setText(null);
 							login_pwd.setText(null);
-						} else {
-							Toast.makeText(LoginActivity.this, "瀵嗙爜閿欒", Toast.LENGTH_SHORT).show();
-						
-							login_pwd.setText(null);
 						}
+						
 						break;
 					}
 					case R.id.login_doctor_select2: {
-						if (name.equals("admin") && pwd.equals("1234")) {
-							
+						
+						Doctor islogin = DoctorWebService.isSuccessLogin(name, pwd, Utils.DOCTOR_TYPE.ACCESSOR.ordinal());
+						
+						if (islogin != null) {
+							Utils.LOGIN_DOCTOR = islogin;
 							Intent i=new Intent(LoginActivity.this,MainActivity.class);
 							startActivity(i);
 							login_name.setText(null);
 							login_pwd.setText(null);
 							
-							
-						} else if (!name.equals("root")) {
-							Toast.makeText(LoginActivity.this, "涓嶅瓨鍦ㄨ鐢ㄦ埛", Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(LoginActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
 							login_name.setText(null);
 							login_pwd.setText(null);
-						} else {
-							Toast.makeText(LoginActivity.this, "瀵嗙爜閿欒", Toast.LENGTH_SHORT).show();
-					
-							login_pwd.setText(null);
 						}
+						
 						break;
 					}
 
 					default:
-						Toast.makeText(LoginActivity.this, "璇烽�夋嫨鍖荤敓绫诲埆", Toast.LENGTH_SHORT).show();
+						Toast.makeText(LoginActivity.this, "Please select one type", Toast.LENGTH_SHORT).show();
 						break;
 					}
 				}

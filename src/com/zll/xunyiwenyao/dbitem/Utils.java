@@ -23,5 +23,7 @@ public class Utils {
     public static enum STATUS{
         COMMITED,SAVED,APPROVED,REFUSED
     };
+    
+    public static Doctor LOGIN_DOCTOR;
 
 }

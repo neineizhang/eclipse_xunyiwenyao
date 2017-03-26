@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.zll.xunyiwenyao.Inspection_create;
 import com.zll.xunyiwenyao.Inspection_query;
@@ -13,6 +14,7 @@ import com.zll.xunyiwenyao.Inspection_template;
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.Report;
 import com.zll.xunyiwenyao.Review;
+import com.zll.xunyiwenyao.dbitem.Utils;
 
 public class MainActivity extends Activity{
 	
@@ -40,6 +42,12 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				if(Utils.LOGIN_DOCTOR.getType() == Utils.DOCTOR_TYPE.ACCESSOR.ordinal()){
+					Toast.makeText(MainActivity.this, "Permission Deined", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				Intent i1=new Intent(MainActivity.this,PrescriptionCreateActivity.class);
 				startActivity(i1);
 				
@@ -50,6 +58,12 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				if(Utils.LOGIN_DOCTOR.getType() == Utils.DOCTOR_TYPE.ACCESSOR.ordinal()){
+					Toast.makeText(MainActivity.this, "Permission Deined", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				Intent i2=new Intent(MainActivity.this,PrescriptionTemplateActivity.class);
 				startActivity(i2);
 				
@@ -61,6 +75,12 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				if(Utils.LOGIN_DOCTOR.getType() == Utils.DOCTOR_TYPE.ACCESSOR.ordinal()){
+					Toast.makeText(MainActivity.this, "Permission Deined", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				Intent i3=new Intent(MainActivity.this,PrescriptionQueryActivity.class);
 				startActivity(i3);
 				
@@ -72,6 +92,12 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				if(Utils.LOGIN_DOCTOR.getType() == Utils.DOCTOR_TYPE.DOCTOR.ordinal()){
+					Toast.makeText(MainActivity.this, "Permission Deined", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				Intent i4=new Intent(MainActivity.this,PrescriptionExamineActivity.class);
 				startActivity(i4);
 				
