@@ -1,5 +1,15 @@
 package com.zll.xunyiwenyao.activity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.zll.xunyiwenyao.R;
+import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,13 +25,6 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zll.xunyiwenyao.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 public class PrescriptionTemplateActivity extends Activity {
 	
@@ -29,14 +32,12 @@ public class PrescriptionTemplateActivity extends Activity {
 	private  ExpandableListView template_exist_lol;
 	private  AutoCompleteTextView prescription_template_search_text;
 	private Map<String, List<String>> dataset = new HashMap<String, List<String>>();
-    private String[] parentList = new String[]{"first", "second", "third"};
-    private List<String> childrenList1 = new ArrayList<String>();
-    private List<String> childrenList2 = new ArrayList<String>();
-    private List<String> childrenList3 = new ArrayList<String>();
-    private static final String[] data = new String[]{
-            "111", "222", "333", "233", "112"
-    };  
+    private String[] parentList;// = new String[]{"first", "second", "third"};
+//    private List<String> childrenList1 = new ArrayList<String>();
+//    private List<String> childrenList2 = new ArrayList<String>();
+//    private List<String> childrenList3 = new ArrayList<String>();
     private Button prescription_template_search_button;
+    private String[] data;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -70,7 +71,9 @@ public class PrescriptionTemplateActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				String template_name = prescription_template_search_text.getText().toString();
 				Intent i = new Intent(PrescriptionTemplateActivity.this,PrescriptionTemplateMangeActivity.class);
+				i.putExtra("template_name", template_name); 
 				startActivity(i);
 			}
 		});
@@ -80,18 +83,39 @@ public class PrescriptionTemplateActivity extends Activity {
       
 		
 	private void initialData() {
-        childrenList1.add(parentList[0] + "-" + "first");
-        childrenList1.add(parentList[0] + "-" + "second");
-        childrenList1.add(parentList[0] + "-" + "third");
-        childrenList2.add(parentList[1] + "-" + "first");
-        childrenList2.add(parentList[1] + "-" + "second");
-        childrenList2.add(parentList[1] + "-" + "third");
-        childrenList3.add(parentList[2] + "-" + "first");
-        childrenList3.add(parentList[2] + "-" + "second");
-        childrenList3.add(parentList[2] + "-" + "third");
-        dataset.put(parentList[0], childrenList1);
-        dataset.put(parentList[1], childrenList2);
-        dataset.put(parentList[2], childrenList3);
+
+        //数据准备
+        parentList = new String[Utils.DEPARTMENT_ARRAY.length];
+        for(int i = 0; i < Utils.DEPARTMENT_ARRAY.length; i++){
+        	String item = Utils.DEPARTMENT_ARRAY[i];
+            parentList[i] = item;
+            dataset.put(item, new ArrayList<String>());
+        }
+
+        List<PrescriptionTemplate> templatelt = PrescriptionTemplateWebService.getAllTemplate();
+        for(PrescriptionTemplate item : templatelt){
+        	String department_name = Utils.DEPARTMENT_ARRAY[item.getDepartment()];
+            dataset.get(department_name).add(item.getName());
+        }
+//        childrenList1.add(parentList[0] + "-" + "first");
+//        childrenList1.add(parentList[0] + "-" + "second");
+//        childrenList1.add(parentList[0] + "-" + "third");
+//        childrenList2.add(parentList[1] + "-" + "first");
+//        childrenList2.add(parentList[1] + "-" + "second");
+//        childrenList2.add(parentList[1] + "-" + "third");
+//        childrenList3.add(parentList[2] + "-" + "first");
+//        childrenList3.add(parentList[2] + "-" + "second");
+//        childrenList3.add(parentList[2] + "-" + "third");
+//        dataset.put(parentList[0], childrenList1);
+//        dataset.put(parentList[1], childrenList2);
+//        dataset.put(parentList[2], childrenList3);
+
+        // auto-complete
+        List<String> namelt = PrescriptionTemplateWebService.getAllTemplateName();
+        data = new String[namelt.size()];
+        for(int i = 0; i < namelt.size(); i++){
+        	data[i] = namelt.get(i);
+        }
     }
 	
 	

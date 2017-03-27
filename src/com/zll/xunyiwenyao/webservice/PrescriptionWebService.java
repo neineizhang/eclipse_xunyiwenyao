@@ -38,7 +38,12 @@ public class PrescriptionWebService {
 	}
 
 	public static void AddPrescription(Prescription item){
-		prescriptionlist.add(item);
+		Prescription prescription_inDB = getPrescriptionByName(item.getName());
+		if(prescription_inDB == null){
+			prescriptionlist.add(item);
+		}else{
+			prescriptionlist.set(prescriptionlist.indexOf(prescription_inDB), item);
+		}
 	}
 
 	public static List<Prescription> getAllPrescription()
@@ -61,6 +66,15 @@ public class PrescriptionWebService {
 		
 		return prescription_result_lt;
 	
+	}
+	
+	public static Prescription getPrescriptionByName(String name){
+		for(Prescription item :prescriptionlist){
+			if(item.getName().equals(name)){
+				return item;
+			}
+		}
+		return null;
 	}
 	
 //	public static Prescription getPrescriptionbyid(int id)

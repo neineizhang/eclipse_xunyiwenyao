@@ -13,7 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zll.xunyiwenyao.R;
+import com.zll.xunyiwenyao.activity.PrescriptionCreateMainActivity.ScrollAdapter;
+import com.zll.xunyiwenyao.dbitem.Drug;
+import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.view.PrescriptionTemplateScrollView;
+import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +36,41 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 		setContentView(R.layout.templatemanage);
 		initViews();
 	}
+	
+	private void initData(){
+		///////////// add template data
+		Bundle extras = getIntent().getExtras(); 
+		String template_name = extras.getString("template_name");
+		if(!template_name.trim().equals("")){
+			PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
+			if(prescriptionTemplate == null){
+				/////// zlladd TOAST
+				
+			}else{
+				//chufangmingcheng.setText(template_name);
+				
+				Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter2)template_drugs_lv.getAdapter()).getData();
+				if(datas == null){
+					datas = new ArrayList<Map<String,String>>();
+				}
+				for(Drug drug : drugmap.keySet()){
+					Map<String, String> tempdata = new HashMap<String, String>();
+					tempdata.put("title", String.valueOf(drug.getId()));
+					tempdata.put("data_" + 1, drug.getName());
+					tempdata.put("data_" + 2, drug.getSpecification());
+					tempdata.put("data_" + 3, drugmap.get(drug)+"");
+					tempdata.put("data_" + 4, drug.getPrice());
+					tempdata.put("data_" + 5, drug.getDescription());
+					datas.add(tempdata);
+				}
+				((ScrollAdapter2)template_drugs_lv.getAdapter()).setData(datas);
+				((ScrollAdapter2)template_drugs_lv.getAdapter()).notifyDataSetChanged();
+			}
+			
+		}
+		///////////// end add template data
+	}
   
 	private void initViews() {
 		List<Map<String, String>> datas = new ArrayList<Map<String,String>>();
@@ -40,17 +79,17 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 		
 		templateHScrollViews.add(headerScroll);
 		template_drugs_lv = (ListView) findViewById(R.id.template_drugs_lv);
-		for(int i = 0; i < 5; i++) {
-			data = new HashMap<String, String>();
-			data.put("title", "Title_" + i);
-			data.put("data_" + 1, "Date_" + 1 + "_" +i );
-			data.put("data_" + 2, "Date_" + 2 + "_" +i );
-			data.put("data_" + 3, "Date_" + 3 + "_" +i );
-			data.put("data_" + 4, "Date_" + 4 + "_" +i );
-			data.put("data_" + 5, "Date_" + 5 + "_" +i );
-			data.put("data_" + 6, "Date_" + 6 + "_" +i );
-			datas.add(data);
-		}
+//		for(int i = 0; i < 5; i++) {
+//			data = new HashMap<String, String>();
+//			data.put("title", "Title_" + i);
+//			data.put("data_" + 1, "Date_" + 1 + "_" +i );
+//			data.put("data_" + 2, "Date_" + 2 + "_" +i );
+//			data.put("data_" + 3, "Date_" + 3 + "_" +i );
+//			data.put("data_" + 4, "Date_" + 4 + "_" +i );
+//			data.put("data_" + 5, "Date_" + 5 + "_" +i );
+//			data.put("data_" + 6, "Date_" + 6 + "_" +i );
+//			datas.add(data);
+//		}
 		SimpleAdapter templatemanadapter = new ScrollAdapter2(this, datas, R.layout.templatemanage_list
 							, new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5", "data_6", }
 							, new int[] { R.id.template_item_title
@@ -60,7 +99,11 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 										, R.id.template_item_data4
 										, R.id.template_item_data5
 										});
-		template_drugs_lv.setAdapter(templatemanadapter);}
+		template_drugs_lv.setAdapter(templatemanadapter);
+
+		///////////// add template data
+		initData();
+	}
 		
 	
 	public void addHViews(final PrescriptionTemplateScrollView hScrollView) {
@@ -106,6 +149,14 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 			this.res = resource;
 			this.from = from;
 			this.to = to;
+		}
+		
+		public List<? extends Map<String, ?>> getData(){
+			return datas;
+		}
+		
+		public void  setData(List<? extends Map<String, ?>> new_data){
+			datas = new_data;
 		}
 		
 		@Override

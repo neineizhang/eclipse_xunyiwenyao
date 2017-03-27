@@ -33,14 +33,11 @@ public class PrescriptionCreateActivity extends Activity   {
     private Context mContext;
     private ExpandableListView exlist_lol;
     private MyBaseExpandableListAdapter myAdapter = null;
+    private String[] data;
 
-
-    private static final String[] data = new String[]{
-           "xiaozhuzhu", "xiaogougou", "xiaomaomao", "xiaotutu", "dagougou"
-   };
-
-
-
+    /**
+     * template data init
+     */
     private void initData(){
         //数据准备
         gData = new ArrayList<Group>();
@@ -55,6 +52,12 @@ public class PrescriptionCreateActivity extends Activity   {
         for(PrescriptionTemplate item : templatelt){
             iData.get(item.getDepartment()).add(new Item(R.drawable.item_picture, item.getName()));
         }
+        // auto-complete
+        List<String> namelt = PrescriptionTemplateWebService.getAllTemplateName();
+        data = new String[namelt.size()];
+        for(int i = 0; i < namelt.size(); i++){
+        	data[i] = namelt.get(i);
+        }
     }
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +69,14 @@ public class PrescriptionCreateActivity extends Activity   {
 		prescription_create_search_button = (Button) findViewById(R.id.prescription_create_search_button);
 		prescription_create_return = (Button) findViewById(R.id.prescription_create_return);
 
+        initData();
+        
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(PrescriptionCreateActivity. this, android.R.layout.simple_dropdown_item_1line, data);
 
         prescription_create_search_text.setAdapter(adapter);
 	    mContext = PrescriptionCreateActivity.this;
 	    exlist_lol = (ExpandableListView) findViewById(R.id.exlist_lol);
 
-        initData();
         myAdapter = new MyBaseExpandableListAdapter(gData,iData,mContext);
         exlist_lol.setAdapter(myAdapter);
 
