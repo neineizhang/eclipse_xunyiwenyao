@@ -330,7 +330,7 @@
                     android:background="#BFBFBF" />
 
                 <EditText
-                    android:id="@+id/name_text31"
+                    android:id="@+id/prescription_data_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
@@ -355,7 +355,7 @@
                     android:background="#BFBFBF" />
 
                 <EditText
-                    android:id="@+id/name_text32"
+                    android:id="@+id/doctor_name_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
@@ -380,7 +380,7 @@
                     android:background="#BFBFBF" />
 
                 <EditText
-                    android:id="@+id/name_text33"
+                    android:id="@+id/checker_name_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
@@ -405,7 +405,7 @@
                     android:background="#BFBFBF" />
 
                 <EditText
-                    android:id="@+id/name_text34"
+                    android:id="@+id/other_information_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
