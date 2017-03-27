@@ -14,6 +14,7 @@ import com.zll.xunyiwenyao.view.PrescriptionCreateScrollView;
 import com.zll.xunyiwenyao.webservice.DrugWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
+import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,6 +40,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 	private Button save, savetotemplate, commit;
 	private EditText patient_name_text,patient_sex_text,patient_age_text,chufangmingcheng;
+	private EditText prescription_data_et,doctor_name_et,checker_name_et,other_information_et;
 	private Button add_drug, dialog_ok_btn;
 	private View view_custom;
 	private Context mContext;
@@ -64,6 +66,19 @@ public class PrescriptionCreateMainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newprescription);
+		
+		//初始化其他信息
+		prescription_data_et = (EditText) findViewById(R.id.prescription_data_et);
+		doctor_name_et = (EditText) findViewById(R.id.doctor_name_et);
+		checker_name_et = (EditText) findViewById(R.id.checker_name_et);
+		other_information_et = (EditText) findViewById(R.id.other_information_et);
+		
+		prescription_data_et.setText("");
+		doctor_name_et.setText("");
+		checker_name_et.setText("");
+		other_information_et.setText("");
+		
+		
 
 		add_drug = (Button) findViewById(R.id.add_drug);
 
