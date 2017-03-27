@@ -5,7 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,9 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PrescriptionTemplateMangeActivity extends Activity {
+public class PrescriptionTemplateMangeActivity extends Activity implements OnClickListener {
 	
 	private ListView template_drugs_lv;
+	private Button template_manage_save,template_manage_delete;
+	private EditText template_manage_name_et;
 	public HorizontalScrollView templateTouchView;
 	protected List<PrescriptionTemplateScrollView> templateHScrollViews =new ArrayList<PrescriptionTemplateScrollView>();
  
@@ -34,13 +39,20 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.templatemanage);
+		template_manage_name_et = (EditText) findViewById(R.id.template_manage_name_et);
+		template_manage_save = (Button) findViewById(R.id.template_manage_save);
+		template_manage_delete = (Button) findViewById(R.id.template_manage_delete);
+		
 		initViews();
+		template_manage_save.setOnClickListener(this);
+		template_manage_delete.setOnClickListener(this);
 	}
 	
 	private void initData(){
 		///////////// add template data
 		Bundle extras = getIntent().getExtras(); 
 		String template_name = extras.getString("template_name");
+		template_manage_name_et.setText(template_name);
 		if(!template_name.trim().equals("")){
 			PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
 			if(prescriptionTemplate == null){
@@ -116,7 +128,7 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 				template_drugs_lv.post(new Runnable() {
 					@Override
 					public void run() {
-						//��listViewˢ�����֮�󣬰Ѹ����ƶ�������λ��
+						//锟斤拷listView刷锟斤拷锟斤拷锟街拷螅迅锟斤拷锟斤拷贫锟斤拷锟斤拷锟斤拷锟轿伙拷锟�
 						hScrollView.scrollTo(scrollX, 0);
 					}
 				});
@@ -127,7 +139,7 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 	
 	public void onScrollChanged(int l, int t, int oldl, int oldt){
 		for(PrescriptionTemplateScrollView scrollView : templateHScrollViews) {
-			//��ֹ�ظ�����
+			//锟斤拷止锟截革拷锟斤拷锟斤拷
 			if(templateTouchView != scrollView)
 				scrollView.smoothScrollTo(l, t);
 		}
@@ -164,7 +176,7 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 			View v = convertView;
 			if(v == null) {
 				v = LayoutInflater.from(context).inflate(res, null);
-				//��һ�γ�ʼ����ʱ��װ����
+				//锟斤拷一锟轿筹拷始锟斤拷锟斤拷时锟斤拷装锟斤拷锟斤拷
 				addHViews((PrescriptionTemplateScrollView) v.findViewById(R.id.template_item_scroll));
 				View[] views = new View[to.length];
 				for(int i = 0; i < to.length; i++) {
@@ -183,13 +195,19 @@ public class PrescriptionTemplateMangeActivity extends Activity {
 		}
 	}
 	
-	//���Ե�����¼� 
+	//锟斤拷锟皆碉拷锟斤拷锟斤拷录锟� 
 	protected View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			Toast.makeText(PrescriptionTemplateMangeActivity.this, ((TextView)v).getText(), Toast.LENGTH_SHORT).show();
 		}
 	};
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 
