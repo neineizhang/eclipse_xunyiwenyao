@@ -26,7 +26,7 @@ public class PatientWebService {
         patientlist.add(patient);
     }
 
-    public static List<Patient> getAllDoctor(){
+    public static List<Patient> getAllPatient(){
         return patientlist;
     }
 

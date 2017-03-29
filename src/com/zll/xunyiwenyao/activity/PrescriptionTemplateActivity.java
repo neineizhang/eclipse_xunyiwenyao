@@ -32,10 +32,8 @@ public class PrescriptionTemplateActivity extends Activity {
 	private  ExpandableListView template_exist_lol;
 	private  AutoCompleteTextView prescription_template_search_text;
 	private Map<String, List<String>> dataset = new HashMap<String, List<String>>();
-    private String[] parentList;// = new String[]{"first", "second", "third"};
-//    private List<String> childrenList1 = new ArrayList<String>();
-//    private List<String> childrenList2 = new ArrayList<String>();
-//    private List<String> childrenList3 = new ArrayList<String>();
+    private String[] parentList;
+   
     private Button prescription_template_search_button;
     private String[] data;
 	
@@ -84,7 +82,7 @@ public class PrescriptionTemplateActivity extends Activity {
 		
 	private void initialData() {
 
-        //数据准备
+        //鏁版嵁鍑嗗
         parentList = new String[Utils.DEPARTMENT_ARRAY.length];
         for(int i = 0; i < Utils.DEPARTMENT_ARRAY.length; i++){
         	String item = Utils.DEPARTMENT_ARRAY[i];
@@ -122,49 +120,49 @@ public class PrescriptionTemplateActivity extends Activity {
 	
     private class MyExpandableListViewAdapter3 extends BaseExpandableListAdapter {
 
-	        //  鑾峰緱鏌愪釜鐖堕」鐨勬煇涓瓙椤�
+	        //  閼惧嘲绶遍弻鎰嚋閻栧爼銆嶉惃鍕厙娑擃亜鐡欐い锟�
 	        @Override
 	        public Object getChild(int parentPos, int childPos) {
 	            return dataset.get(parentList[parentPos]).get(childPos);
 	        }
-	     // 鑾峰緱鐖堕」鐨勬暟閲�
+	     // 閼惧嘲绶遍悥鍫曘�嶉惃鍕殶闁诧拷
 			@Override
 			public int getGroupCount() {
 				return dataset.size();
 				// return 0;
 			}
 			
-			// 鑾峰緱鏌愪釜鐖堕」鐨勫瓙椤规暟鐩�
+			// 閼惧嘲绶遍弻鎰嚋閻栧爼銆嶉惃鍕摍妞よ鏆熼惄锟�
 			@Override
 			public int getChildrenCount(int parentPos) {
 				return dataset.get(parentList[parentPos]).size();
 			}
 	       
-	        //  鑾峰緱鏌愪釜鐖堕」
+	        //  閼惧嘲绶遍弻鎰嚋閻栧爼銆�
 	        @Override
 	        public Object getGroup(int parentPos) {
 	            return dataset.get(parentList[parentPos]);
 	        }
 
-	        //  鑾峰緱鏌愪釜鐖堕」鐨刬d
+	        //  閼惧嘲绶遍弻鎰嚋閻栧爼銆嶉惃鍒琩
 	        @Override
 	        public long getGroupId(int parentPos) {
 	            return parentPos;
 	        }
 
-	        //  鑾峰緱鏌愪釜鐖堕」鐨勬煇涓瓙椤圭殑id
+	        //  閼惧嘲绶遍弻鎰嚋閻栧爼銆嶉惃鍕厙娑擃亜鐡欐い鍦畱id
 	        @Override
 	        public long getChildId(int parentPos, int childPos) {
 	            return childPos;
 	        }
 
-	        //  鎸夊嚱鏁扮殑鍚嶅瓧鏉ョ悊瑙ｅ簲璇ユ槸鏄惁鍏锋湁绋冲畾鐨刬d锛岃繖涓嚱鏁扮洰鍓嶄竴鐩撮兘鏄繑鍥瀎alse锛屾病鏈夊幓鏀瑰姩杩�
+	        //  閹稿鍤遍弫鎵畱閸氬秴鐡ч弶銉ф倞鐟欙絽绨茬拠銉︽Ц閺勵垰鎯侀崗閿嬫箒缁嬪啿鐣鹃惃鍒琩閿涘矁绻栨稉顏勫毐閺佹壆娲伴崜宥勭閻╂挳鍏橀弰顖濈箲閸ョ�巃lse閿涘本鐥呴張澶婂箵閺�鐟板З鏉╋拷
 	        @Override
 	        public boolean hasStableIds() {
 	            return false;
 	        }
 
-	        //  鑾峰緱鐖堕」鏄剧ず鐨剉iew
+	        //  閼惧嘲绶遍悥鍫曘�嶉弰鍓с仛閻ㄥ墘iew
 	        @Override
 	        public View getGroupView(int parentPos, boolean b, View view, ViewGroup viewGroup) {
 	            if (view == null) {
@@ -179,7 +177,7 @@ public class PrescriptionTemplateActivity extends Activity {
 	            return view;
 	        }
 
-	        //  鑾峰緱瀛愰」鏄剧ず鐨剉iew
+	        //  閼惧嘲绶辩�涙劙銆嶉弰鍓с仛閻ㄥ墘iew
 	        @Override
 	        public View getChildView(int parentPos, int childPos, boolean b, View view, ViewGroup viewGroup) {
 	            if (view == null) {
@@ -196,7 +194,7 @@ public class PrescriptionTemplateActivity extends Activity {
 	            return view;
 	        }
 
-	        //  瀛愰」鏄惁鍙�変腑锛屽鏋滈渶瑕佽缃瓙椤圭殑鐐瑰嚮浜嬩欢锛岄渶瑕佽繑鍥瀟rue
+	        //  鐎涙劙銆嶉弰顖氭儊閸欘垶锟藉鑵戦敍灞筋洤閺嬫粓娓剁憰浣筋啎缂冾喖鐡欐い鍦畱閻愮懓鍤禍瀣╂閿涘矂娓剁憰浣界箲閸ョ�焤ue
 	        @Override
 	        public boolean isChildSelectable(int i, int i1) {
 	            return true;

@@ -33,6 +33,11 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.HorizontalScrollView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.NumberPicker.OnValueChangeListener;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +45,12 @@ import android.widget.Toast;
 public class PrescriptionCreateMainActivity extends Activity {
 
 	private Button save, savetotemplate, commit;
-	private EditText patient_name_text,patient_sex_text,patient_age_text,chufangmingcheng;
+	private EditText patient_name_text,chufangmingcheng;
 	private EditText prescription_data_et,doctor_name_et,checker_name_et,other_information_et;
+	private RadioGroup radioGroupsex;
+	private NumberPicker patient_age_text;
+	int minAge = 1, maxAge =100;
+	private RadioButton radioman,radiowoman;
 	private Button add_drug, dialog_ok_btn;
 	private View view_custom;
 	private Context mContext;
@@ -58,7 +67,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	private List<String> childrenList2 = new ArrayList<String>();
 	private List<String> childrenList3 = new ArrayList<String>();
 	private static final String[] data = new String[] { "first", "second", "third", "forth", "fifth" };
-
+    public int patient_sex,patient_age ;
 	private ListView drugs_lv;
 	public HorizontalScrollView mTouchView;
 	protected List<PrescriptionCreateScrollView> mHScrollViews = new ArrayList<PrescriptionCreateScrollView>();
@@ -69,6 +78,17 @@ public class PrescriptionCreateMainActivity extends Activity {
 		setContentView(R.layout.newprescription);
 		
 		//��ʼ��������Ϣ
+		patient_age_text = (NumberPicker)findViewById(R.id.patient_age_text);
+		patient_age_text.setMinValue(minAge);
+		patient_age_text.setMaxValue(maxAge);
+		patient_age_text.setValue(1);
+		patient_age_text.setOnValueChangedListener(new OnValueChangeListener() {
+			
+			public void onValueChange(NumberPicker packer, int oldVal, int newVal) {
+				// TODO Auto-generated method stub
+				patient_age =newVal;
+			}
+		});
 		prescription_data_et = (EditText) findViewById(R.id.prescription_data_et);
 		doctor_name_et = (EditText) findViewById(R.id.doctor_name_et);
 		checker_name_et = (EditText) findViewById(R.id.checker_name_et);
@@ -156,9 +176,26 @@ public class PrescriptionCreateMainActivity extends Activity {
 		commit = (Button) findViewById(R.id.commit);
 		chufangmingcheng = (EditText) findViewById(R.id.editText1);
 		patient_name_text = (EditText) findViewById(R.id.patient_name_text);
-		patient_sex_text = (EditText) findViewById(R.id.patient_sex_text);
-		patient_age_text = (EditText) findViewById(R.id.patient_age_text);
+		radioGroupsex = (RadioGroup) findViewById(R.id.radioGroupsex);
 		
+		radioman = (RadioButton) findViewById(R.id.radioman);
+		radiowoman = (RadioButton) findViewById(R.id.radiowoman);
+		radioGroupsex.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				// TODO Auto-generated method stub
+				RadioButton radbtn = (RadioButton) findViewById(checkedId);
+				if( radbtn == radioman)
+						{
+					 patient_sex =0;
+			}
+				else if( radbtn == radiowoman)
+				{
+					  patient_sex= 1;
+	}
+			}
+			});
 		///////////// add template data
 		Bundle extras = getIntent().getExtras(); 
 		String template_name = extras.getString("template_name");
@@ -197,17 +234,16 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
+
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
-				String patient_sex = patient_sex_text.getText().toString();
-				String patient_age = patient_age_text.getText().toString();
+				
+				
 				
 				Patient patient = new Patient();
-				patient.setAge(Integer.valueOf(patient_age));
+				patient.setAge(patient_age);
 				patient.setName(patient_name);
-				patient.setSex(Integer.valueOf(patient_sex));
+				patient.setSex(patient_sex);
 				
 				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
 				//List<Drug> druglt = new ArrayList<Drug>();
@@ -269,6 +305,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				finish();
 			}
 		});
+		
 		commit.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -277,13 +314,13 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
-				String patient_sex = patient_sex_text.getText().toString();
-				String patient_age = patient_age_text.getText().toString();
+			
+		
 				
 				Patient patient = new Patient();
-				patient.setAge(Integer.valueOf(patient_age));
+				patient.setAge(patient_age);
 				patient.setName(patient_name);
-				patient.setSex(Integer.valueOf(patient_sex));
+				patient.setSex(patient_sex);
 				
 				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
 				//List<Drug> druglt = new ArrayList<Drug>();

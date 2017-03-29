@@ -24,7 +24,7 @@ public class PrescriptionWebService {
 		
 		//doctor = new Doctor(1, "doctor A", Utils.DOCTOR_TYPE.DOCTOR.ordinal(), "Hospital 1");
 		doctor = DoctorWebService.getAllDoctor().get(0);
-		patient = PatientWebService.getAllDoctor().get(1);
+		patient = PatientWebService.getAllPatient().get(1);
 
 		Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
 		drugmap.put(DrugWebService.getAllDrug().get(0), 1);
@@ -34,6 +34,16 @@ public class PrescriptionWebService {
 		drugmap.put(DrugWebService.getAllDrug().get(3), 1);
 		
 		prescription= new Prescription(1,"coach", Utils.DEPARTMENT.NEIKE.ordinal(), doctor,patient, drugmap);
+		prescriptionlist.add(prescription);
+		doctor = DoctorWebService.getAllDoctor().get(1);
+		patient = PatientWebService.getAllPatient().get(0);
+
+		Map<Drug, Integer> drugmap1 = new HashMap<Drug, Integer>();
+		drugmap1.put(DrugWebService.getAllDrug().get(0), 1);
+		drugmap1.put(DrugWebService.getAllDrug().get(1), 3);
+		drugmap1.put(DrugWebService.getAllDrug().get(2), 4);
+		
+		prescription= new Prescription(2,"toothache", Utils.DEPARTMENT.WAIKE.ordinal(), doctor,patient, drugmap);
 		prescriptionlist.add(prescription);
 	}
 

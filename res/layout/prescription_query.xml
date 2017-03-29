@@ -50,8 +50,13 @@
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
-
-                <RadioGroup
+                
+                  <HorizontalScrollView
+                        android:id="@+id/horizontalScrollView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0" >
+                   <RadioGroup
                     android:id="@+id/main_tab_group"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -75,6 +80,9 @@
                         android:checked="true"
                         android:text="待提交" />
 
+
+                   
+
                     <RadioButton
                         android:id="@+id/query_waitcheck"
                         android:layout_weight="1.0"
@@ -97,6 +105,7 @@
                         android:layout_width="wrap_content"
                         android:text="审核不通过" />
                 </RadioGroup>
+                 </HorizontalScrollView>
 
                 <TextView
                     android:id="@+id/main_tab_new_message"
