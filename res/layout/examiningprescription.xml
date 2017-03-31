@@ -226,7 +226,7 @@
                         android:text="药品序号"
                         android:textColor="#850" />
 
-                    <com.zll.xunyiwenyao.view.PrescriptionCreateScrollView
+                    <com.zll.xunyiwenyao.view.PrescriptionExamingPrescriptionScrollView
                         android:id="@+id/examing_item_scroll_title"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -273,7 +273,7 @@
                                 android:text="服用备注"
                                 android:textColor="#850" />
                         </LinearLayout>
-                    </com.zll.xunyiwenyao.view.PrescriptionCreateScrollView>
+                        </com.zll.xunyiwenyao.view.PrescriptionExamingPrescriptionScrollView>
                 </LinearLayout>
 
                 <ListView

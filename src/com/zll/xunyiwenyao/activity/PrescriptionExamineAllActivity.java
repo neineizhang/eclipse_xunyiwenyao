@@ -47,10 +47,10 @@ public class PrescriptionExamineAllActivity extends Activity implements OnItemCl
 	    }
 
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	        Intent i =new Intent(this,PrescriptionCreateMainActivity.class);
-	        TextView template_name_tv=(TextView) view.findViewById(R.id.examine_lvitem_name);
-	        String template_name = template_name_tv.getText().toString();
-	        i.putExtra("template_name", template_name); 
+	        Intent i =new Intent(this,PrescriptionExamingPrescriptionActivity.class);
+	        TextView prescription_name_tv=(TextView) view.findViewById(R.id.examine_lvitem_name);
+	        String prescription_name = prescription_name_tv.getText().toString();
+	        i.putExtra("prescription_name", prescription_name); 
 			startActivity(i);
 	        
 	    }

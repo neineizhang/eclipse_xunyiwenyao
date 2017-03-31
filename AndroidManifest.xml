@@ -36,6 +36,7 @@
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineRefusedActivity"></activity>
 		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineAllActivity"></activity>
 		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineApprovedActivity"></activity>
+		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamingPrescriptionActivity"></activity>
 
         <activity android:name="Inspection_create"></activity>
         <activity android:name="Inspection_template"></activity>

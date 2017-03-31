@@ -351,18 +351,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	}
 
 	private void initialData() {
-		// childrenList1.add(parentList[0] + "-" + "first");
-		// childrenList1.add(parentList[0] + "-" + "second");
-		// childrenList1.add(parentList[0] + "-" + "third");
-		// childrenList2.add(parentList[1] + "-" + "first");
-		// childrenList2.add(parentList[1] + "-" + "second");
-		// childrenList2.add(parentList[1] + "-" + "third");
-		// childrenList3.add(parentList[2] + "-" + "first");
-		// childrenList3.add(parentList[2] + "-" + "second");
-		// childrenList3.add(parentList[2] + "-" + "third");
-		// dataset.put(parentList[0], childrenList1);
-		// dataset.put(parentList[1], childrenList2);
-		// dataset.put(parentList[2], childrenList3);
+	
 
 		List<String> namelt = new ArrayList<String>();
 		List<Drug> resultDruglt = DrugWebService.getAllDrug();
