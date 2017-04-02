@@ -98,7 +98,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	private void initViews() {
 		List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
 		Map<String, String> data = null;
-		PrescriptionExamingPrescriptionScrollView headerScroll = (PrescriptionExamingPrescriptionScrollView) findViewById(R.id.item_scroll_title);
+		PrescriptionExamingPrescriptionScrollView headerScroll = (PrescriptionExamingPrescriptionScrollView) findViewById(R.id.examing_item_scroll_title);
 
 		mHScrollViews.add(headerScroll);
 
@@ -179,11 +179,10 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 			View v = convertView;
 			if (v == null) {
 				v = LayoutInflater.from(context).inflate(res, null);
-				addHViews((PrescriptionExamingPrescriptionScrollView) v.findViewById(R.id.item_scroll));
+				addHViews((PrescriptionExamingPrescriptionScrollView) v.findViewById(R.id.examing_item_scroll));
 				View[] views = new View[to.length];
 				for (int i = 0; i < to.length; i++) {
 					View tv = v.findViewById(to[i]);
-					;
 					tv.setOnClickListener(clickListener);
 					views[i] = tv;
 				}
