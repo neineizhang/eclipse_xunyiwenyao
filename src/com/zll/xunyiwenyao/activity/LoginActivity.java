@@ -1,24 +1,24 @@
 package com.zll.xunyiwenyao.activity;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 //import com.zll.xunyiwenyao.db.MyDBHelper;
 
@@ -27,14 +27,15 @@ public class LoginActivity extends Activity {
 	private RadioGroup select_doctor;
 	private Button login_entrylog;
 	private EditText login_name, login_pwd;
-	private Button btn_register;
+	//private Button btn_register;
 	//private MyDBHelper myDBHelper;
-	private SQLiteDatabase db;
+	//private SQLiteDatabase db;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.login);
 
 		//myDBHelper = new MyDBHelper(login.this,"xywy_db",null, 1);
@@ -75,9 +76,7 @@ public class LoginActivity extends Activity {
 							Utils.LOGIN_DOCTOR = islogin;
 							Intent i=new Intent(LoginActivity.this,MainActivity.class);
 							startActivity(i);
-							login_name.setText(null);
-							login_pwd.setText(null);
-							
+							finish();
 						} else {
 							Toast.makeText(LoginActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
 							login_name.setText(null);
@@ -94,9 +93,7 @@ public class LoginActivity extends Activity {
 							Utils.LOGIN_DOCTOR = islogin;
 							Intent i=new Intent(LoginActivity.this,MainActivity.class);
 							startActivity(i);
-							login_name.setText(null);
-							login_pwd.setText(null);
-							
+							finish();
 						} else {
 							Toast.makeText(LoginActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
 							login_name.setText(null);

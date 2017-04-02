@@ -5,12 +5,14 @@
     android:orientation="vertical" 
     android:divider="@drawable/line_div"  
     android:showDividers="middle"
+    android:background="@drawable/background_login"
     android:dividerPadding="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
+        android:background="@drawable/background_login_div"
         android:orientation="vertical" >
 
        
@@ -34,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/background_login_div"
         android:orientation="horizontal" >
     
     
@@ -42,28 +45,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="处方开具" />
+            android:text="处方\n开具" />
 
         <Button
             android:id="@+id/prescription_template"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="处方模板" />
+            android:text="处方\n模板" />
 
         <Button
             android:id="@+id/prescription_query"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="处方查询" />
+            android:text="处方\n查询" />
 
         <Button
             android:id="@+id/prescription_examine"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="处方审核" />
+            android:text="处方\n审核" />
         
     </LinearLayout>
 
@@ -78,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/background_login_div"
         android:orientation="horizontal" >
 
         <Button
@@ -85,21 +89,21 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="检查单开具" />
+            android:text="检查单\n开具" />
 
         <Button
             android:id="@+id/inspection_template"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="检查单模板" />
+            android:text="检查单\n模板" />
 
         <Button
             android:id="@+id/inspection_query"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="检查单查询" />
+            android:text="检查单\n查询" />
     </LinearLayout>
 
     <TextView
@@ -113,6 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/background_login_div"
         android:orientation="horizontal" >
 
         <Button
@@ -120,14 +125,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="用户药品评价浏览" />
+            android:text="用户药品\n评价浏览" />
 
         <Button
             android:id="@+id/report"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="药物反应报告填写" />
+            android:text="药物反应\n报告填写" />
     </LinearLayout>
 
 </LinearLayout>

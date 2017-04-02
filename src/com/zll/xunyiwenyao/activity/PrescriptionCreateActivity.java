@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,7 +22,6 @@ import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class PrescriptionCreateActivity extends Activity   {
 
@@ -29,7 +29,6 @@ public class PrescriptionCreateActivity extends Activity   {
 	private Button prescription_create_search_button,prescription_create_return;
 	private ArrayList<Group> gData = null;
     private ArrayList<ArrayList<Item>> iData = null;
-    private ArrayList<Item> lData = null;
     private Context mContext;
     private ExpandableListView exlist_lol;
     private MyBaseExpandableListAdapter myAdapter = null;
@@ -39,7 +38,6 @@ public class PrescriptionCreateActivity extends Activity   {
      * template data init
      */
     private void initData(){
-        //数据准备
         gData = new ArrayList<Group>();
         iData = new ArrayList<ArrayList<Item>>();
 
@@ -63,6 +61,7 @@ public class PrescriptionCreateActivity extends Activity   {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.prescription_create);
 
 		prescription_create_search_text = (AutoCompleteTextView) findViewById(R.id.prescription_create_search_text);
@@ -98,6 +97,7 @@ public class PrescriptionCreateActivity extends Activity   {
 			// TODO Auto-generated method stub
 			Intent i = new  Intent(PrescriptionCreateActivity.this,MainActivity.class);
 			startActivity(i);
+			finish();
 		}
 	});
 
@@ -112,6 +112,7 @@ public class PrescriptionCreateActivity extends Activity   {
 			Intent i2=new Intent(PrescriptionCreateActivity.this,PrescriptionCreateMainActivity.class);
 			i2.putExtra("template_name", template_name); 
 			startActivity(i2);
+			finish();
 		}
 	});
 	

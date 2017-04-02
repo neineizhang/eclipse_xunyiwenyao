@@ -15,7 +15,6 @@ import com.zll.xunyiwenyao.view.PrescriptionCreateScrollView;
 import com.zll.xunyiwenyao.webservice.DrugWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
-import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseExpandableListAdapter;
@@ -60,12 +60,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	private MyExpandableListViewAdapter2 adapter;
 	private AutoCompleteTextView add_drugs_autv;
 	private Map<String, List<String>> dataset = new HashMap<String, List<String>>();
-	// private String[] parentList = new String[] { "first", "second", "third"
-	// };
 	private String[] parentList = new String[] { "first" };
-	private List<String> childrenList1 = new ArrayList<String>();
-	private List<String> childrenList2 = new ArrayList<String>();
-	private List<String> childrenList3 = new ArrayList<String>();
 	private static final String[] data = new String[] { "first", "second", "third", "forth", "fifth" };
     public int patient_sex,patient_age ;
 	private ListView drugs_lv;
@@ -75,9 +70,9 @@ public class PrescriptionCreateMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.newprescription);
 		
-		//��ʼ��������Ϣ
 		patient_age_text = (NumberPicker)findViewById(R.id.patient_age_text);
 		patient_age_text.setMinValue(minAge);
 		patient_age_text.setMaxValue(maxAge);
@@ -103,11 +98,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 		initViews();
 		builder = new AlertDialog.Builder(this);
-		// final LayoutInflater inflater =
-		// New_prescription.this.getLayoutInflater();
 		view_custom = View.inflate(this, R.layout.add_drugs_dialog, null);
-		// builder.setView(view_custom);
-		// builder.setCancelable(true);
 		add_drug.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -149,7 +140,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String drugname = add_drugs_autv.getText().toString();
 				Drug drug = DrugWebService.getDrugByName(drugname);
 				if(drug == null){
-					/////// !!1!
+					/////// zll add !!1!
 					alert.dismiss();
 					return;
 				}
@@ -237,16 +228,14 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
-				
-				
-				
+						
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
 				
 				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-				//List<Drug> druglt = new ArrayList<Drug>();
+				
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
 				for(Map<String, String> item : datas){
 					Drug drug = new Drug();
@@ -268,6 +257,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				PrescriptionWebService.AddPrescription(prescription);
 				
 				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		});
 		savetotemplate.setOnClickListener(new OnClickListener() {
@@ -351,8 +341,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 	}
 
 	private void initialData() {
-	
-
 		List<String> namelt = new ArrayList<String>();
 		List<Drug> resultDruglt = DrugWebService.getAllDrug();
 		// System.out.println(resultDruglt.size());
@@ -372,7 +360,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 		@Override
 		public int getGroupCount() {
 			return dataset.size();
-			// return 0;
 		}
 
 		@Override
@@ -411,13 +398,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 			view.setTag(R.layout.add_drugs_dialog_item, childPos);
 			TextView text = (TextView) view.findViewById(R.id.add_drugs_dialog_item);
 			text.setText(dataset.get(parentList[parentPos]).get(childPos));
-			// text.setOnClickListener(new View.OnClickListener() {
-			// @Override
-			// public void onClick(View view) {
-			// Toast.makeText(New_prescription.this, "鐐瑰埌浜嗗唴缃殑textview",
-			// Toast.LENGTH_SHORT).show();
-			// }
-			// });
 			return view;
 		}
 
@@ -450,24 +430,10 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 	private void initViews() {
 		List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
-		Map<String, String> data = null;
 		PrescriptionCreateScrollView headerScroll = (PrescriptionCreateScrollView) findViewById(R.id.item_scroll_title);
 
 		mHScrollViews.add(headerScroll);
-
 		drugs_lv = (ListView) findViewById(R.id.drugs_lv);
-
-//		for (int i = 0; i < 1; i++) {
-//			data = new HashMap<String, String>();
-//			data.put("title", "Title_" + i);
-//			data.put("data_" + 1, "Date_" + 1 + "_" + i);
-//			data.put("data_" + 2, "Date_" + 2 + "_" + i);
-//			data.put("data_" + 3, "Date_" + 3 + "_" + i);
-//			data.put("data_" + 4, "Date_" + 4 + "_" + i);
-//			data.put("data_" + 5, "Date_" + 5 + "_" + i);
-//
-//			datas.add(data);
-//		}
 
 		ScrollAdapter adapter = new ScrollAdapter(this, datas, R.layout.scroll_item,
 				new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5" }, new int[] { R.id.item_title,
@@ -503,13 +469,13 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 	class ScrollAdapter extends SimpleAdapter {
 
-		private List<? extends Map<String, ?>> datas;
+		private List<Map<String, String>> datas;
 		private int res;
 		private String[] from;
 		private int[] to;
 		private Context context;
 
-		public ScrollAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from,
+		public ScrollAdapter(Context context, List<Map<String, String>> data, int resource, String[] from,
 				int[] to) {
 			super(context, data, resource, from, to);
 			this.context = context;
@@ -519,11 +485,11 @@ public class PrescriptionCreateMainActivity extends Activity {
 			this.to = to;
 		}
 
-		public void setData(List<? extends Map<String, ?>> newdatas){
+		public void setData(List<Map<String, String>> newdatas){
 			datas = newdatas;
 		}
 		
-		public List<? extends Map<String, ?>> getData(){
+		public List<Map<String, String>> getData(){
 			return datas;
 		}
 		
