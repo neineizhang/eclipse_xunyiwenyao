@@ -57,6 +57,7 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 		Bundle extras = getIntent().getExtras(); 
 		String template_name = extras.getString("template_name");
 		template_manage_name_et.setText(template_name);
+		template_manage_name_et.setEnabled(false);
 		if(!template_name.trim().equals("")){
 			prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
 			if(prescriptionTemplate == null){

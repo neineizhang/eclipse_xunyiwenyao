@@ -1,5 +1,6 @@
 package com.zll.xunyiwenyao.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,9 +90,15 @@ public class PrescriptionCreateMainActivity extends Activity {
 		checker_name_et = (EditText) findViewById(R.id.checker_name_et);
 		other_information_et = (EditText) findViewById(R.id.other_information_et);
 		
-		prescription_data_et.setText("");
+
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");       
+		String date = sDateFormat.format(new java.util.Date());    
+		prescription_data_et.setText(date);
+		prescription_data_et.setEnabled(false);
 		doctor_name_et.setText(Utils.LOGIN_DOCTOR.getName());
+		doctor_name_et.setEnabled(false);
 		checker_name_et.setText("");
+		checker_name_et.setEnabled(false);
 		other_information_et.setText("");
 		
 		add_drug = (Button) findViewById(R.id.add_drug);
@@ -520,7 +527,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	protected View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Toast.makeText(PrescriptionCreateMainActivity.this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(PrescriptionCreateMainActivity.this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
 		}
 	};
 

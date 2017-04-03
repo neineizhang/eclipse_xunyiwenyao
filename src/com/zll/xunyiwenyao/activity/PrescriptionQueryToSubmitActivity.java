@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.prescriptionqueryall);
         
         allprescription_lv = (ListView) findViewById(R.id.allprescription_lv);
@@ -54,6 +56,6 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
-		Toast.makeText(mContext,"Äãµã»÷ÁËµÚ" + position + "Ïî",Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext,"ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½" + position + "ï¿½ï¿½",Toast.LENGTH_SHORT).show();
 	}
 	}

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,6 +36,7 @@ public class PrescriptionQueryRefuseActivity extends Activity implements OnItemC
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.prescriptionqueryall);
         
         allprescription_lv = (ListView) findViewById(R.id.allprescription_lv);
@@ -58,6 +60,6 @@ public class PrescriptionQueryRefuseActivity extends Activity implements OnItemC
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
-		Toast.makeText(mContext,"Äãµã»÷ÁËµÚ" + position + "Ïî",Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext,"ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½" + position + "ï¿½ï¿½",Toast.LENGTH_SHORT).show();
 	}
 	}

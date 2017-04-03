@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
+import android.view.Window;
 import android.widget.TabHost;
 import android.app.TabActivity;
 import android.widget.TabHost.TabSpec;
@@ -24,6 +25,7 @@ public class PrescriptionQueryActivity extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.prescription_query);
 		mContext = PrescriptionQueryActivity.this;
 		query_tabhost = getTabHost();
