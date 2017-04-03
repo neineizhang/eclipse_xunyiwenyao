@@ -52,8 +52,22 @@ public class PrescriptionTemplateWebService {
     	return namelist;
     }
     
+    
     public static void addPrescriptionTemplate(PrescriptionTemplate item){
     	templatelt.add(item);
+    }
+    
+    public static void updatePrescriptionTemplate(PrescriptionTemplate item){
+    	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
+    	int index = templatelt.indexOf(presciption);
+    	presciption.setDrugmap(item.getDrugmap());
+    	templatelt.set(index, presciption);
+    }
+    
+    public static void deletePrescriptionTemplate(PrescriptionTemplate item){
+    	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
+    	int index = templatelt.indexOf(presciption);
+    	templatelt.remove(index);
     }
     
     public static PrescriptionTemplate getPrescriptionTemplateByName(String name){

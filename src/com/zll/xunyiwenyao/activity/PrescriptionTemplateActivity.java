@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseExpandableListAdapter;
@@ -40,6 +41,7 @@ public class PrescriptionTemplateActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.prescription_template);
         
@@ -73,6 +75,7 @@ public class PrescriptionTemplateActivity extends Activity {
 				Intent i = new Intent(PrescriptionTemplateActivity.this,PrescriptionTemplateMangeActivity.class);
 				i.putExtra("template_name", template_name); 
 				startActivity(i);
+				finish();
 			}
 		});
 		

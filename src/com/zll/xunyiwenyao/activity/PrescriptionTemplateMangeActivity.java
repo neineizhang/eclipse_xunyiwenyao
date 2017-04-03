@@ -3,10 +3,12 @@ package com.zll.xunyiwenyao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -34,10 +36,12 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 	private EditText template_manage_name_et;
 	public HorizontalScrollView templateTouchView;
 	protected List<PrescriptionTemplateScrollView> templateHScrollViews =new ArrayList<PrescriptionTemplateScrollView>();
- 
+	PrescriptionTemplate prescriptionTemplate = null;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.templatemanage);
 		template_manage_name_et = (EditText) findViewById(R.id.template_manage_name_et);
 		template_manage_save = (Button) findViewById(R.id.template_manage_save);
@@ -54,10 +58,10 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 		String template_name = extras.getString("template_name");
 		template_manage_name_et.setText(template_name);
 		if(!template_name.trim().equals("")){
-			PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
+			prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
 			if(prescriptionTemplate == null){
-				/////// zlladd TOAST
-				
+				Toast.makeText(PrescriptionTemplateMangeActivity.this, "NAME ERROR", Toast.LENGTH_SHORT).show();
+				finish();
 			}else{
 				//chufangmingcheng.setText(template_name);
 				
@@ -82,6 +86,10 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 			
 		}
 		///////////// end add template data
+		else{
+			Toast.makeText(PrescriptionTemplateMangeActivity.this, "NAME IS EMPTY", Toast.LENGTH_SHORT).show();
+			finish();
+		}
 	}
   
 	private void initViews() {
@@ -91,17 +99,7 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 		
 		templateHScrollViews.add(headerScroll);
 		template_drugs_lv = (ListView) findViewById(R.id.template_drugs_lv);
-//		for(int i = 0; i < 5; i++) {
-//			data = new HashMap<String, String>();
-//			data.put("title", "Title_" + i);
-//			data.put("data_" + 1, "Date_" + 1 + "_" +i );
-//			data.put("data_" + 2, "Date_" + 2 + "_" +i );
-//			data.put("data_" + 3, "Date_" + 3 + "_" +i );
-//			data.put("data_" + 4, "Date_" + 4 + "_" +i );
-//			data.put("data_" + 5, "Date_" + 5 + "_" +i );
-//			data.put("data_" + 6, "Date_" + 6 + "_" +i );
-//			datas.add(data);
-//		}
+
 		SimpleAdapter templatemanadapter = new ScrollAdapter2(this, datas, R.layout.templatemanage_list
 							, new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5", "data_6", }
 							, new int[] { R.id.template_item_title
@@ -152,6 +150,8 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 		private String[] from;
 		private int[] to;
 		private Context context;
+		private List<View[]> holders_lt = new ArrayList<View[]>();
+		
 		public ScrollAdapter2(Context context,
 				List<? extends Map<String, ?>> data, int resource,
 				String[] from, int[] to) {
@@ -161,14 +161,30 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 			this.res = resource;
 			this.from = from;
 			this.to = to;
+			for(int i = 0; i < data.size(); i++){
+				holders_lt.add(null);
+			}
 		}
 		
 		public List<? extends Map<String, ?>> getData(){
+			for(int position = 0; position < holders_lt.size(); position++){
+				View[] holders = holders_lt.get(position);
+				int len = holders.length;
+				for(int i = 0 ; i < len; i++) {
+					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
+					String value = ((TextView)holders[i]).getText().toString();
+					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
+					((Map<String, String>)this.datas.get(position)).put(from[i], value);
+				}
+			}
 			return datas;
 		}
 		
 		public void  setData(List<? extends Map<String, ?>> new_data){
 			datas = new_data;
+			for(int i = 0; i < new_data.size(); i++){
+				holders_lt.add(null);
+			}
 		}
 		
 		@Override
@@ -185,6 +201,15 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 					views[i] = tv;
 				}
 				v.setTag(views);
+				if(holders_lt.get(position) == null){
+					holders_lt.set(position, views);
+//					Log.d("rxz", position+":"+this.datas.get(position).get(from[0]).toString());
+//					Log.d("rxz", position+":"+this.datas.get(position).get(from[1]).toString());
+//					Log.d("rxz", position+":"+this.datas.get(position).get(from[2]).toString());
+//					Log.d("rxz", position+":"+this.datas.get(position).get(from[3]).toString());
+//					Log.d("rxz", position+":"+this.datas.get(position).get(from[4]).toString());
+//					Log.d("rxz", position+":"+this.datas.get(position).get(from[5]).toString());
+				}
 			}
 			View[] holders = (View[]) v.getTag();
 			int len = holders.length;
@@ -199,14 +224,36 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 	protected View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Toast.makeText(PrescriptionTemplateMangeActivity.this, ((TextView)v).getText(), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(PrescriptionTemplateMangeActivity.this, ((TextView)v).getText(), Toast.LENGTH_SHORT).show();
 		}
 	};
 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		
+		switch (arg0.getId()) {
+		case R.id.template_manage_save:
+			//// get update info
+			List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter2)template_drugs_lv.getAdapter()).getData();
+			for(Drug drug : prescriptionTemplate.getDrugmap().keySet()){
+				for(Map<String, String> data_map : datas){
+					if(drug.getName().equals(data_map.get("data_1"))){
+						prescriptionTemplate.getDrugmap().put(drug, Integer.parseInt(data_map.get("data_3")));
+					}
+				}
+			}
+			//// end update info 
+			PrescriptionTemplateWebService.updatePrescriptionTemplate(prescriptionTemplate);
+			Toast.makeText(PrescriptionTemplateMangeActivity.this, "UPDATE SUCCESS", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.template_manage_delete:
+			PrescriptionTemplateWebService.deletePrescriptionTemplate(prescriptionTemplate);
+			Toast.makeText(PrescriptionTemplateMangeActivity.this, "DELETE SUCCESS", Toast.LENGTH_SHORT).show();
+			break;
+		default:
+			break;
+		}
+		finish();
 	}
 }
 
