@@ -44,7 +44,7 @@ public class PrescriptionQueryActivity extends TabActivity {
 		query_tabhost.addTab(spec);
 
 		intent = new Intent(this,PrescriptionQueryToApproveActivity.class);
-		spec=query_tabhost.newTabSpec("tab3").setIndicator("待审核").setContent(intent);
+		spec = query_tabhost.newTabSpec("tab3").setIndicator("待审核").setContent(intent);
 		query_tabhost.addTab(spec);
 
 		intent = new Intent(this,PrescriptionQueryApprovedActivity.class);
@@ -68,7 +68,8 @@ public class PrescriptionQueryActivity extends TabActivity {
 						query_tabhost.setCurrentTabByTag("tab2");
 						break;
 					case R.id.query_waitcheck:
-						query_tabhost.setCurrentTabByTag("tab3֪");
+						query_tabhost.setCurrentTabByTag("tab3");
+						//query_tabhost.setCurrentTabByTag("tab3֪");
 						break;
 					case R.id.query_commitok:
 						query_tabhost.setCurrentTabByTag("tab4");

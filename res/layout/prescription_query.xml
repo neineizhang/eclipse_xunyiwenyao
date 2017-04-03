@@ -70,6 +70,7 @@
                         android:layout_weight="1.0"
                         android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
+                        android:checked="true"
                         android:text="全部" />
 
                     <RadioButton
@@ -77,11 +78,7 @@
                         android:layout_weight="1.0"
                         android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
-                        android:checked="true"
                         android:text="待提交" />
-
-
-                   
 
                     <RadioButton
                         android:id="@+id/query_waitcheck"
@@ -96,7 +93,6 @@
                         android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
                         android:text="审核通过" />
-
 
                     <RadioButton
                         android:id="@+id/query_commitno"

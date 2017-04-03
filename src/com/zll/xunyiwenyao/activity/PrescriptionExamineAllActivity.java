@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -28,6 +29,7 @@ public class PrescriptionExamineAllActivity extends Activity implements OnItemCl
 	    protected void onCreate(Bundle savedInstanceState) {
 	        // TODO Auto-generated method stub
 	        super.onCreate(savedInstanceState);
+			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        setContentView(R.layout.prescription_examine_lv);
 	        examine_lv = (ListView) findViewById(R.id.examine_lv);
 	        mContext = PrescriptionExamineAllActivity.this;

@@ -9,16 +9,19 @@ import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.view.PrescriptionExamingPrescriptionScrollView;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import android.app.Activity;
 import android.content.Context;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ListView;
@@ -37,6 +40,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.examiningprescription);
 		examing_prescription_name = (TextView) findViewById(R.id.examing_prescription_name);
 		examing_patient_name_text  = (TextView) findViewById(R.id.examing_patient_name_text); 
@@ -47,6 +51,14 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	    examing_doctor_name_et= (TextView) findViewById(R.id.examing_doctor_name_et);
 	    examing_checker_name_et= (TextView) findViewById(R.id.examing_checker_name_et);
 	    examing_other_information_et= (TextView) findViewById(R.id.examing_other_information_et);
+	    
+	    approved_btn = (Button) findViewById(R.id.approved_btn);
+	    refused_btn = (Button) findViewById(R.id.refused_btn);
+	    if(Utils.LOGIN_DOCTOR.getType() == Utils.DOCTOR_TYPE.DOCTOR.ordinal()){
+	    	approved_btn.setVisibility(View.INVISIBLE);
+	    	refused_btn.setVisibility(View.INVISIBLE);
+	    }
+	    
 	    initViews();
 	    initdata();
 		

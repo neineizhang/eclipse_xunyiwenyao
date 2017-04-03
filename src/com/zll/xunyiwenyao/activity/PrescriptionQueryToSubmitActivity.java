@@ -1,10 +1,12 @@
 package com.zll.xunyiwenyao.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.adapter.PrescriptionQueryAdapter;
 import com.zll.xunyiwenyao.dbitem.Prescription;
+import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import android.app.Activity;
@@ -47,10 +49,10 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 
 	private void intialData() {
 		// TODO Auto-generated method stub
-		 Prescription onedata = PrescriptionWebService.getAllPrescription().get(0);
-		 mPrescription.add(onedata);
-		 mPrescription.add(onedata);
-		 
+		 List<Prescription> prescriptionlist = PrescriptionWebService.getPrescriptionbyStatus(Utils.STATUS.SAVED.ordinal());
+		 for(Prescription item : prescriptionlist){
+			 mPrescription.add(item);
+		 }
 	}
 
 	@Override

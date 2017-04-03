@@ -24,7 +24,7 @@ public class Prescription {
     
 
     public Prescription(int id, String name, int department, Doctor doctor, Patient patient,
-			Map<Drug, Integer> drugmap) {
+			Map<Drug, Integer> drugmap, int status) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -32,9 +32,10 @@ public class Prescription {
 		this.doctor = doctor;
 		this.patient = patient;
 		this.drugmap = drugmap;
+		this.status = status;
 	}
 
-
+    
 
 	public int getId() {
         return id;
