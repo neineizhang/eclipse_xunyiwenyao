@@ -51,7 +51,7 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 
 	private void intialData() {
 		// TODO Auto-generated method stub
-		 List<Prescription> prescriptionlist = PrescriptionWebService.getPrescriptionbyStatus(Utils.STATUS.SAVED.ordinal());
+		prescriptionlist = PrescriptionWebService.getPrescriptionbyStatus(Utils.STATUS.SAVED.ordinal());
 		 for(Prescription item : prescriptionlist){
 			 mPrescription.add(item);
 		 }
@@ -61,9 +61,8 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
 		Intent i = new Intent(this, PrescriptionCreateMainActivity.class);
-		TextView prescription_name_tv=(TextView) view.findViewById(R.id.examine_lvitem_name);
-		String prescription_name = prescription_name_tv.getText().toString();
-	    i.putExtra("prescription_name", prescription_name); 
-	    startActivity(i);
+		String prescription_name = prescriptionlist.get(position).getName();
+		i.putExtra("prescription_name", prescription_name);
+		startActivity(i);
 	}
 	}

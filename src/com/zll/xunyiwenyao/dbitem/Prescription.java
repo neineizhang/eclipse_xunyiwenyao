@@ -17,6 +17,7 @@ public class Prescription {
     private Map<Drug, Integer> drugmap;
     private int status;
     private String date;
+    private String clinical_diagnosis;
     
 
     public Prescription(){
@@ -26,7 +27,7 @@ public class Prescription {
     
 
     public Prescription(int id, String name, int department, Doctor doctor, Patient patient,
-			Map<Drug, Integer> drugmap, int status,String date) {
+			Map<Drug, Integer> drugmap, int status,String date,String clinical_diagnosis) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -36,6 +37,7 @@ public class Prescription {
 		this.drugmap = drugmap;
 		this.status = status;
 		this.date =date;
+		this.clinical_diagnosis=clinical_diagnosis;
 	}
 
     
@@ -98,6 +100,18 @@ public class Prescription {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+
+
+	public String getClinical_diagnosis() {
+		return clinical_diagnosis;
+	}
+
+
+
+	public void setClinical_diagnosis(String clinical_diagnosis) {
+		this.clinical_diagnosis = clinical_diagnosis;
 	}
 
 

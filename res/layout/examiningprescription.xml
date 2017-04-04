@@ -45,12 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="5">
 
             <TextView
                 android:id="@+id/examingtextView2"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:background="#B0B0B0"
                 android:text="病人信息"
@@ -83,7 +83,7 @@
 
                 <TextView
                     android:id="@+id/examing_patient_name_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
@@ -112,7 +112,7 @@
                     android:background="#BFBFBF" />
                 <TextView
                     android:id="@+id/examing_patient_sex_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
 
@@ -143,7 +143,7 @@
 
                 <TextView
                     android:id="@+id/examing_patient_age_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
@@ -173,7 +173,7 @@
 
                 <TextView
                     android:id="@+id/examing_clinical_diagnosis_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
@@ -187,7 +187,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_weight="8" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -230,8 +231,8 @@
                         android:id="@+id/examing_item_scroll_title"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:scrollbars="none" >
+                        
+                        android:scrollbars="vertical" >
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -281,7 +282,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:cacheColorHint="@android:color/transparent"
-                    android:scrollbars="none" >
+                    android:scrollbars="vertical" >
                 </ListView>
             </LinearLayout>
         </LinearLayout>
@@ -290,7 +291,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="5">
 
             <TextView
                 android:id="@+id/examing_textView3"
@@ -325,7 +326,7 @@
                     android:layout_gravity="center_horizontal"
                     android:background="#BFBFBF" />
 
-                <EditText
+                <TextView
                     android:id="@+id/examing_prescription_data_et"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -356,8 +357,8 @@
 
                 <TextView
                     android:id="@+id/examing_doctor_name_et"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
             <View

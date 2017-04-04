@@ -36,7 +36,7 @@ public class PrescriptionWebService {
 		drugmap.put(DrugWebService.getAllDrug().get(3), 1);
 		
 		prescription= new Prescription(1,"coach", Utils.DEPARTMENT.NEIKE.ordinal(), 
-				doctor, patient, drugmap, Utils.STATUS.APPROVED.ordinal(), date);
+				doctor, patient, drugmap, Utils.STATUS.APPROVED.ordinal(), date,"头疼发热无过敏历史");
 		prescriptionlist.add(prescription);
 		
 		doctor = DoctorWebService.getAllDoctor().get(1);
@@ -48,7 +48,7 @@ public class PrescriptionWebService {
 		drugmap1.put(DrugWebService.getAllDrug().get(2), 4);
 		
 		prescription= new Prescription(2,"toothache", Utils.DEPARTMENT.WAIKE.ordinal(), 
-				doctor,patient, drugmap, Utils.STATUS.COMMITED.ordinal(),date);
+				doctor,patient, drugmap, Utils.STATUS.COMMITED.ordinal(),date,"青霉素过敏");
 		prescriptionlist.add(prescription);
 		MAX_ID = 3;
 	}

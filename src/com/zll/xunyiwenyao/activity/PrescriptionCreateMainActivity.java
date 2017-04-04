@@ -47,7 +47,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 	private Button save, savetotemplate, commit;
 	private EditText patient_name_text,chufangmingcheng;
-	private EditText prescription_data_et,doctor_name_et,checker_name_et,other_information_et;
+	private EditText prescription_data_et,doctor_name_et,checker_name_et,other_information_et,clinical_diagnosis_et;
 	private RadioGroup radioGroupsex;
 	private NumberPicker patient_age_text;
 	int minAge = 1, maxAge =100;
@@ -89,6 +89,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 		doctor_name_et = (EditText) findViewById(R.id.doctor_name_et);
 		checker_name_et = (EditText) findViewById(R.id.checker_name_et);
 		other_information_et = (EditText) findViewById(R.id.other_information_et);
+		clinical_diagnosis_et = (EditText) findViewById(R.id.clinical_diagnosis_text);
 		
 
 		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");       
@@ -197,15 +198,68 @@ public class PrescriptionCreateMainActivity extends Activity {
 		///////////// add template data
 		Bundle extras = getIntent().getExtras(); 
 		String template_name = extras.getString("template_name");
-		if(!template_name.trim().equals("")){
-			PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
-			if(prescriptionTemplate == null){
-				/////// zlladd TOAST
+		if(template_name != null){
+			if(!template_name.trim().equals("")){
+				PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
+				if(prescriptionTemplate == null){
+					
+					
+				}else{
+					//chufangmingcheng.setText(template_name);
+					
+					Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
+					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
+					if(datas == null){
+						datas = new ArrayList<Map<String,String>>();
+					}
+					for(Drug drug : drugmap.keySet()){
+						Map<String, String> tempdata = new HashMap<String, String>();
+						tempdata.put("title", String.valueOf(drug.getId()));
+						tempdata.put("data_" + 1, drug.getName());
+						tempdata.put("data_" + 2, drug.getSpecification());
+						tempdata.put("data_" + 3, drugmap.get(drug)+"");
+						tempdata.put("data_" + 4, drug.getPrice());
+						tempdata.put("data_" + 5, drug.getDescription());
+						datas.add(tempdata);
+					}
+					((ScrollAdapter)drugs_lv.getAdapter()).setData(datas);
+					((ScrollAdapter)drugs_lv.getAdapter()).notifyDataSetChanged();
+				}
+				
+			}
+		}
+		///////////// end add template data
+		
+		
+		String prescription_name = extras.getString("prescription_name");
+		if(prescription_name != null){
+			Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
+			if(prescription == null){
+				Toast.makeText(mContext, "处方名称无效", Toast.LENGTH_SHORT).show();
 				
 			}else{
 				//chufangmingcheng.setText(template_name);
+				String patient_name = prescription.getPatient().getName().toString();  
+	            int patient_age = prescription.getPatient().getAge();
+	            int patient_sex =prescription.getPatient().getSex();
+//	            String doctor_name=prescription.getDoctor().getName().toString();
+//	            String  prescription_date = prescription.getDate().toString();
+	            String clinical_diagnosis = prescription.getClinical_diagnosis().toString();
+	            
+				chufangmingcheng.setText(prescription_name);
+				patient_name_text.setText(patient_name);
+				patient_age_text.setValue(patient_age);
 				
-				Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
+				if( patient_sex==0){
+					radioman.setChecked(true);
+				}
+				else 
+					radiowoman.setChecked(true);
+//					
+//				doctor_name_et.setText(doctor_name);
+//				prescription_data_et.setText(prescription_date);
+				clinical_diagnosis_et.setText(clinical_diagnosis);
+				Map<Drug, Integer> drugmap = prescription.getDrugmap();
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
 				if(datas == null){
 					datas = new ArrayList<Map<String,String>>();
@@ -222,10 +276,13 @@ public class PrescriptionCreateMainActivity extends Activity {
 				}
 				((ScrollAdapter)drugs_lv.getAdapter()).setData(datas);
 				((ScrollAdapter)drugs_lv.getAdapter()).notifyDataSetChanged();
+				
+				///////
+				
 			}
 			
 		}
-		///////////// end add template data
+		
 		
 		
 		save.setOnClickListener(new OnClickListener() {
@@ -236,6 +293,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
 				String prescription_date = prescription_data_et.getText().toString();
+				String clinical_diagnosis = clinical_diagnosis_et.getText().toString();
 						
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
@@ -262,6 +320,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setDrugmap(drugmap);
 				prescription.setStatus(Utils.STATUS.SAVED.ordinal());
 				prescription.setDate(prescription_date);
+				prescription.setClinical_diagnosis(clinical_diagnosis);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				
@@ -314,7 +373,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
 				String prescription_date = prescription_data_et.getText().toString();
-		
+				String clinical_diagnosis = clinical_diagnosis_et.getText().toString();
 				
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
@@ -341,6 +400,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setDrugmap(drugmap);
 				prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
 				prescription.setDate(prescription_date);
+				prescription.setClinical_diagnosis(clinical_diagnosis);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				

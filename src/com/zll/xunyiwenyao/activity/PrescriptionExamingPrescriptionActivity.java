@@ -10,6 +10,7 @@ import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.util.MyListView;
 import com.zll.xunyiwenyao.view.PrescriptionExamingPrescriptionScrollView;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -47,7 +49,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 		examing_patient_sex_text = (TextView) findViewById(R.id.examing_patient_sex_text); 
 		examing_patient_age_text = (TextView) findViewById(R.id.examing_patient_age_text); 
 		examing_clinical_diagnosis_text= (TextView) findViewById(R.id.examing_clinical_diagnosis_text); 
-	    examing_prescription_data_et = (TextView) findViewById(R.id.examing_clinical_diagnosis_text);
+	    examing_prescription_data_et = (TextView) findViewById(R.id.examing_prescription_data_et);
 	    examing_doctor_name_et= (TextView) findViewById(R.id.examing_doctor_name_et);
 	    examing_checker_name_et= (TextView) findViewById(R.id.examing_checker_name_et);
 	    examing_other_information_et= (TextView) findViewById(R.id.examing_other_information_et);
@@ -73,16 +75,20 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 					Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "该处方单表为空", Toast.LENGTH_SHORT).show();
 					
 				}else{
-//		            String patient_name = prescription.getPatient().getName().toString();  
-//		            int patient_age = prescription.getPatient().getAge();
-//		            String patient_sex =prescription.getPatient().getSex()==0?"男":"女";
-//		            String doctor_name=prescription.getDoctor().getName().toString();
-//		            
-//					examing_prescription_name.setText(prescription_name);
-//					examing_patient_name_text.setText(patient_name);
-//					examing_patient_age_text.setText(patient_age);
-//					examing_patient_sex_text.setText(patient_sex);
-//					examing_doctor_name_et.setText(doctor_name);
+		            String patient_name = prescription.getPatient().getName().toString();  
+		            int patient_age = prescription.getPatient().getAge();
+		            String patient_sex =prescription.getPatient().getSex()==0?"男":"女";
+		            String doctor_name=prescription.getDoctor().getName().toString();
+		            String  prescription_date = prescription.getDate().toString();
+		            String clinical_diagnosis = prescription.getClinical_diagnosis().toString();
+		            
+					examing_prescription_name.setText(prescription_name);
+					examing_patient_name_text.setText(patient_name);
+					examing_patient_age_text.setText(patient_age+"");
+					examing_patient_sex_text.setText(patient_sex);
+					examing_doctor_name_et.setText(doctor_name);
+					examing_prescription_data_et.setText(prescription_date);
+					examing_clinical_diagnosis_text.setText(clinical_diagnosis);
 					
 					Map<Drug, Integer> drugmap = prescription.getDrugmap();
 					
@@ -132,6 +138,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 				new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5" }, new int[] { R.id.examing_item_title,
 						R.id.examing_item_data1, R.id.examing_item_data2, R.id.examing_item_data3, R.id.examing_item_data4, R.id.examing_item_data5 });
 		examing_drugs_lv.setAdapter(adapter);
+//		setListViewHeightBasedOnChildren(examing_drugs_lv);
 
 	}
 
@@ -187,6 +194,11 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 		}
 		
 		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return super.getCount();
+		}
+		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
 			if (v == null) {
@@ -215,5 +227,29 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 			Toast.makeText(PrescriptionExamingPrescriptionActivity.this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
 		}
 	};
+	
+	   public void setListViewHeightBasedOnChildren(ListView listView) {   
+	        // 获取ListView对应的Adapter   
+		    ListAdapter listAdapter = listView.getAdapter();   
+	        if (listAdapter == null) {   
+	            return;   
+	        }   
+	   
+	        int totalHeight = 0;   
+	        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {   
+	            // listAdapter.getCount()返回数据项的数目   
+	            View listItem = listAdapter.getView(i, null, listView);   
+	            // 计算子项View 的宽高   
+	            listItem.measure(0, 0);    
+	            // 统计所有子项的总高度   
+	            totalHeight += listItem.getMeasuredHeight();    
+	        }   
+	   
+	        ViewGroup.LayoutParams params = listView.getLayoutParams();   
+	        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));   
+	        // listView.getDividerHeight()获取子项间分隔符占用的高度   
+	        // params.height最后得到整个ListView完整显示需要的高度   
+	        listView.setLayoutParams(params);   
+	    } 
 
 }
