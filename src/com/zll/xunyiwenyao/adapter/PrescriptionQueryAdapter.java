@@ -55,7 +55,7 @@ public class PrescriptionQueryAdapter extends BaseAdapter {
 	
 		prescription_lvitem_id.setText(mPrescription.get(position).getId()+"");
 		prescription_lvitem_name.setText(mPrescription.get(position).getName());
-		prescription_lvitem_date.setText(mPrescription.get(position).getName());
+		prescription_lvitem_date.setText(mPrescription.get(position).getDate()+"");
         return convertView;
 	
 	}

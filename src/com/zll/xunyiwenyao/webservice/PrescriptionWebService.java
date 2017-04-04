@@ -1,6 +1,7 @@
 package com.zll.xunyiwenyao.webservice;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.zll.xunyiwenyao.dbitem.Utils;
 public class PrescriptionWebService {
 	
 	private static List<Prescription> prescriptionlist;
+	private static int MAX_ID = 1;
 
 	static {
 		prescriptionlist = new ArrayList<Prescription>();
@@ -21,7 +23,7 @@ public class PrescriptionWebService {
 		Doctor doctor = null;
 		Patient patient = null;
 		Prescription  prescription = null;
-		
+		String date = "2017-04-04 10:40:40";
 		//doctor = new Doctor(1, "doctor A", Utils.DOCTOR_TYPE.DOCTOR.ordinal(), "Hospital 1");
 		doctor = DoctorWebService.getAllDoctor().get(0);
 		patient = PatientWebService.getAllPatient().get(1);
@@ -34,7 +36,7 @@ public class PrescriptionWebService {
 		drugmap.put(DrugWebService.getAllDrug().get(3), 1);
 		
 		prescription= new Prescription(1,"coach", Utils.DEPARTMENT.NEIKE.ordinal(), 
-				doctor, patient, drugmap, Utils.STATUS.APPROVED.ordinal());
+				doctor, patient, drugmap, Utils.STATUS.APPROVED.ordinal(), date);
 		prescriptionlist.add(prescription);
 		
 		doctor = DoctorWebService.getAllDoctor().get(1);
@@ -46,13 +48,17 @@ public class PrescriptionWebService {
 		drugmap1.put(DrugWebService.getAllDrug().get(2), 4);
 		
 		prescription= new Prescription(2,"toothache", Utils.DEPARTMENT.WAIKE.ordinal(), 
-				doctor,patient, drugmap, Utils.STATUS.COMMITED.ordinal());
+				doctor,patient, drugmap, Utils.STATUS.COMMITED.ordinal(),date);
 		prescriptionlist.add(prescription);
+		MAX_ID = 3;
 	}
 
 	public static void AddPrescription(Prescription item){
 		Prescription prescription_inDB = getPrescriptionByName(item.getName());
+
 		if(prescription_inDB == null){
+			item.setId(MAX_ID);
+	    	MAX_ID++;
 			prescriptionlist.add(item);
 		}else{
 			prescriptionlist.set(prescriptionlist.indexOf(prescription_inDB), item);

@@ -11,11 +11,13 @@ import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -29,7 +31,7 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 	private ArrayList<Prescription>  mPrescription = null;
 	private Context mContext;
 	private PrescriptionQueryAdapter mPrescriptionQueryAdapter = null;
-	
+	private List<Prescription> prescriptionlist = null;
 	
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -58,6 +60,10 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
-		Toast.makeText(mContext,"�����˵�" + position + "��",Toast.LENGTH_SHORT).show();
+		Intent i = new Intent(this, PrescriptionCreateMainActivity.class);
+		TextView prescription_name_tv=(TextView) view.findViewById(R.id.examine_lvitem_name);
+		String prescription_name = prescription_name_tv.getText().toString();
+	    i.putExtra("prescription_name", prescription_name); 
+	    startActivity(i);
 	}
 	}

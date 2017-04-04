@@ -1,5 +1,6 @@
 package com.zll.xunyiwenyao.dbitem;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class Prescription {
     private Patient patient;
     private Map<Drug, Integer> drugmap;
     private int status;
+    private String date;
     
 
     public Prescription(){
@@ -24,7 +26,7 @@ public class Prescription {
     
 
     public Prescription(int id, String name, int department, Doctor doctor, Patient patient,
-			Map<Drug, Integer> drugmap, int status) {
+			Map<Drug, Integer> drugmap, int status,String date) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,6 +35,7 @@ public class Prescription {
 		this.patient = patient;
 		this.drugmap = drugmap;
 		this.status = status;
+		this.date =date;
 	}
 
     
@@ -96,6 +99,24 @@ public class Prescription {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+
+
+	public String getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
+
+
+	
+	
     
     
 }

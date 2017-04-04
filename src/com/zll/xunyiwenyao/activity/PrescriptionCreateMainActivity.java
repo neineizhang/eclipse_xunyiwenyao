@@ -235,6 +235,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
+				String prescription_date = prescription_data_et.getText().toString();
 						
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
@@ -260,6 +261,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setName(prescription_name);
 				prescription.setDrugmap(drugmap);
 				prescription.setStatus(Utils.STATUS.SAVED.ordinal());
+				prescription.setDate(prescription_date);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				
@@ -311,7 +313,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 				String prescription_name = chufangmingcheng.getText().toString();
 				String patient_name = patient_name_text.getText().toString();
-			
+				String prescription_date = prescription_data_et.getText().toString();
 		
 				
 				Patient patient = new Patient();
@@ -338,6 +340,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setName(prescription_name);
 				prescription.setDrugmap(drugmap);
 				prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
+				prescription.setDate(prescription_date);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				

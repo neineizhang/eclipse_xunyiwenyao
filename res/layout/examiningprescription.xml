@@ -327,10 +327,14 @@
 
                 <EditText
                     android:id="@+id/examing_prescription_data_et"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#BFBFBF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -353,9 +357,13 @@
                 <TextView
                     android:id="@+id/examing_doctor_name_et"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="3" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#BFBFBF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -377,10 +385,14 @@
 
                 <TextView
                     android:id="@+id/examing_checker_name_et"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#BFBFBF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -402,10 +414,14 @@
 
                 <TextView
                     android:id="@+id/examing_other_information_et"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#BFBFBF" />
         </LinearLayout>
 
         <LinearLayout
