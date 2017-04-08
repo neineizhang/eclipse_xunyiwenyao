@@ -3,10 +3,12 @@
     package="com.zll.xunyiwenyao"
     android:versionCode="1"
     android:versionName="1.0" >
-
+    
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="22" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,6 @@
             android:name="com.zll.xunyiwenyao.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,9 +35,9 @@
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionQueryToApproveActivity"></activity>
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionQueryToSubmitActivity"></activity>
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineRefusedActivity"></activity>
-	<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineAllActivity"></activity>
-	<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineApprovedActivity"></activity>
-	<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamingPrescriptionActivity"></activity>
+		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineAllActivity"></activity>
+		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineApprovedActivity"></activity>
+		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamingPrescriptionActivity"></activity>
 
         <activity android:name=".activity.InspectionCreateActivity"></activity>
         <activity android:name=".activity.InspectionQueryActivity"></activity>
@@ -46,8 +47,7 @@
         <activity android:name=".activity.InspectionCheckActivity"></activity>
         <activity android:name=".activity.DoctorInformationManageActivity"></activity>
         <activity android:name=".activity.AccessorMainActivity"></activity>
-       
-        
+          
     </application>
 
 </manifest>
