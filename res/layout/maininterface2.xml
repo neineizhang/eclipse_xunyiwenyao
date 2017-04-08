@@ -36,13 +36,12 @@
         android:layout_weight="1"
         android:orientation="horizontal" >
 
-
-        <Button
+        <!-- <Button
             android:id="@+id/prescription_query"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="处方查询" />
+            android:text="处方查询" /> -->
 
         <Button
             android:id="@+id/prescription_examine"

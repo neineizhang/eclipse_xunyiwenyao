@@ -38,6 +38,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	private TextView  examing_prescription_data_et,examing_doctor_name_et,examing_checker_name_et,examing_other_information_et;
 	private ListView examing_drugs_lv;
 	public HorizontalScrollView mTouchView;
+	private Prescription prescription = null;
 	protected List<PrescriptionExamingPrescriptionScrollView> mHScrollViews = new ArrayList<PrescriptionExamingPrescriptionScrollView>();
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -61,6 +62,29 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	    	refused_btn.setVisibility(View.INVISIBLE);
 	    }
 	    
+	    approved_btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				prescription.setStatus(Utils.STATUS.APPROVED.ordinal());
+				PrescriptionWebService.updatePrescription(prescription);
+				Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "APPROVED SUCCESS", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		});
+	    
+	    refused_btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				prescription.setStatus(Utils.STATUS.REFUSED.ordinal());
+				PrescriptionWebService.updatePrescription(prescription);
+				Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "REFUSED SUCCESS", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		});
 	    initViews();
 	    initdata();
 		
@@ -70,7 +94,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 			String prescription_name = extras.getString("prescription_name");
 			Toast.makeText(PrescriptionExamingPrescriptionActivity.this, prescription_name, Toast.LENGTH_SHORT).show();
 			if(!prescription_name.trim().equals("")){
-				Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
+				prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
 				if(prescription == null){
 					Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "该处方单表为空", Toast.LENGTH_SHORT).show();
 					

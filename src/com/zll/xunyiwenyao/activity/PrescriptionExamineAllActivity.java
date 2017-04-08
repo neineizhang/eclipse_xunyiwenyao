@@ -1,9 +1,11 @@
 package com.zll.xunyiwenyao.activity;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.adapter.PrescriptionExamineAdapter;
 import com.zll.xunyiwenyao.dbitem.Prescription;
+import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import android.app.Activity;
@@ -23,6 +25,7 @@ public class PrescriptionExamineAllActivity extends Activity implements OnItemCl
 	 private ArrayList<Prescription> examineprescriptionList = null;
 	    private ListView examine_lv;
 	    private PrescriptionExamineAdapter mPrescriptionExamineAdapter;
+		private List<Prescription> prescriptionlist = null;
 
 	    private Context mContext;
 
@@ -43,16 +46,24 @@ public class PrescriptionExamineAllActivity extends Activity implements OnItemCl
 	    }
 
 	    private  void  intialdata(){
-	        Prescription onedata = PrescriptionWebService.getAllPrescription().get(1);
-	        examineprescriptionList.add(onedata);
-	        examineprescriptionList.add(onedata);
+
+	    	examineprescriptionList = new ArrayList<Prescription>();
+	    	prescriptionlist = PrescriptionWebService.getPrescriptionbyStatus(Utils.STATUS.COMMITED.ordinal());
+	    	for (Prescription item : prescriptionlist) {
+	    		examineprescriptionList.add(item);
+			}
+//	        Prescription onedata = PrescriptionWebService.getAllPrescription().get(1);
+//	        examineprescriptionList.add(onedata);
+//	        examineprescriptionList.add(onedata);
 	    }
 
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	        Intent i =new Intent(this,PrescriptionExamingPrescriptionActivity.class);
-	        TextView prescription_lvitem_name=(TextView) view.findViewById(R.id.prescription_lvitem_name);
-	        String prescription_name = prescription_lvitem_name.getText().toString();
+	        //TextView prescription_lvitem_name=(TextView) view.findViewById(R.id.prescription_lvitem_name);
+	        //String prescription_name = prescription_lvitem_name.getText().toString();
+			String prescription_name = prescriptionlist.get(position).getName();
 	        i.putExtra("prescription_name", prescription_name); 
+	        i.putExtra("type", "all"); 
 			startActivity(i);
 	        
 	    }

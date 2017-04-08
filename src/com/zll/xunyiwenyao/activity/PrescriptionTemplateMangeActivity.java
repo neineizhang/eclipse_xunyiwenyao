@@ -33,7 +33,7 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 	
 	private ListView template_drugs_lv;
 	private Button template_manage_save,template_manage_delete;
-	private EditText template_manage_name_et;
+	private TextView template_manage_name_et;
 	public HorizontalScrollView templateTouchView;
 	protected List<PrescriptionTemplateScrollView> templateHScrollViews =new ArrayList<PrescriptionTemplateScrollView>();
 	PrescriptionTemplate prescriptionTemplate = null;
@@ -43,7 +43,7 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.templatemanage);
-		template_manage_name_et = (EditText) findViewById(R.id.template_manage_name_et);
+		template_manage_name_et = (TextView) findViewById(R.id.template_manage_name_et);
 		template_manage_save = (Button) findViewById(R.id.template_manage_save);
 		template_manage_delete = (Button) findViewById(R.id.template_manage_delete);
 		

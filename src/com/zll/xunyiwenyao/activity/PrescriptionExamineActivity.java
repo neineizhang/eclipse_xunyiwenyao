@@ -41,7 +41,7 @@ public class PrescriptionExamineActivity extends TabActivity  {
 		//����TabHost.TabSpec,������������һҳ
 		Intent remoteIntent1 = new Intent();
 		remoteIntent1.setClass(this,PrescriptionExamineAllActivity.class);
-		TabHost.TabSpec tab1 = examine_tabhost.newTabSpec("text1").setIndicator("ALL").setContent(remoteIntent1);
+		TabHost.TabSpec tab1 = examine_tabhost.newTabSpec("text1").setIndicator("COMMITED").setContent(remoteIntent1);
 		Intent remoteIntent2 = new Intent();
 		remoteIntent2.setClass(this,PrescriptionExamineApprovedActivity.class);
 	    TabHost.TabSpec tab2 = examine_tabhost.newTabSpec("text2").setIndicator("Approved").setContent(remoteIntent2);

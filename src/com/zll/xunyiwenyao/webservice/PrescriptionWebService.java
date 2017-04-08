@@ -10,6 +10,7 @@ import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Patient;
 import com.zll.xunyiwenyao.dbitem.Prescription;
+import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.dbitem.Utils;
 
 public class PrescriptionWebService {
@@ -63,6 +64,12 @@ public class PrescriptionWebService {
 		}else{
 			prescriptionlist.set(prescriptionlist.indexOf(prescription_inDB), item);
 		}
+	}
+	
+	public static void updatePrescription(Prescription item){
+		Prescription presciption = getPrescriptionByName(item.getName());
+    	int index = prescriptionlist.indexOf(presciption);
+    	prescriptionlist.set(index, item);
 	}
 
 	public static List<Prescription> getAllPrescription()

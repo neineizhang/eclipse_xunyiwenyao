@@ -19,23 +19,23 @@ public class AccessorMainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maininterface2);
 
-        prescription_query = (Button)findViewById(R.id.prescription_query);
+        //prescription_query = (Button)findViewById(R.id.prescription_query);
         prescription_examine = (Button) findViewById(R.id.prescription_examine);
         inspection_query = (Button)findViewById(R.id.inspection_query);
         review_query = (Button)findViewById(R.id.review_query);
         report_query = (Button)findViewById(R.id.report_query);
         information_manage = (Button)findViewById(R.id.information_manage);
 
-        prescription_query.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent i=new Intent(AccessorMainActivity.this,PrescriptionQueryActivity.class);
-                startActivity(i);
-
-            }
-        });
+//        prescription_query.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                Intent i=new Intent(AccessorMainActivity.this,PrescriptionQueryActivity.class);
+//                startActivity(i);
+//
+//            }
+//        });
 
         prescription_examine.setOnClickListener(new View.OnClickListener() {
 

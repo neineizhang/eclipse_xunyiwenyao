@@ -56,6 +56,7 @@ public class PrescriptionQueryApprovedActivity extends Activity implements OnIte
 
 	private void intialData() {
 		// TODO Auto-generated method stub
+		mPrescription = new ArrayList<Prescription>();
 		prescriptionlist = PrescriptionWebService
 				.getPrescriptionbyStatus(Utils.STATUS.APPROVED.ordinal());
 		for (Prescription item : prescriptionlist) {

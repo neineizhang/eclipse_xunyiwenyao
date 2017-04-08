@@ -1,14 +1,17 @@
 package com.zll.xunyiwenyao.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.adapter.PrescriptionExamineAdapter;
 import com.zll.xunyiwenyao.dbitem.Prescription;
+import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +25,7 @@ public class PrescriptionExamineApprovedActivity extends Activity implements OnI
 	 private ArrayList<Prescription> examineprescriptionList = null;
 	    private ListView examine_lv;
 	    private PrescriptionExamineAdapter mPrescriptionExamineAdapter;
+		private List<Prescription> prescriptionlist = null;
 
 	    private Context mContext;
 
@@ -42,12 +46,18 @@ public class PrescriptionExamineApprovedActivity extends Activity implements OnI
 	    }
 
 	    private  void  intialdata(){
-	        Prescription onedata = PrescriptionWebService.getAllPrescription().get(1);
-	        examineprescriptionList.add(onedata);
-	        examineprescriptionList.add(onedata);
+	        examineprescriptionList =new ArrayList<Prescription>();
+	    	prescriptionlist = PrescriptionWebService.getPrescriptionbyStatus(Utils.STATUS.APPROVED.ordinal());
+	    	for (Prescription item : prescriptionlist) {
+	    		examineprescriptionList.add(item);
+			}
 	    }
 
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	        Toast.makeText(mContext,"你点击了?" + position + "�?",Toast.LENGTH_SHORT).show();
+	        Intent i =new Intent(this,PrescriptionExamingPrescriptionActivity.class);
+			String prescription_name = prescriptionlist.get(position).getName();
+	        i.putExtra("prescription_name", prescription_name); 
+	        i.putExtra("type", "approved"); 
+			startActivity(i);
 	    }
 	}
