@@ -23,7 +23,15 @@ public class Utils {
     public static enum STATUS{
         COMMITED,SAVED,APPROVED,REFUSED
     };
-    
+
+    public static enum INSPECTION_STATUS{
+        UNCOMMITED, COMMITED
+    };
+
     public static Doctor LOGIN_DOCTOR;
+
+    public static enum REPORT_LEVEL{
+        NEW, SEVERE, GENERAL
+    };
 
 }

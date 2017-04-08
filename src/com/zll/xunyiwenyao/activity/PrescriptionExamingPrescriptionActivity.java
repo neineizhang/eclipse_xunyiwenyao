@@ -78,7 +78,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 		            String patient_name = prescription.getPatient().getName().toString();  
 		            int patient_age = prescription.getPatient().getAge();
 		            String patient_sex =prescription.getPatient().getSex()==0?"男":"女";
-		            String doctor_name=prescription.getDoctor().getName().toString();
+		            String doctor_name=prescription.getDoctor().getRealName().toString();
 		            String  prescription_date = prescription.getDate().toString();
 		            String clinical_diagnosis = prescription.getClinical_diagnosis().toString();
 		            

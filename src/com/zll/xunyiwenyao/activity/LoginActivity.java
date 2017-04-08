@@ -10,6 +10,7 @@ import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,6 +21,15 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.zll.xunyiwenyao.R;
+import com.zll.xunyiwenyao.dbitem.Doctor;
+import com.zll.xunyiwenyao.dbitem.Review;
+import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.webservice.DoctorWebService;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 //import com.zll.xunyiwenyao.db.MyDBHelper;
 
 public class LoginActivity extends Activity {
@@ -27,7 +37,8 @@ public class LoginActivity extends Activity {
 	private RadioGroup select_doctor;
 	private Button login_entrylog;
 	private EditText login_name, login_pwd;
-	//private Button btn_register;
+	private Button btn_register;
+
 	//private MyDBHelper myDBHelper;
 	//private SQLiteDatabase db;
 
@@ -45,15 +56,17 @@ public class LoginActivity extends Activity {
 		login_entrylog = (Button) findViewById(R.id.login_entrylog);
 		login_name = (EditText) findViewById(R.id.login_name);
 		login_pwd = (EditText) findViewById(R.id.login_pwd);
-		//注册
-//		btn_register.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				showMyDialog();
-//			}
-//		});
+		btn_register = (Button)findViewById(R.id.register_button);
+		//娉ㄥ唽
+		btn_register.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i1=new Intent(LoginActivity.this,RegisterActivity.class);
+				startActivity(i1);
+			}
+		});
 
 		login_entrylog.setOnClickListener(new OnClickListener() {
 
@@ -91,7 +104,7 @@ public class LoginActivity extends Activity {
 						
 						if (islogin != null) {
 							Utils.LOGIN_DOCTOR = islogin;
-							Intent i=new Intent(LoginActivity.this,MainActivity.class);
+						Intent i=new Intent(LoginActivity.this,AccessorMainActivity.class);
 							startActivity(i);
 							finish();
 						} else {
@@ -114,7 +127,7 @@ public class LoginActivity extends Activity {
 	}//onCreate
 	
 	//注册
-	public void showMyDialog() {
+//	public void showMyDialog() {
 //		Builder builder = new Builder(login.this);
 //		LayoutInflater inflater = LayoutInflater.from(login.this);
 //		View view = inflater.inflate(R.layout.register_layout, null);
@@ -172,7 +185,7 @@ public class LoginActivity extends Activity {
 //			}
 //		});
 
-	}
+	//}
 	// MD5加密
 	public static String MD5(String string) {
 		return encodeMD5String(string);

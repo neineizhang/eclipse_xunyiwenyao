@@ -24,7 +24,7 @@ public class DrugWebService {
         druglist.add(drug);
         drug = new Drug(4, "Drug D", "12g X 13", "32.00", "one day one time");
         druglist.add(drug);
-        drug = new Drug(5, "Drug E", "12g X 120", "22.00", "一one day one time");
+        drug = new Drug(5, "Drug E", "12g X 120", "22.00", "one day one time");
         druglist.add(drug);
     }
 

@@ -34,15 +34,18 @@
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionQueryToApproveActivity"></activity>
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionQueryToSubmitActivity"></activity>
         <activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineRefusedActivity"></activity>
-		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineAllActivity"></activity>
-		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineApprovedActivity"></activity>
-		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamingPrescriptionActivity"></activity>
+	<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineAllActivity"></activity>
+	<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineApprovedActivity"></activity>
+	<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamingPrescriptionActivity"></activity>
 
-        <activity android:name="Inspection_create"></activity>
-        <activity android:name="Inspection_template"></activity>
-        <activity android:name="Inspection_query"></activity>
-        <activity android:name="Review"></activity>
-        <activity android:name="Report"></activity>
+        <activity android:name=".activity.InspectionCreateActivity"></activity>
+        <activity android:name=".activity.InspectionQueryActivity"></activity>
+        <activity android:name=".activity.ReviewCreateActivity"></activity>
+        <activity android:name=".activity.ReportCreateActivity"></activity>
+        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.InspectionCheckActivity"></activity>
+        <activity android:name=".activity.DoctorInformationManageActivity"></activity>
+        <activity android:name=".activity.AccessorMainActivity"></activity>
        
         
     </application>

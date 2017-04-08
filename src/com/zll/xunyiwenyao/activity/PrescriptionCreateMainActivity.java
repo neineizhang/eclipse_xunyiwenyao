@@ -96,7 +96,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 		String date = sDateFormat.format(new java.util.Date());    
 		prescription_data_et.setText(date);
 		prescription_data_et.setEnabled(false);
-		doctor_name_et.setText(Utils.LOGIN_DOCTOR.getName());
+		doctor_name_et.setText(Utils.LOGIN_DOCTOR.getRealName());
 		doctor_name_et.setEnabled(false);
 		checker_name_et.setText("");
 		checker_name_et.setEnabled(false);
