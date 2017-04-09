@@ -59,5 +59,6 @@ public class PrescriptionExamineApprovedActivity extends Activity implements OnI
 	        i.putExtra("prescription_name", prescription_name); 
 	        i.putExtra("type", "approved"); 
 			startActivity(i);
+	        finish();
 	    }
 	}

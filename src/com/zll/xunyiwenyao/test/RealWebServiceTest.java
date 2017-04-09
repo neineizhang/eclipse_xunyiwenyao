@@ -1,11 +1,15 @@
 package com.zll.xunyiwenyao.test;
 
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.zll.xunyiwenyao.util.HttpHelper;
+import com.zll.xunyiwenyao.util.JsonHelper;
+import com.zll.xunyiwenyao.webitem.ResponseItem;
 
 /**
  * 
@@ -24,6 +28,14 @@ public class RealWebServiceTest {
 		
 		//发送 GET 请求
         String s = HttpHelper.sendGet(url, "");
+        
+        Map m = JsonHelper.toMap(s);
+        ResponseItem responditem = new  ResponseItem();
+        responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
+        System.out.println(JsonHelper.toJSON(responditem));
+        System.out.println("___________");
+        
+        
         JSONObject jo = new JSONObject(s);
         JSONArray ja = jo.getJSONArray("data");
         System.out.println(ja.length());

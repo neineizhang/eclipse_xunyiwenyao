@@ -65,6 +65,6 @@ public class PrescriptionExamineAllActivity extends Activity implements OnItemCl
 	        i.putExtra("prescription_name", prescription_name); 
 	        i.putExtra("type", "all"); 
 			startActivity(i);
-	        
+	        finish();
 	    }
 	}

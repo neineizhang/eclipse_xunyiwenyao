@@ -61,6 +61,12 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	    	approved_btn.setVisibility(View.INVISIBLE);
 	    	refused_btn.setVisibility(View.INVISIBLE);
 	    }
+
+		String type = getIntent().getExtras().getString("type");
+		if(type != null && (type.equals("approved") || type.equals("refused"))){
+	    	approved_btn.setVisibility(View.INVISIBLE);
+	    	refused_btn.setVisibility(View.INVISIBLE);
+		}
 	    
 	    approved_btn.setOnClickListener(new View.OnClickListener() {
 			
@@ -139,24 +145,10 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	}
 	private void initViews() {
 		List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
-		Map<String, String> data = null;
 		PrescriptionExamingPrescriptionScrollView headerScroll = (PrescriptionExamingPrescriptionScrollView) findViewById(R.id.examing_item_scroll_title);
 
 		mHScrollViews.add(headerScroll);
-
 		examing_drugs_lv = (ListView) findViewById(R.id.examing_drugs_lv);
-
-		for (int i = 0; i < 1; i++) {
-			data = new HashMap<String, String>();
-			data.put("title", "Title_" + i);
-			data.put("data_" + 1, "Date_" + 1 + "_" + i);
-			data.put("data_" + 2, "Date_" + 2 + "_" + i);
-			data.put("data_" + 3, "Date_" + 3 + "_" + i);
-			data.put("data_" + 4, "Date_" + 4 + "_" + i);
-			data.put("data_" + 5, "Date_" + 5 + "_" + i);
-
-			datas.add(data);
-		}
       
 		ExamingScrollAdapter adapter = new ExamingScrollAdapter(this, datas, R.layout.examing_scroll_view,
 				new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5" }, new int[] { R.id.examing_item_title,

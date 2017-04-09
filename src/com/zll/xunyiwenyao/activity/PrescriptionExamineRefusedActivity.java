@@ -66,6 +66,7 @@ public class PrescriptionExamineRefusedActivity extends Activity implements Adap
         i.putExtra("prescription_name", prescription_name); 
         i.putExtra("type", "refused"); 
 		startActivity(i);
+        finish();
     }
 }
 

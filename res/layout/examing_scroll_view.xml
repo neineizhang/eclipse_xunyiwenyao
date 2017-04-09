@@ -37,7 +37,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center" />
 
-           <EditText 
+           <TextView 
                android:id="@+id/examing_item_data3"
                android:layout_width="100dip"
                android:layout_height="fill_parent"
@@ -51,11 +51,10 @@
                 android:textColor="#111"
                 android:gravity="center" />
 
-            <EditText
+            <TextView
                 android:id="@+id/examing_item_data5"
                 android:layout_width="100dip"
                 android:layout_height="fill_parent"
-                
                 android:gravity="center" />
 
             
