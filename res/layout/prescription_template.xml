@@ -63,13 +63,7 @@
         android:layout_below="@+id/prescription_template_search_layout" >
        </ExpandableListView>
 
-    <Button
-        android:id="@+id/prescription_create_return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="返回"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+  
 
 
     

@@ -103,11 +103,14 @@ public class PrescriptionWebService {
 		return null;
 	}
 	
-//	public static Prescription getPrescriptionbyid(int id)
-//	{
-//		for Prescription item :prescriptionlist:
-//		return prescription;
-//	}
+	public static List<String> getAllPrescriptionName(){
+    	List<String> namelist = new ArrayList<String>();
+    	for(Prescription item : prescriptionlist){
+    		namelist.add(item.getName());
+    	}
+    	return namelist;
+    }
+    
 	
 	
 }

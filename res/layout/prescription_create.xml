@@ -11,16 +11,17 @@
         android:background="@drawable/background_login"
         android:id="@+id/prescription_create_main_title">
 
-        <TextView
+       <TextView  
             android:id="@+id/prescription_create_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_login_div"
             android:gravity="center_horizontal"
-            
-            android:paddingTop="5dp"
+            android:paddingTop="6dp"
             android:text="处方生成"
-            android:textSize="16dp" />
+            android:textSize="16dp" 
+
+            />
 
     </LinearLayout>
 
@@ -38,7 +39,8 @@
             android:layout_weight="3"
             android:completionHint="请输入搜索内容"
             android:completionThreshold="1"
-            android:dropDownHorizontalOffset="5dp" />
+            android:dropDownHorizontalOffset="5dp"
+            android:hint="默认为新建模板" />
 
         <Button
             android:id="@+id/prescription_create_search_button"
@@ -61,12 +63,6 @@
         android:childDivider="#E02D2F" >
     </ExpandableListView>
 
-    <Button
-        android:id="@+id/prescription_create_return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="返回"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+    
 
 </RelativeLayout>

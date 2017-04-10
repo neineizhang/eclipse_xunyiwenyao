@@ -1,5 +1,6 @@
 package com.zll.xunyiwenyao.activity;
 
+import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,8 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				prescription.setStatus(Utils.STATUS.APPROVED.ordinal());
+				prescription.setChecker(Utils.LOGIN_DOCTOR);
+				//prescription.setChecker(checker);
 				PrescriptionWebService.updatePrescription(prescription);
 				Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "APPROVED SUCCESS", Toast.LENGTH_SHORT).show();
 				finish();
@@ -86,6 +89,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				prescription.setStatus(Utils.STATUS.REFUSED.ordinal());
+				prescription.setChecker(Utils.LOGIN_DOCTOR);
 				PrescriptionWebService.updatePrescription(prescription);
 				Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "REFUSED SUCCESS", Toast.LENGTH_SHORT).show();
 				finish();
@@ -98,7 +102,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 	private void initdata(){
 		  Bundle extras = getIntent().getExtras(); 
 			String prescription_name = extras.getString("prescription_name");
-			Toast.makeText(PrescriptionExamingPrescriptionActivity.this, prescription_name, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(PrescriptionExamingPrescriptionActivity.this, prescription_name, Toast.LENGTH_SHORT).show();
 			if(!prescription_name.trim().equals("")){
 				prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
 				if(prescription == null){
@@ -119,6 +123,15 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 					examing_doctor_name_et.setText(doctor_name);
 					examing_prescription_data_et.setText(prescription_date);
 					examing_clinical_diagnosis_text.setText(clinical_diagnosis);
+					
+					if(Utils.LOGIN_DOCTOR.getType()==0 && prescription.getChecker()==null){
+						examing_checker_name_et.setText(Utils.LOGIN_DOCTOR.getRealName().toString());
+					}
+					else if(prescription.getChecker()!=null){
+						examing_checker_name_et.setText(prescription.getChecker().getRealName().toString());
+					}
+					else 
+					{examing_checker_name_et.setText(" ");}
 					
 					Map<Drug, Integer> drugmap = prescription.getDrugmap();
 					

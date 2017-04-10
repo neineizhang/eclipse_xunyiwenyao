@@ -226,7 +226,7 @@
                     android:layout_alignBottom="@+id/pricription_information"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:text="＋" />
+                    android:background="@drawable/add_drug_btn"/>
             </RelativeLayout>
 
             <LinearLayout

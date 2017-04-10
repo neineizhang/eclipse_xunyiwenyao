@@ -1,7 +1,9 @@
 package com.zll.xunyiwenyao.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.adapter.MyBaseExpandableListAdapter;
@@ -19,6 +22,7 @@ import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.Group;
 import com.zll.xunyiwenyao.util.Item;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
+import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ import java.util.List;
 public class PrescriptionCreateActivity extends Activity   {
 
 	private AutoCompleteTextView prescription_create_search_text ;
-	private Button prescription_create_search_button,prescription_create_return;
+	private Button prescription_create_search_button;
 	private ArrayList<Group> gData = null;
     private ArrayList<ArrayList<Item>> iData = null;
     private Context mContext;
@@ -66,7 +70,7 @@ public class PrescriptionCreateActivity extends Activity   {
 
 		prescription_create_search_text = (AutoCompleteTextView) findViewById(R.id.prescription_create_search_text);
 		prescription_create_search_button = (Button) findViewById(R.id.prescription_create_search_button);
-		prescription_create_return = (Button) findViewById(R.id.prescription_create_return);
+		
 
         initData();
         
@@ -91,15 +95,15 @@ public class PrescriptionCreateActivity extends Activity   {
        });
 
        //为返回按钮添加监听事件
-       prescription_create_return.setOnClickListener(new OnClickListener() {
-
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent i = new  Intent(PrescriptionCreateActivity.this,MainActivity.class);
-			startActivity(i);
-			finish();
-		}
-	});
+//       prescription_create_return.setOnClickListener(new OnClickListener() {
+//
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			Intent i = new  Intent(PrescriptionCreateActivity.this,MainActivity.class);
+//			startActivity(i);
+//			finish();
+//		}
+//	});
 
 
        //为确定按钮添加监听事件
@@ -108,11 +112,42 @@ public class PrescriptionCreateActivity extends Activity   {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			List<String> list = new ArrayList<String>();
+		    list = PrescriptionTemplateWebService.getAllTemplateName();
 			String template_name = prescription_create_search_text.getText().toString();
+			if(!list.contains(template_name) && !(template_name.equals("")))
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionCreateActivity.this);
+				builder.setTitle("提示");
+				builder.setMessage("您输入的模板名不存在。是否新建模板？");
+				builder.setIcon(R.drawable.ic_launcher);
+			    builder.setCancelable(false);
+			    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						Intent i2=new Intent(PrescriptionCreateActivity.this,PrescriptionCreateMainActivity.class);
+						i2.putExtra("template_name", ""); 
+						startActivity(i2);
+						finish();
+					}
+				});
+			    builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+			    	 
+			     @Override
+			          public void onClick(DialogInterface dialog, int which) {
+			    	  // TODO Auto-generated method stub
+			              dialog.dismiss();
+			      }
+			      });
+			    builder.create().show();
+			}
+			else{
 			Intent i2=new Intent(PrescriptionCreateActivity.this,PrescriptionCreateMainActivity.class);
 			i2.putExtra("template_name", template_name); 
 			startActivity(i2);
 			finish();
+		}
 		}
 	});
 	

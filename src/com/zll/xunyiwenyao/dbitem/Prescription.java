@@ -13,6 +13,7 @@ public class Prescription {
     private String name;
     private int department;
     private Doctor doctor;
+    private Doctor checker;
     private Patient patient;
     private Map<Drug, Integer> drugmap;
     private int status;
@@ -127,6 +128,18 @@ public class Prescription {
 	}
 
 
+
+	public Doctor getChecker() {
+		return checker;
+	}
+
+
+
+	public void setChecker(Doctor checker) {
+		this.checker = checker;
+	}
+
+    
 
 
 	

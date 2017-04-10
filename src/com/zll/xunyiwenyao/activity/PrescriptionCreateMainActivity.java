@@ -2,6 +2,7 @@ package com.zll.xunyiwenyao.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,7 +150,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String drugname = add_drugs_autv.getText().toString();
 				Drug drug = DrugWebService.getDrugByName(drugname);
 				if(drug == null){
-					/////// zll add !!1!
+					Toast.makeText(mContext, "不存在该药品", Toast.LENGTH_SHORT).show();
 					alert.dismiss();
 					return;
 				}
@@ -294,6 +296,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String patient_name = patient_name_text.getText().toString();
 				String prescription_date = prescription_data_et.getText().toString();
 				String clinical_diagnosis = clinical_diagnosis_et.getText().toString();
+			
 						
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
@@ -313,7 +316,12 @@ public class PrescriptionCreateMainActivity extends Activity {
 					int count = Integer.valueOf(item.get("data_3"));
 					drugmap.put(drug, count);
 				}
-				
+				List<String> list = new ArrayList<String>();
+			    list = PrescriptionWebService.getAllPrescriptionName();
+				if(list.contains(prescription_name))
+				{Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();}
+				else
+				{
 				Prescription prescription = new Prescription();
 				prescription.setPatient(patient);
 				prescription.setName(prescription_name);
@@ -321,11 +329,13 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setStatus(Utils.STATUS.SAVED.ordinal());
 				prescription.setDate(prescription_date);
 				prescription.setClinical_diagnosis(clinical_diagnosis);
+				prescription.setDoctor(Utils.LOGIN_DOCTOR);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				
 				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 				finish();
+			}
 			}
 		});
 		savetotemplate.setOnClickListener(new OnClickListener() {
@@ -353,7 +363,12 @@ public class PrescriptionCreateMainActivity extends Activity {
 					int count = Integer.valueOf(item.get("data_3"));
 					drugmap.put(drug, count);
 				}
-
+				List<String> list = new ArrayList<String>();
+			    list = PrescriptionTemplateWebService.getAllTemplateName();
+			    if(list.contains(prescription_name))
+				{Toast.makeText(mContext, "该模板名称已存在", Toast.LENGTH_SHORT).show();}
+			    else
+			    {	
 				PrescriptionTemplate prescriptionTemplate = new PrescriptionTemplate();
 				prescriptionTemplate.setName(prescription_name);
 				prescriptionTemplate.setDrugmap(drugmap);
@@ -361,6 +376,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 				finish();
+			}
 			}
 		});
 		
@@ -379,7 +395,20 @@ public class PrescriptionCreateMainActivity extends Activity {
 				patient.setAge(patient_age);
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
+				List<String> list = new ArrayList<String>();
+			    list = PrescriptionWebService.getAllPrescriptionName();
+				//信息完整性及处方名称唯一性验证
+			    if(patient_name.equals(""))
+			    { Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();}
+			    else if(clinical_diagnosis.equals(""))
+				{ Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();}
+				else if(prescription_name.equals(""))
+				{Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();}
+			     
+				else if(list.contains(prescription_name))
+				{Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();}
 				
+				else{
 				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
 				//List<Drug> druglt = new ArrayList<Drug>();
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
@@ -401,11 +430,13 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
 				prescription.setDate(prescription_date);
 				prescription.setClinical_diagnosis(clinical_diagnosis);
+				prescription.setDoctor(Utils.LOGIN_DOCTOR);
 				
 				PrescriptionWebService.AddPrescription(prescription);
 				
 				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 				finish();
+				}
 			}
 		});
 	}
@@ -420,7 +451,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 		dataset.put("first", namelt);
 	}
 
-	private class MyExpandableListViewAdapter2 extends BaseExpandableListAdapter {
+	public class MyExpandableListViewAdapter2 extends BaseExpandableListAdapter {
 
 		@Override
 		public Object getChild(int parentPos, int childPos) {
