@@ -48,12 +48,12 @@ import android.widget.Toast;
 public class PrescriptionCreateMainActivity extends Activity {
 
 	private Button save, savetotemplate, commit;
-	private EditText patient_name_text,chufangmingcheng;
-	private EditText prescription_data_et,doctor_name_et,checker_name_et,other_information_et,clinical_diagnosis_et;
+	private EditText patient_name_text, chufangmingcheng;
+	private EditText prescription_data_et, doctor_name_et, checker_name_et, other_information_et, clinical_diagnosis_et;
 	private RadioGroup radioGroupsex;
 	private NumberPicker patient_age_text;
-	int minAge = 1, maxAge =100;
-	private RadioButton radioman,radiowoman;
+	int minAge = 1, maxAge = 100;
+	private RadioButton radioman, radiowoman;
 	private Button add_drug, dialog_ok_btn;
 	private View view_custom;
 	private Context mContext;
@@ -65,7 +65,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	private Map<String, List<String>> dataset = new HashMap<String, List<String>>();
 	private String[] parentList = new String[] { "first" };
 	private static final String[] data = new String[] { "first", "second", "third", "forth", "fifth" };
-    public int patient_sex,patient_age ;
+	public int patient_sex, patient_age;
 	private ListView drugs_lv;
 	public HorizontalScrollView mTouchView;
 	protected List<PrescriptionCreateScrollView> mHScrollViews = new ArrayList<PrescriptionCreateScrollView>();
@@ -75,16 +75,16 @@ public class PrescriptionCreateMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.newprescription);
-		
-		patient_age_text = (NumberPicker)findViewById(R.id.patient_age_text);
+
+		patient_age_text = (NumberPicker) findViewById(R.id.patient_age_text);
 		patient_age_text.setMinValue(minAge);
 		patient_age_text.setMaxValue(maxAge);
 		patient_age_text.setValue(1);
 		patient_age_text.setOnValueChangedListener(new OnValueChangeListener() {
-			
+
 			public void onValueChange(NumberPicker packer, int oldVal, int newVal) {
 				// TODO Auto-generated method stub
-				patient_age =newVal;
+				patient_age = newVal;
 			}
 		});
 		prescription_data_et = (EditText) findViewById(R.id.prescription_data_et);
@@ -92,10 +92,9 @@ public class PrescriptionCreateMainActivity extends Activity {
 		checker_name_et = (EditText) findViewById(R.id.checker_name_et);
 		other_information_et = (EditText) findViewById(R.id.other_information_et);
 		clinical_diagnosis_et = (EditText) findViewById(R.id.clinical_diagnosis_text);
-		
 
-		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");       
-		String date = sDateFormat.format(new java.util.Date());    
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String date = sDateFormat.format(new java.util.Date());
 		prescription_data_et.setText(date);
 		prescription_data_et.setEnabled(false);
 		doctor_name_et.setText(Utils.LOGIN_DOCTOR.getRealName());
@@ -103,7 +102,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 		checker_name_et.setText("");
 		checker_name_et.setEnabled(false);
 		other_information_et.setText("");
-		
+
 		add_drug = (Button) findViewById(R.id.add_drug);
 
 		initViews();
@@ -149,7 +148,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				// TODO Auto-generated method stub
 				String drugname = add_drugs_autv.getText().toString();
 				Drug drug = DrugWebService.getDrugByName(drugname);
-				if(drug == null){
+				if (drug == null) {
 					Toast.makeText(mContext, "不存在该药品", Toast.LENGTH_SHORT).show();
 					alert.dismiss();
 					return;
@@ -162,131 +161,127 @@ public class PrescriptionCreateMainActivity extends Activity {
 				tempdata.put("data_" + 3, "1");
 				tempdata.put("data_" + 4, drug.getPrice());
 				tempdata.put("data_" + 5, drug.getDescription());
-				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
+						.getData();
 				datas.add(tempdata);
-				((ScrollAdapter)drugs_lv.getAdapter()).setData(datas);
-				((ScrollAdapter)drugs_lv.getAdapter()).notifyDataSetChanged();
+				((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
+				((ScrollAdapter) drugs_lv.getAdapter()).notifyDataSetChanged();
 				alert.dismiss();
 			}
 		});
 
 		mContext = this;
-		
+
 		save = (Button) findViewById(R.id.save);
 		savetotemplate = (Button) findViewById(R.id.savetotemplate);
 		commit = (Button) findViewById(R.id.commit);
 		chufangmingcheng = (EditText) findViewById(R.id.editText1);
 		patient_name_text = (EditText) findViewById(R.id.patient_name_text);
 		radioGroupsex = (RadioGroup) findViewById(R.id.radioGroupsex);
-		
+
 		radioman = (RadioButton) findViewById(R.id.radioman);
 		radiowoman = (RadioButton) findViewById(R.id.radiowoman);
 		radioGroupsex.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			
+
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
 				RadioButton radbtn = (RadioButton) findViewById(checkedId);
-				if( radbtn == radioman)
-						{
-					 patient_sex =0;
+				if (radbtn == radioman) {
+					patient_sex = 0;
+				} else if (radbtn == radiowoman) {
+					patient_sex = 1;
+				}
 			}
-				else if( radbtn == radiowoman)
-				{
-					  patient_sex= 1;
-	}
-			}
-			});
+		});
 		///////////// add template data
-		Bundle extras = getIntent().getExtras(); 
+		Bundle extras = getIntent().getExtras();
 		String template_name = extras.getString("template_name");
-		if(template_name != null){
-			if(!template_name.trim().equals("")){
-				PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService.getPrescriptionTemplateByName(template_name);
-				if(prescriptionTemplate == null){
-					
-					
-				}else{
-					//chufangmingcheng.setText(template_name);
-					
+		if (template_name != null) {
+			if (!template_name.trim().equals("")) {
+				PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService
+						.getPrescriptionTemplateByName(template_name);
+				if (prescriptionTemplate == null) {
+
+				} else {
+					// chufangmingcheng.setText(template_name);
+
 					Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
-					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
-					if(datas == null){
-						datas = new ArrayList<Map<String,String>>();
+					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv
+							.getAdapter()).getData();
+					if (datas == null) {
+						datas = new ArrayList<Map<String, String>>();
 					}
-					for(Drug drug : drugmap.keySet()){
+					for (Drug drug : drugmap.keySet()) {
 						Map<String, String> tempdata = new HashMap<String, String>();
 						tempdata.put("title", String.valueOf(drug.getId()));
 						tempdata.put("data_" + 1, drug.getName());
 						tempdata.put("data_" + 2, drug.getSpecification());
-						tempdata.put("data_" + 3, drugmap.get(drug)+"");
+						tempdata.put("data_" + 3, drugmap.get(drug) + "");
 						tempdata.put("data_" + 4, drug.getPrice());
 						tempdata.put("data_" + 5, drug.getDescription());
 						datas.add(tempdata);
 					}
-					((ScrollAdapter)drugs_lv.getAdapter()).setData(datas);
-					((ScrollAdapter)drugs_lv.getAdapter()).notifyDataSetChanged();
+					((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
+					((ScrollAdapter) drugs_lv.getAdapter()).notifyDataSetChanged();
 				}
-				
+
 			}
 		}
 		///////////// end add template data
-		
-		
+
 		String prescription_name = extras.getString("prescription_name");
-		if(prescription_name != null){
+		if (prescription_name != null) {
 			Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
-			if(prescription == null){
+			if (prescription == null) {
 				Toast.makeText(mContext, "处方名称无效", Toast.LENGTH_SHORT).show();
-				
-			}else{
-				//chufangmingcheng.setText(template_name);
-				String patient_name = prescription.getPatient().getName().toString();  
-	            int patient_age = prescription.getPatient().getAge();
-	            int patient_sex =prescription.getPatient().getSex();
-//	            String doctor_name=prescription.getDoctor().getName().toString();
-//	            String  prescription_date = prescription.getDate().toString();
-	            String clinical_diagnosis = prescription.getClinical_diagnosis().toString();
-	            
+
+			} else {
+				// chufangmingcheng.setText(template_name);
+				String patient_name = prescription.getPatient().getName().toString();
+				int patient_age = prescription.getPatient().getAge();
+				int patient_sex = prescription.getPatient().getSex();
+				// String
+				// doctor_name=prescription.getDoctor().getName().toString();
+				// String prescription_date = prescription.getDate().toString();
+				String clinical_diagnosis = prescription.getClinical_diagnosis().toString();
+
 				chufangmingcheng.setText(prescription_name);
 				patient_name_text.setText(patient_name);
 				patient_age_text.setValue(patient_age);
-				
-				if( patient_sex==0){
+
+				if (patient_sex == 0) {
 					radioman.setChecked(true);
-				}
-				else 
+				} else
 					radiowoman.setChecked(true);
-//					
-//				doctor_name_et.setText(doctor_name);
-//				prescription_data_et.setText(prescription_date);
+				//
+				// doctor_name_et.setText(doctor_name);
+				// prescription_data_et.setText(prescription_date);
 				clinical_diagnosis_et.setText(clinical_diagnosis);
 				Map<Drug, Integer> drugmap = prescription.getDrugmap();
-				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
-				if(datas == null){
-					datas = new ArrayList<Map<String,String>>();
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
+						.getData();
+				if (datas == null) {
+					datas = new ArrayList<Map<String, String>>();
 				}
-				for(Drug drug : drugmap.keySet()){
+				for (Drug drug : drugmap.keySet()) {
 					Map<String, String> tempdata = new HashMap<String, String>();
 					tempdata.put("title", String.valueOf(drug.getId()));
 					tempdata.put("data_" + 1, drug.getName());
 					tempdata.put("data_" + 2, drug.getSpecification());
-					tempdata.put("data_" + 3, drugmap.get(drug)+"");
+					tempdata.put("data_" + 3, drugmap.get(drug) + "");
 					tempdata.put("data_" + 4, drug.getPrice());
 					tempdata.put("data_" + 5, drug.getDescription());
 					datas.add(tempdata);
 				}
-				((ScrollAdapter)drugs_lv.getAdapter()).setData(datas);
-				((ScrollAdapter)drugs_lv.getAdapter()).notifyDataSetChanged();
-				
+				((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
+				((ScrollAdapter) drugs_lv.getAdapter()).notifyDataSetChanged();
+
 				///////
-				
+
 			}
-			
+
 		}
-		
-		
-		
+
 		save.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -296,17 +291,17 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String patient_name = patient_name_text.getText().toString();
 				String prescription_date = prescription_data_et.getText().toString();
 				String clinical_diagnosis = clinical_diagnosis_et.getText().toString();
-			
-						
+
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
-				
+
 				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-				
-				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
-				for(Map<String, String> item : datas){
+
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
+						.getData();
+				for (Map<String, String> item : datas) {
 					Drug drug = new Drug();
 					drug.setId(Integer.parseInt(item.get("title")));
 					drug.setDescription(item.get("data_5"));
@@ -317,25 +312,24 @@ public class PrescriptionCreateMainActivity extends Activity {
 					drugmap.put(drug, count);
 				}
 				List<String> list = new ArrayList<String>();
-			    list = PrescriptionWebService.getAllPrescriptionName();
-				if(list.contains(prescription_name))
-				{Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();}
-				else
-				{
-				Prescription prescription = new Prescription();
-				prescription.setPatient(patient);
-				prescription.setName(prescription_name);
-				prescription.setDrugmap(drugmap);
-				prescription.setStatus(Utils.STATUS.SAVED.ordinal());
-				prescription.setDate(prescription_date);
-				prescription.setClinical_diagnosis(clinical_diagnosis);
-				prescription.setDoctor(Utils.LOGIN_DOCTOR);
-				
-				PrescriptionWebService.AddPrescription(prescription);
-				
-				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
-				finish();
-			}
+				list = PrescriptionWebService.getAllPrescriptionName();
+				if (list.contains(prescription_name)) {
+					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
+				} else {
+					final Prescription prescription = new Prescription();
+					prescription.setPatient(patient);
+					prescription.setName(prescription_name);
+					prescription.setDrugmap(drugmap);
+					prescription.setStatus(Utils.STATUS.SAVED.ordinal());
+					prescription.setDate(prescription_date);
+					prescription.setClinical_diagnosis(clinical_diagnosis);
+					prescription.setDoctor(Utils.LOGIN_DOCTOR);
+
+					PrescriptionWebService.AddPrescription(prescription);
+
+					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 		});
 		savetotemplate.setOnClickListener(new OnClickListener() {
@@ -345,15 +339,18 @@ public class PrescriptionCreateMainActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				String prescription_name = chufangmingcheng.getText().toString();
-				PrescriptionTemplate prescriptionTemplate_indb = PrescriptionTemplateWebService.getPrescriptionTemplateByName(prescription_name);
-				if(prescriptionTemplate_indb != null){
-					Toast.makeText(mContext, "HAVED, SAVE FAILURE", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				
+				// PrescriptionTemplate prescriptionTemplate_indb =
+				// PrescriptionTemplateWebService.getPrescriptionTemplateByName(prescription_name);
+				// if(prescriptionTemplate_indb != null){
+				// Toast.makeText(mContext, "HAVED, SAVE FAILURE",
+				// Toast.LENGTH_SHORT).show();
+				// return;
+				// }
+				//
 				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
-				for(Map<String, String> item : datas){
+				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
+						.getData();
+				for (Map<String, String> item : datas) {
 					Drug drug = new Drug();
 					drug.setId(Integer.parseInt(item.get("title")));
 					drug.setDescription(item.get("data_5"));
@@ -364,22 +361,59 @@ public class PrescriptionCreateMainActivity extends Activity {
 					drugmap.put(drug, count);
 				}
 				List<String> list = new ArrayList<String>();
-			    list = PrescriptionTemplateWebService.getAllTemplateName();
-			    if(list.contains(prescription_name))
-				{Toast.makeText(mContext, "该模板名称已存在", Toast.LENGTH_SHORT).show();}
-			    else
-			    {	
-				PrescriptionTemplate prescriptionTemplate = new PrescriptionTemplate();
-				prescriptionTemplate.setName(prescription_name);
-				prescriptionTemplate.setDrugmap(drugmap);
-				PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
+				list = PrescriptionTemplateWebService.getAllTemplateName();
+				if (list.contains(prescription_name)) {
+					Toast.makeText(mContext, "该模板名称已存在", Toast.LENGTH_SHORT).show();
+				} else {
 
-				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
-				finish();
-			}
+					final PrescriptionTemplate prescriptionTemplate = new PrescriptionTemplate();
+					final String[] departments = Utils.DEPARTMENT_ARRAY;
+					AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionCreateMainActivity.this);
+					builder.setTitle("请选择模板分类");
+					/**
+					 * 
+					 * 1、public Builder setItems(int itemsId, final
+					 * OnClickListener
+					 * 
+					 * listener) itemsId表示字符串数组的资源ID，该资源指定的数组会显示在列表中。 2、public
+					 * Builder
+					 * 
+					 * setItems(CharSequence[] items, final OnClickListener
+					 * listener)
+					 * 
+					 * items表示用于显示在列表中的字符串数组
+					 * 
+					 */
+					builder.setSingleChoiceItems(departments, 1, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							String select_item = departments[which].toString();
+							Toast.makeText(PrescriptionCreateMainActivity.this, "选择了--->>" + select_item,
+									Toast.LENGTH_SHORT).show();
+							prescriptionTemplate.setDepartment(which);
+						}
+					});
+					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+							Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
+							finish();
+						}
+					});
+					builder.create().show();
+					prescriptionTemplate.setName(prescription_name);
+					prescriptionTemplate.setDrugmap(drugmap);
+					PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
+
+					// Toast.makeText(mContext, "SAVE SUCCESS",
+					// Toast.LENGTH_SHORT).show();
+					
+				}
 			}
 		});
-		
+
 		commit.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -390,52 +424,55 @@ public class PrescriptionCreateMainActivity extends Activity {
 				String patient_name = patient_name_text.getText().toString();
 				String prescription_date = prescription_data_et.getText().toString();
 				String clinical_diagnosis = clinical_diagnosis_et.getText().toString();
-				
+
 				Patient patient = new Patient();
 				patient.setAge(patient_age);
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
 				List<String> list = new ArrayList<String>();
-			    list = PrescriptionWebService.getAllPrescriptionName();
-				//信息完整性及处方名称唯一性验证
-			    if(patient_name.equals(""))
-			    { Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();}
-			    else if(clinical_diagnosis.equals(""))
-				{ Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();}
-				else if(prescription_name.equals(""))
-				{Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();}
-			     
-				else if(list.contains(prescription_name))
-				{Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();}
-				
-				else{
-				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-				//List<Drug> druglt = new ArrayList<Drug>();
-				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter)drugs_lv.getAdapter()).getData();
-				for(Map<String, String> item : datas){
-					Drug drug = new Drug();
-					drug.setId(Integer.parseInt(item.get("title")));
-					drug.setDescription(item.get("data_5"));
-					drug.setPrice(item.get("data_4"));
-					drug.setName(item.get("data_1"));
-					drug.setSpecification(item.get("data_2"));
-					int count = Integer.valueOf(item.get("data_3"));
-					drugmap.put(drug, count);
+				list = PrescriptionWebService.getAllPrescriptionName();
+				// 信息完整性及处方名称唯一性验证
+				if (patient_name.equals("")) {
+					Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();
+				} else if (clinical_diagnosis.equals("")) {
+					Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();
+				} else if (prescription_name.equals("")) {
+					Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();
 				}
-				
-				Prescription prescription = new Prescription();
-				prescription.setPatient(patient);
-				prescription.setName(prescription_name);
-				prescription.setDrugmap(drugmap);
-				prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
-				prescription.setDate(prescription_date);
-				prescription.setClinical_diagnosis(clinical_diagnosis);
-				prescription.setDoctor(Utils.LOGIN_DOCTOR);
-				
-				PrescriptionWebService.AddPrescription(prescription);
-				
-				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
-				finish();
+
+				else if (list.contains(prescription_name)) {
+					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
+				}
+
+				else {
+					Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+					// List<Drug> druglt = new ArrayList<Drug>();
+					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv
+							.getAdapter()).getData();
+					for (Map<String, String> item : datas) {
+						Drug drug = new Drug();
+						drug.setId(Integer.parseInt(item.get("title")));
+						drug.setDescription(item.get("data_5"));
+						drug.setPrice(item.get("data_4"));
+						drug.setName(item.get("data_1"));
+						drug.setSpecification(item.get("data_2"));
+						int count = Integer.valueOf(item.get("data_3"));
+						drugmap.put(drug, count);
+					}
+
+					Prescription prescription = new Prescription();
+					prescription.setPatient(patient);
+					prescription.setName(prescription_name);
+					prescription.setDrugmap(drugmap);
+					prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
+					prescription.setDate(prescription_date);
+					prescription.setClinical_diagnosis(clinical_diagnosis);
+					prescription.setDoctor(Utils.LOGIN_DOCTOR);
+
+					PrescriptionWebService.AddPrescription(prescription);
+
+					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
+					finish();
 				}
 			}
 		});
@@ -576,8 +613,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 		private int[] to;
 		private Context context;
 
-		public ScrollAdapter(Context context, List<Map<String, String>> data, int resource, String[] from,
-				int[] to) {
+		public ScrollAdapter(Context context, List<Map<String, String>> data, int resource, String[] from, int[] to) {
 			super(context, data, resource, from, to);
 			this.context = context;
 			this.datas = data;
@@ -586,14 +622,14 @@ public class PrescriptionCreateMainActivity extends Activity {
 			this.to = to;
 		}
 
-		public void setData(List<Map<String, String>> newdatas){
+		public void setData(List<Map<String, String>> newdatas) {
 			datas = newdatas;
 		}
-		
-		public List<Map<String, String>> getData(){
+
+		public List<Map<String, String>> getData() {
 			return datas;
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
@@ -621,7 +657,8 @@ public class PrescriptionCreateMainActivity extends Activity {
 	protected View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			//Toast.makeText(PrescriptionCreateMainActivity.this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+			// Toast.makeText(PrescriptionCreateMainActivity.this, ((TextView)
+			// v).getText(), Toast.LENGTH_SHORT).show();
 		}
 	};
 
