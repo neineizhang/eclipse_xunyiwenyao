@@ -398,7 +398,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.cancel();
-							Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext, "SAVE SUCCESS",Toast.LENGTH_SHORT).show();
 							finish();
 						}
 					});
@@ -407,8 +407,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 					prescriptionTemplate.setDrugmap(drugmap);
 					PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
 
-					// Toast.makeText(mContext, "SAVE SUCCESS",
-					// Toast.LENGTH_SHORT).show();
 					
 				}
 			}
