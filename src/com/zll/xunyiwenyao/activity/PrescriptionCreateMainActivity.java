@@ -13,6 +13,7 @@ import com.zll.xunyiwenyao.dbitem.Patient;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.util.ListViewUtils;
 import com.zll.xunyiwenyao.view.PrescriptionCreateScrollView;
 import com.zll.xunyiwenyao.webservice.DrugWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
@@ -570,7 +571,10 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 		mHScrollViews.add(headerScroll);
 		drugs_lv = (ListView) findViewById(R.id.drugs_lv);
-
+		
+		//重写listview解决listview和scollview不兼容的问题
+	//	ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
+		
 		ScrollAdapter adapter = new ScrollAdapter(this, datas, R.layout.scroll_item,
 				new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5" }, new int[] { R.id.item_title,
 						R.id.item_data1, R.id.item_data2, R.id.item_data3, R.id.item_data4, R.id.item_data5 });
@@ -618,6 +622,11 @@ public class PrescriptionCreateMainActivity extends Activity {
 			this.res = resource;
 			this.from = from;
 			this.to = to;
+		}
+		
+		public void notifyDataSetChanged(){
+			super.notifyDataSetChanged();
+			ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
 		}
 
 		public void setData(List<Map<String, String>> newdatas) {
