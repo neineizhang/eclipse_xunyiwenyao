@@ -11,6 +11,7 @@ import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.util.ListViewUtils;
 import com.zll.xunyiwenyao.util.MyListView;
 import com.zll.xunyiwenyao.view.PrescriptionExamingPrescriptionScrollView;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
@@ -213,7 +214,12 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 			this.from = from;
 			this.to = to;
 		}
-
+        
+		public void notifyDataSetChanged(){
+			super.notifyDataSetChanged();
+			ListViewUtils.setListViewHeightBasedOnChildren(examing_drugs_lv);
+		}
+		
 		public void setData(List<? extends Map<String, ?>> newdatas){
 			datas = newdatas;
 		}

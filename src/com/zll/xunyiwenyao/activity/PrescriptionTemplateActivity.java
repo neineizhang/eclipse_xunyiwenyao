@@ -76,7 +76,7 @@ public class PrescriptionTemplateActivity extends Activity {
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionTemplateWebService.getAllTemplateName();
 				String template_name = prescription_template_search_text.getText().toString();
-				if(!list.contains(template_name) || !(template_name.equals("")))
+				if(!list.contains(template_name) && !(template_name.equals("")))
 				{
 					AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionTemplateActivity.this);
 					builder.setTitle("提示");
