@@ -41,8 +41,8 @@ public class RealWebServiceTest {
         System.out.println(ja.length());
         
         //发送 POST 请求
-        String sr = HttpHelper.sendPost(url, "");
-        System.out.println(sr);
+        //String sr = HttpHelper.sendPost(url, "");
+        //System.out.println(sr);
 	}
 
 }

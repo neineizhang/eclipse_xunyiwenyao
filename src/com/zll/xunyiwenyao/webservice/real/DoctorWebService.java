@@ -58,10 +58,11 @@ public class DoctorWebService {
         	doctor = new Doctor(jsonobj.getInt("doctor_id"), 
         			jsonobj.getString("real_name"), 
         			jsonobj.getInt("type"), 
-        			jsonobj.getString("hospital"), 
+        			jsonobj.get("hospital").toString(), 
         			jsonobj.getString("reg_name"), 
-        			jsonobj.getString("password"));
+        			jsonobj.get("password").toString());
         	doctorlist.add(doctor);
+        	System.out.println("success add:"+JsonHelper.toJSON(doctor));
         }
     }
     

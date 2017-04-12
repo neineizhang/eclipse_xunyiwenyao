@@ -73,7 +73,7 @@ public class JsonHelper {
         while (iterator.hasNext()) {
 
             key = (String) iterator.next();
-            value = jsonObject.getString(key);
+            value = jsonObject.get(key).toString();
             result.put(key, value);
 
         }
