@@ -104,7 +104,7 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
   
 	private void initViews() {
 		List<Map<String, String>> datas = new ArrayList<Map<String,String>>();
-		Map<String, String> data = null;
+		//Map<String, String> data = null;
 		PrescriptionTemplateScrollView headerScroll = (PrescriptionTemplateScrollView) findViewById(R.id.template_item_scroll_title);
 		
 		templateHScrollViews.add(headerScroll);

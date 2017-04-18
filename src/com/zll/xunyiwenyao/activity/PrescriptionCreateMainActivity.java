@@ -15,6 +15,7 @@ import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.ListViewUtils;
 import com.zll.xunyiwenyao.view.PrescriptionCreateScrollView;
+import com.zll.xunyiwenyao.view.PrescriptionTemplateScrollView;
 import com.zll.xunyiwenyao.webservice.DrugWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
@@ -24,6 +25,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,6 +75,8 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 	public HorizontalScrollView mTouchView;
 	protected List<PrescriptionCreateScrollView> mHScrollViews = new ArrayList<PrescriptionCreateScrollView>();
 
+	private int prescription_id = 0;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -247,10 +251,12 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 		String prescription_name = extras.getString("prescription_name");
 		if (prescription_name != null) {
 			Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
+			
 			if (prescription == null) {
 				Toast.makeText(mContext, "处方名称无效", Toast.LENGTH_SHORT).show();
 
 			} else {
+				prescription_id = prescription.getId();
 				// chufangmingcheng.setText(template_name);
 				String patient_name = prescription.getPatient().getName().toString();
 				int patient_age = prescription.getPatient().getAge();
@@ -335,16 +341,18 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					prescription_frug.setDrug(drug);
 					prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
 					prescription_frug.setDescription(item.get("data_5"));
+					Log.d("rxz", "001:"+prescription_frug.getDescription());
 					
 					druglist.add(prescription_frug);
 					//drugmap.put(drug, count);
 				}
-				List<String> list = new ArrayList<String>();
-				list = PrescriptionWebService.getAllPrescriptionName();
+//				List<String> list = new ArrayList<String>();
+//				list = PrescriptionWebService.getAllPrescriptionName();
 //				if (list.contains(prescription_name)) {
 //					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
 //				} else {
-					final Prescription prescription = new Prescription();
+					Prescription prescription = new Prescription();
+					prescription.setId(prescription_id);
 					prescription.setPatient(patient);
 					prescription.setName(prescription_name);
 					//prescription.setDrugmap(drugmap);
@@ -354,12 +362,13 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					prescription.setClinical_diagnosis(clinical_diagnosis);
 					prescription.setDoctor(Utils.LOGIN_DOCTOR);
 
+					Log.d("rxz", "001:"+prescription.getId());
 					PrescriptionWebService.AddPrescription(prescription);
 
 					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 					finish();
-				}
-//			}
+//				}
+			}
 		});
 		savetotemplate.setOnClickListener(new OnClickListener() {
 
@@ -668,53 +677,76 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 
 	class ScrollAdapter extends SimpleAdapter {
 
-		private List<Map<String, String>> datas;
+		private List<? extends Map<String, ?>> datas;
 		private int res;
 		private String[] from;
 		private int[] to;
 		private Context context;
-
-		public ScrollAdapter(Context context, List<Map<String, String>> data, int resource, String[] from, int[] to) {
+		private List<View[]> holders_lt = new ArrayList<View[]>();
+		
+		public ScrollAdapter(Context context,
+				List<? extends Map<String, ?>> data, int resource,
+				String[] from, int[] to) {
 			super(context, data, resource, from, to);
 			this.context = context;
 			this.datas = data;
 			this.res = resource;
 			this.from = from;
 			this.to = to;
+			for(int i = 0; i < data.size(); i++){
+				holders_lt.add(null);
+			}
 		}
 		
 		public void notifyDataSetChanged(){
 			super.notifyDataSetChanged();
-			ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
+			//ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
 		}
-
-		public void setData(List<Map<String, String>> newdatas) {
-			datas = newdatas;
-		}
-
-		public List<Map<String, String>> getData() {
+		
+		public List<? extends Map<String, ?>> getData(){
+			for(int position = 0; position < holders_lt.size(); position++){
+				View[] holders = holders_lt.get(position);
+				int len = holders.length;
+				for(int i = 0 ; i < len; i++) {
+					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
+					String value = ((TextView)holders[i]).getText().toString();
+					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
+					((Map<String, String>)this.datas.get(position)).put(from[i], value);
+				}
+			}
 			return datas;
 		}
-
+		
+		public void  setData(List<? extends Map<String, ?>> new_data){
+			datas = new_data;
+			for(int i = 0; i < new_data.size(); i++){
+				holders_lt.add(null);
+			}
+		}
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
-			if (v == null) {
+			if(v == null) {
 				v = LayoutInflater.from(context).inflate(res, null);
+				//锟斤拷一锟轿筹拷始锟斤拷锟斤拷时锟斤拷装锟斤拷锟斤拷
 				addHViews((PrescriptionCreateScrollView) v.findViewById(R.id.item_scroll));
 				View[] views = new View[to.length];
-				for (int i = 0; i < to.length; i++) {
-					View tv = v.findViewById(to[i]);
-					;
+				for(int i = 0; i < to.length; i++) {
+					View tv = v.findViewById(to[i]);;
 					tv.setOnClickListener(clickListener);
 					views[i] = tv;
 				}
 				v.setTag(views);
+				if(holders_lt.get(position) == null){
+					holders_lt.set(position, views);
+
+				}
 			}
 			View[] holders = (View[]) v.getTag();
 			int len = holders.length;
-			for (int i = 0; i < len; i++) {
-				((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
+			for(int i = 0 ; i < len; i++) {
+				((TextView)holders[i]).setText(this.datas.get(position).get(from[i]).toString());
 			}
 			return v;
 		}
