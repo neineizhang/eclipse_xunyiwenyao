@@ -29,6 +29,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseExpandableListAdapter;
@@ -46,7 +48,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PrescriptionCreateMainActivity extends Activity {
+public class PrescriptionCreateMainActivity extends Activity implements OnItemLongClickListener {
 
 	private Button save, savetotemplate, commit;
 	private EditText patient_name_text, chufangmingcheng;
@@ -314,9 +316,9 @@ public class PrescriptionCreateMainActivity extends Activity {
 				}
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionWebService.getAllPrescriptionName();
-				if (list.contains(prescription_name)) {
-					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
-				} else {
+//				if (list.contains(prescription_name)) {
+//					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
+//				} else {
 					final Prescription prescription = new Prescription();
 					prescription.setPatient(patient);
 					prescription.setName(prescription_name);
@@ -331,7 +333,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 					finish();
 				}
-			}
+//			}
 		});
 		savetotemplate.setOnClickListener(new OnClickListener() {
 
@@ -579,6 +581,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5" }, new int[] { R.id.item_title,
 						R.id.item_data1, R.id.item_data2, R.id.item_data3, R.id.item_data4, R.id.item_data5 });
 		drugs_lv.setAdapter(adapter);
+		drugs_lv.setOnItemLongClickListener(this);
 
 	}
 
@@ -668,5 +671,12 @@ public class PrescriptionCreateMainActivity extends Activity {
 			// v).getText(), Toast.LENGTH_SHORT).show();
 		}
 	};
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//		// TODO Auto-generated method stub
+//		
+	return false;
+	}
 
 }

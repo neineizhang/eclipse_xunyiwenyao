@@ -39,7 +39,7 @@ public class DrugWebService {
 
     
     public static void initDB() throws JSONException{
-		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getDrug.do";
+		String url = "http://222.29.100.155/b2b2c/api/mobile/drug/getDrug.do";
 		
 		String s = HttpHelper.sendGet(url, "");
         Map m = JsonHelper.toMap(s);
@@ -61,9 +61,9 @@ public class DrugWebService {
         	JSONObject jsonobj = (JSONObject) ja.get(i);
         	drug = new Drug(jsonobj.getInt("drug_id"), 
         			jsonobj.getString("appro_name"), 
-        			jsonobj.getString("specification"), 
+        			jsonobj.getString("py_name"),
         			jsonobj.getString("dosage_form"), 
-        			jsonobj.get("alias").toString());
+        			jsonobj.getString("specification"));
         	druglist.add(drug);
         	System.out.println("success add:"+JsonHelper.toJSON(drug));
         }
@@ -88,6 +88,15 @@ public class DrugWebService {
     public static Drug getDrugByName(String name){
     	for(Drug item : druglist){
     		if(item.getName().equals(name)){
+    			return item;
+    		}
+    	}
+    	return null;
+    }
+    
+    public static Drug getDrugByID(int id){
+    	for(Drug item : druglist){
+    		if(item.getId() == id){
     			return item;
     		}
     	}

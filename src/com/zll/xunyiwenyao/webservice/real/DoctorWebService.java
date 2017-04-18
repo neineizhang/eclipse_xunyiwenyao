@@ -88,7 +88,17 @@ public class DoctorWebService {
         }
         return resultlist;
     }
+    
+    public static Doctor getDoctorByID(int id){
+        for(Doctor doctor : doctorlist){
+            if(doctor.getId() == id){
+                return doctor;
+            }
+        }
+        return null;
+    }
 
+    ////// 
     public static void addDoctor(Doctor item){
     	item.setId(MAX_ID);
     	MAX_ID++;

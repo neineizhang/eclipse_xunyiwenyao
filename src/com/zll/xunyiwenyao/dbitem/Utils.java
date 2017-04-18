@@ -15,10 +15,16 @@ public class Utils {
     };
 
     public static enum DEPARTMENT {
-        NEIKE, WAIKE, ERKE, FUCHANKE, WUGUANKE, PIFUKE
-    };
+        EMPTY, NEIKE, WAIKE, FUCHANKE, ERKE, WUGUANKE, PIFUKE
+    }; ///// 直接改这里
 
-    public static String[] DEPARTMENT_ARRAY = new String[]{"NEI KE", "WAI KE", "ER KE", "FU CHAN KE", "WU GUANKE", "PI FU KE"};
+    public static String[] DEPARTMENT_ARRAY = new String[]{ "内科", "外科", "妇刹颗", "儿科", "眼耳鼻咽喉科 ","皮肤病与性病","精神卫生","职业病","医学影像和放射治疗","医学检验、病理","全科医学","急救医学","康复医学","预防保健","特种医学与军事医学","计划生育技术服务","其他专业"};
+
+//    public static enum DEPARTMENT {
+//        NEIKE, WAIKE, ERKE, FUCHANKE, WUGUANKE, PIFUKE
+//    }; 
+//
+//    public static String[] DEPARTMENT_ARRAY = new String[]{"NEI KE", "WAI KE", "ER KE", "FU CHAN KE", "WU GUANKE", "PI FU KE"};
     
     public static enum STATUS{
         COMMITED,SAVED,APPROVED,REFUSED

@@ -204,12 +204,7 @@ public class PrescriptionTemplateMangeActivity extends Activity implements OnCli
 				v.setTag(views);
 				if(holders_lt.get(position) == null){
 					holders_lt.set(position, views);
-//					Log.d("rxz", position+":"+this.datas.get(position).get(from[0]).toString());
-//					Log.d("rxz", position+":"+this.datas.get(position).get(from[1]).toString());
-//					Log.d("rxz", position+":"+this.datas.get(position).get(from[2]).toString());
-//					Log.d("rxz", position+":"+this.datas.get(position).get(from[3]).toString());
-//					Log.d("rxz", position+":"+this.datas.get(position).get(from[4]).toString());
-//					Log.d("rxz", position+":"+this.datas.get(position).get(from[5]).toString());
+
 				}
 			}
 			View[] holders = (View[]) v.getTag();
