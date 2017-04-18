@@ -1,8 +1,6 @@
 package com.zll.xunyiwenyao.dbitem;
 
-import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by rxz on 2017/3/21.
@@ -15,27 +13,27 @@ public class Prescription {
     private Doctor doctor;
     private Doctor checker;
     private Patient patient;
-    private Map<Drug, Integer> drugmap;
+    //private Map<Drug, Integer> drugmap;
+    private List<Prescription_drugmap> druglist;
     private int status;
     private String date;
     private String clinical_diagnosis;
     
 
     public Prescription(){
-        setDrugmap(new HashMap<Drug, Integer>());
     }
   
-    
 
-    public Prescription(int id, String name, int department, Doctor doctor, Patient patient,
-			Map<Drug, Integer> drugmap, int status,String date,String clinical_diagnosis) {
+    public Prescription(int id, String name, int department, Doctor doctor, Doctor checker, Patient patient,
+    		List<Prescription_drugmap> druglist, int status,String date,String clinical_diagnosis) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.department = department;
 		this.doctor = doctor;
+		this.checker = checker;
 		this.patient = patient;
-		this.drugmap = drugmap;
+		this.druglist = druglist;
 		this.status = status;
 		this.date =date;
 		this.clinical_diagnosis=clinical_diagnosis;
@@ -83,12 +81,12 @@ public class Prescription {
         this.patient = patient;
     }
 
-    public Map<Drug, Integer> getDrugmap() {
-        return drugmap;
+    public List<Prescription_drugmap> getDruglist() {
+        return druglist;
     }
 
-    public void setDrugmap(Map<Drug, Integer> drugmap) {
-        this.drugmap = drugmap;
+    public void setDruglist(List<Prescription_drugmap> druglist) {
+        this.druglist = druglist;
     }
 
 
@@ -139,11 +137,5 @@ public class Prescription {
 		this.checker = checker;
 	}
 
-    
-
-
-	
-	
-    
     
 }

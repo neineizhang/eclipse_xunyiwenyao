@@ -1,6 +1,7 @@
 package com.zll.xunyiwenyao.dbitem;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,17 +12,18 @@ public class PrescriptionTemplate {
     private int id;
     private String name;
     private int department;
-    private Map<Drug, Integer> drugmap;
+    //private Map<Drug, Integer> drugmap;
+    private List<Prescription_drugmap> druglist;
 
     public PrescriptionTemplate(){
-        setDrugmap(new HashMap<Drug, Integer>());
+
     }
 
-    public PrescriptionTemplate(int id, String name, int department, Map<Drug, Integer> drugmap) {
+    public PrescriptionTemplate(int id, String name, int department, List<Prescription_drugmap> druglist) {
         this.id = id;
         this.name = name;
         this.department = department;
-        this.drugmap = drugmap;
+        this.druglist = druglist;
     }
 
     public int getId() {
@@ -48,11 +50,11 @@ public class PrescriptionTemplate {
         this.department = department;
     }
 
-    public Map<Drug, Integer> getDrugmap() {
-        return drugmap;
+    public List<Prescription_drugmap> getDruglist() {
+        return druglist;
     }
 
-    public void setDrugmap(Map<Drug, Integer> drugmap) {
-        this.drugmap = drugmap;
+    public void setDruglist(List<Prescription_drugmap> druglist) {
+        this.druglist = druglist;
     }
 }

@@ -1,18 +1,13 @@
 package com.zll.xunyiwenyao.webservice;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.zll.xunyiwenyao.dbitem.Doctor;
-import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Patient;
 import com.zll.xunyiwenyao.dbitem.Prescription;
-import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
 import com.zll.xunyiwenyao.dbitem.Utils;
-import com.zll.xunyiwenyao.webservice.DrugWebService;
 
 public class PrescriptionWebService {
 	
@@ -29,28 +24,40 @@ public class PrescriptionWebService {
 		//doctor = new Doctor(1, "doctor A", Utils.DOCTOR_TYPE.DOCTOR.ordinal(), "Hospital 1");
 		doctor = DoctorWebService.getAllDoctor().get(0);
 		patient = PatientWebService.getAllPatient().get(1);
-
-		Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-		drugmap.put(DrugWebService.getAllDrug().get(0), 1);
-		drugmap.put(DrugWebService.getAllDrug().get(1), 3);
-		drugmap.put(DrugWebService.getAllDrug().get(2), 4);
-		drugmap.put(DrugWebService.getAllDrug().get(4), 2);
-		drugmap.put(DrugWebService.getAllDrug().get(3), 1);
+				
+		List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "111"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "222"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(2), 3, "333"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(3), 2, "444"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(4), 1, "555"));
+		//new Prescription.Prescription_drugmap();Prescription.Prescription_drugmap drugitem = new Prescription.Prescription_drugmap();
+//		Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+//		drugmap.put(DrugWebService.getAllDrug().get(0), 1);
+//		drugmap.put(DrugWebService.getAllDrug().get(1), 3);
+//		drugmap.put(DrugWebService.getAllDrug().get(2), 4);
+//		drugmap.put(DrugWebService.getAllDrug().get(4), 2);
+//		drugmap.put(DrugWebService.getAllDrug().get(3), 1);
 		
 		prescription= new Prescription(1,"coach", Utils.DEPARTMENT.NEIKE.ordinal(), 
-				doctor, patient, drugmap, Utils.STATUS.APPROVED.ordinal(), date,"头疼发热无过敏历史");
+				doctor, null, patient, druglist, Utils.STATUS.APPROVED.ordinal(), date,"头疼发热无过敏历史");
 		prescriptionlist.add(prescription);
 		
 		doctor = DoctorWebService.getAllDoctor().get(1);
 		patient = PatientWebService.getAllPatient().get(0);
 
-		Map<Drug, Integer> drugmap1 = new HashMap<Drug, Integer>();
-		drugmap1.put(DrugWebService.getAllDrug().get(0), 1);
-		drugmap1.put(DrugWebService.getAllDrug().get(1), 3);
-		drugmap1.put(DrugWebService.getAllDrug().get(2), 4);
+//		Map<Drug, Integer> drugmap1 = new HashMap<Drug, Integer>();
+//		drugmap1.put(DrugWebService.getAllDrug().get(0), 1);
+//		drugmap1.put(DrugWebService.getAllDrug().get(1), 3);
+//		drugmap1.put(DrugWebService.getAllDrug().get(2), 4);
+
+		druglist = new ArrayList<Prescription_drugmap>();
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "aaa"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "bbb"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(2), 3, "ccc"));
 		
 		prescription= new Prescription(2,"toothache", Utils.DEPARTMENT.WAIKE.ordinal(), 
-				doctor,patient, drugmap, Utils.STATUS.COMMITED.ordinal(),date,"青霉素过敏");
+				doctor, null, patient, druglist, Utils.STATUS.COMMITED.ordinal(),date,"青霉素过敏");
 		prescriptionlist.add(prescription);
 		MAX_ID = 3;
 	}

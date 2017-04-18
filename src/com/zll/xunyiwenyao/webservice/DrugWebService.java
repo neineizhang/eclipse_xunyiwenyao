@@ -16,15 +16,15 @@ public class DrugWebService {
     static {
         Drug drug = null;
         druglist = new ArrayList<Drug>();
-        drug = new Drug(1, "Drug A", "12g X 10", "12.00", "one day one time");
+        drug = new Drug(1, "Drug A", "12g X 10", "suibian", "bianji");
         druglist.add(drug);
-        drug = new Drug(2, "Drug B", "12g X 30", "22.00", "one day 3 time");
+        drug = new Drug(2, "Drug B", "12g X 30", "suibian", "keli");
         druglist.add(drug);
-        drug = new Drug(3, "Drug C", "1g X 10", "72.00", "one day 2 time");
+        drug = new Drug(3, "Drug C", "1g X 10", "suibian", "bianji");
         druglist.add(drug);
-        drug = new Drug(4, "Drug D", "12g X 13", "32.00", "one day one time");
+        drug = new Drug(4, "Drug D", "12g X 13", "suibian", "keli");
         druglist.add(drug);
-        drug = new Drug(5, "Drug E", "12g X 120", "22.00", "one day one time");
+        drug = new Drug(5, "Drug E", "12g X 120", "suibian", "bianji");
         druglist.add(drug);
     }
 
@@ -38,6 +38,15 @@ public class DrugWebService {
     public static Drug getDrugByName(String name){
     	for(Drug item : druglist){
     		if(item.getName().equals(name)){
+    			return item;
+    		}
+    	}
+    	return null;
+    }
+    
+    public static Drug getDrugByID(int id){
+    	for(Drug item : druglist){
+    		if(item.getId() == id){
     			return item;
     		}
     	}

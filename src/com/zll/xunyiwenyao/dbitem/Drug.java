@@ -8,19 +8,20 @@ public class Drug {
     private int id;
     private String name;
     private String specification;
-    private String price;
-    private String description;
+    //private String price;
+    private String py_name;
+    private String dosage_form;
 
     public Drug(){
 
     }
 
-    public Drug(int id, String name, String specification, String price, String description) {
+    public Drug(int id, String name, String specification, String py_name, String dosage_form) {
         this.id = id;
         this.name = name;
         this.specification = specification;
-        this.price = price;
-        this.description = description;
+        this.py_name = py_name;
+        this.dosage_form = dosage_form;
     }
 
     public int getId() {
@@ -46,20 +47,20 @@ public class Drug {
     public void setSpecification(String specification) {
         this.specification = specification;
     }
+    
+	public String getPy_name() {
+		return py_name;
+	}
 
-    public String getPrice() {
-        return price;
-    }
+	public void setPy_name(String py_name) {
+		this.py_name = py_name;
+	}
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
+	public String getDosage_form() {
+		return dosage_form;
+	}
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDosage_form(String dosage_form) {
+		this.dosage_form = dosage_form;
+	}
 }

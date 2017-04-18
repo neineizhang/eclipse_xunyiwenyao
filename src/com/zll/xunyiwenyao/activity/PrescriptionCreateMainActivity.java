@@ -2,7 +2,6 @@ package com.zll.xunyiwenyao.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +11,7 @@ import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Patient;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.ListViewUtils;
 import com.zll.xunyiwenyao.view.PrescriptionCreateScrollView;
@@ -162,8 +162,8 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				tempdata.put("data_" + 1, drug.getName());
 				tempdata.put("data_" + 2, drug.getSpecification());
 				tempdata.put("data_" + 3, "1");
-				tempdata.put("data_" + 4, drug.getPrice());
-				tempdata.put("data_" + 5, drug.getDescription());
+				tempdata.put("data_" + 4, drug.getDosage_form());
+				tempdata.put("data_" + 5, "");
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				datas.add(tempdata);
@@ -208,20 +208,32 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				} else {
 					// chufangmingcheng.setText(template_name);
 
-					Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
+					//Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
+				    List<Prescription_drugmap> druglist = prescriptionTemplate.getDruglist();
+				    
 					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv
 							.getAdapter()).getData();
 					if (datas == null) {
 						datas = new ArrayList<Map<String, String>>();
 					}
-					for (Drug drug : drugmap.keySet()) {
+					//for (Drug drug : drugmap.keySet()) {
+					for(Prescription_drugmap drugitem : druglist){
 						Map<String, String> tempdata = new HashMap<String, String>();
-						tempdata.put("title", String.valueOf(drug.getId()));
-						tempdata.put("data_" + 1, drug.getName());
-						tempdata.put("data_" + 2, drug.getSpecification());
-						tempdata.put("data_" + 3, drugmap.get(drug) + "");
-						tempdata.put("data_" + 4, drug.getPrice());
-						tempdata.put("data_" + 5, drug.getDescription());
+						
+
+						tempdata.put("title", String.valueOf(drugitem.getDrug().getId()));
+						tempdata.put("data_" + 1, drugitem.getDrug().getName());
+						tempdata.put("data_" + 2, drugitem.getDrug().getSpecification());
+						tempdata.put("data_" + 3, drugitem.getCount()+"");
+						tempdata.put("data_" + 4, drugitem.getDrug().getDosage_form());
+						tempdata.put("data_" + 5, drugitem.getDescription());
+						
+//						tempdata.put("title", String.valueOf(drug.getId()));
+//						tempdata.put("data_" + 1, drug.getName());
+//						tempdata.put("data_" + 2, drug.getSpecification());
+//						tempdata.put("data_" + 3, drugmap.get(drug) + "");
+//						tempdata.put("data_" + 4, drug.getDosage_form());
+//						tempdata.put("data_" + 5, "");
 						datas.add(tempdata);
 					}
 					((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
@@ -260,22 +272,26 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				// doctor_name_et.setText(doctor_name);
 				// prescription_data_et.setText(prescription_date);
 				clinical_diagnosis_et.setText(clinical_diagnosis);
-				Map<Drug, Integer> drugmap = prescription.getDrugmap();
+				//Map<Drug, Integer> drugmap = prescription.getDrugmap();
+			    List<Prescription_drugmap> druglist = prescription.getDruglist();
+			    
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				if (datas == null) {
 					datas = new ArrayList<Map<String, String>>();
 				}
-				for (Drug drug : drugmap.keySet()) {
+
+				for(Prescription_drugmap drugitem : druglist){
 					Map<String, String> tempdata = new HashMap<String, String>();
-					tempdata.put("title", String.valueOf(drug.getId()));
-					tempdata.put("data_" + 1, drug.getName());
-					tempdata.put("data_" + 2, drug.getSpecification());
-					tempdata.put("data_" + 3, drugmap.get(drug) + "");
-					tempdata.put("data_" + 4, drug.getPrice());
-					tempdata.put("data_" + 5, drug.getDescription());
+					tempdata.put("title", String.valueOf(drugitem.getDrug().getId()));
+					tempdata.put("data_" + 1, drugitem.getDrug().getName());
+					tempdata.put("data_" + 2, drugitem.getDrug().getSpecification());
+					tempdata.put("data_" + 3, drugitem.getCount()+"");
+					tempdata.put("data_" + 4, drugitem.getDrug().getDosage_form());
+					tempdata.put("data_" + 5, drugitem.getDescription());
 					datas.add(tempdata);
 				}
+				
 				((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
 				((ScrollAdapter) drugs_lv.getAdapter()).notifyDataSetChanged();
 
@@ -300,19 +316,28 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
 
-				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+				//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+			    List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
 
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				for (Map<String, String> item : datas) {
-					Drug drug = new Drug();
-					drug.setId(Integer.parseInt(item.get("title")));
-					drug.setDescription(item.get("data_5"));
-					drug.setPrice(item.get("data_4"));
-					drug.setName(item.get("data_1"));
-					drug.setSpecification(item.get("data_2"));
-					int count = Integer.valueOf(item.get("data_3"));
-					drugmap.put(drug, count);
+					Prescription_drugmap prescription_frug = new Prescription_drugmap();
+					
+					Drug drug = DrugWebService.getDrugByID(Integer.parseInt(item.get("title")));
+					//drug.setId(Integer.parseInt(item.get("title")));
+					//drug.setDescription(item.get("data_5"));
+					//drug.setPrice(item.get("data_4"));
+					//drug.setName(item.get("data_1"));
+					//drug.setSpecification(item.get("data_2"));
+					//int count = Integer.valueOf(item.get("data_3"));
+					
+					prescription_frug.setDrug(drug);
+					prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
+					prescription_frug.setDescription(item.get("data_5"));
+					
+					druglist.add(prescription_frug);
+					//drugmap.put(drug, count);
 				}
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionWebService.getAllPrescriptionName();
@@ -322,7 +347,8 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					final Prescription prescription = new Prescription();
 					prescription.setPatient(patient);
 					prescription.setName(prescription_name);
-					prescription.setDrugmap(drugmap);
+					//prescription.setDrugmap(drugmap);
+					prescription.setDruglist(druglist);
 					prescription.setStatus(Utils.STATUS.SAVED.ordinal());
 					prescription.setDate(prescription_date);
 					prescription.setClinical_diagnosis(clinical_diagnosis);
@@ -350,18 +376,28 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				// return;
 				// }
 				//
-				Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+				//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+			    List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
+			    
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				for (Map<String, String> item : datas) {
-					Drug drug = new Drug();
-					drug.setId(Integer.parseInt(item.get("title")));
-					drug.setDescription(item.get("data_5"));
-					drug.setPrice(item.get("data_4"));
-					drug.setName(item.get("data_1"));
-					drug.setSpecification(item.get("data_2"));
-					int count = Integer.valueOf(item.get("data_3"));
-					drugmap.put(drug, count);
+					Prescription_drugmap prescription_frug = new Prescription_drugmap();
+					
+					Drug drug = DrugWebService.getDrugByID(Integer.parseInt(item.get("title")));
+					//drug.setId(Integer.parseInt(item.get("title")));
+					//drug.setDescription(item.get("data_5"));
+					//drug.setPrice(item.get("data_4"));
+					//drug.setName(item.get("data_1"));
+					//drug.setSpecification(item.get("data_2"));
+					//int count = Integer.valueOf(item.get("data_3"));
+					
+					prescription_frug.setDrug(drug);
+					prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
+					prescription_frug.setDescription(item.get("data_5"));
+					
+					druglist.add(prescription_frug);
+					//drugmap.put(drug, count);
 				}
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionTemplateWebService.getAllTemplateName();
@@ -407,7 +443,8 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					});
 					builder.create().show();
 					prescriptionTemplate.setName(prescription_name);
-					prescriptionTemplate.setDrugmap(drugmap);
+					//prescriptionTemplate.setDrugmap(drugmap);
+					prescriptionTemplate.setDruglist(druglist);
 					PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
 
 					
@@ -446,25 +483,44 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				}
 
 				else {
-					Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+					//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+				    List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
 					// List<Drug> druglt = new ArrayList<Drug>();
 					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv
 							.getAdapter()).getData();
 					for (Map<String, String> item : datas) {
-						Drug drug = new Drug();
-						drug.setId(Integer.parseInt(item.get("title")));
-						drug.setDescription(item.get("data_5"));
-						drug.setPrice(item.get("data_4"));
-						drug.setName(item.get("data_1"));
-						drug.setSpecification(item.get("data_2"));
-						int count = Integer.valueOf(item.get("data_3"));
-						drugmap.put(drug, count);
+//						Drug drug = new Drug();
+//						drug.setId(Integer.parseInt(item.get("title")));
+//						drug.setDescription(item.get("data_5"));
+//						drug.setPrice(item.get("data_4"));
+//						drug.setName(item.get("data_1"));
+//						drug.setSpecification(item.get("data_2"));
+//						int count = Integer.valueOf(item.get("data_3"));
+//						drugmap.put(drug, count);
+						
+						Prescription_drugmap prescription_frug = new Prescription_drugmap();
+						
+						Drug drug = DrugWebService.getDrugByID(Integer.parseInt(item.get("title")));
+						//drug.setId(Integer.parseInt(item.get("title")));
+						//drug.setDescription(item.get("data_5"));
+						//drug.setPrice(item.get("data_4"));
+						//drug.setName(item.get("data_1"));
+						//drug.setSpecification(item.get("data_2"));
+						//int count = Integer.valueOf(item.get("data_3"));
+						
+						prescription_frug.setDrug(drug);
+						prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
+						prescription_frug.setDescription(item.get("data_5"));
+						
+						druglist.add(prescription_frug);
+						//drugmap.put(drug, count);
 					}
 
 					Prescription prescription = new Prescription();
 					prescription.setPatient(patient);
 					prescription.setName(prescription_name);
-					prescription.setDrugmap(drugmap);
+//					prescription.setDrugmap(drugmap);
+					prescription.setDruglist(druglist);
 					prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
 					prescription.setDate(prescription_date);
 					prescription.setClinical_diagnosis(clinical_diagnosis);

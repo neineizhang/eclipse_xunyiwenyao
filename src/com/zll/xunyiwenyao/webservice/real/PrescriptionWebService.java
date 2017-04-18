@@ -1,7 +1,6 @@
 package com.zll.xunyiwenyao.webservice.real;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,16 +12,14 @@ import org.json.JSONObject;
 import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Patient;
-import com.zll.xunyiwenyao.dbitem.Prescription2;
-import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
-import com.zll.xunyiwenyao.dbitem.Utils;
+import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.util.HttpHelper;
 import com.zll.xunyiwenyao.util.JsonHelper;
 import com.zll.xunyiwenyao.webitem.ResponseItem;
 
 public class PrescriptionWebService {
 	
-	private static List<Prescription2> prescriptionlist;
+	private static List<Prescription> prescriptionlist;
 	private static int MAX_ID = 1;
 
 //	static {
@@ -76,8 +73,8 @@ public class PrescriptionWebService {
         System.out.println(ja.length());
 
         ////////
-        Prescription2  prescription = null;
-        prescriptionlist = new ArrayList<Prescription2>();
+        Prescription  prescription = null;
+        prescriptionlist = new ArrayList<Prescription>();
         for(int i = 0; i < ja.length(); i++){
         	JSONObject jsonobj = (JSONObject) ja.get(i);
         	
@@ -86,10 +83,13 @@ public class PrescriptionWebService {
         	int department = 0;//////?
         	Doctor doctor = DoctorWebService.getDoctorByID(jsonobj.getInt("creator_id"));
         	Doctor checker = DoctorWebService.getDoctorByID(jsonobj.getInt("reviewer_id"));
-        	String patient_name =jsonobj.getString("user_name");
-        	int user_id =jsonobj.getInt("user_id");
-        	int user_age =jsonobj.getInt("user_age");
-        	int user_sex =jsonobj.getInt("user_sex");
+        	//String patient_name =jsonobj.getString("user_name");
+        	Patient patient = new Patient();
+        	patient.setName(jsonobj.getString("user_name"));
+        	patient.setAge(jsonobj.getInt("user_age"));
+        	patient.setSex(jsonobj.getInt("user_sex"));
+        	patient.setId(jsonobj.getInt("user_id"));
+        	
         	Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>(); 
         	JSONArray jsonarray = jsonobj.getJSONArray("detailList");
         	for(int j = 0; j < jsonarray.length(); j++){
@@ -104,17 +104,17 @@ public class PrescriptionWebService {
         	String date = jsonobj.getString("create_time"); /////???
         	String clinical_diagnosis = jsonobj.getString("content");; //////?
         	
-        	prescription = new Prescription2(
-        			id, name, department, doctor, patient_name, user_sex,user_age,
-        			drugmap, status, date, clinical_diagnosis);
-        	        
-        	prescriptionlist.add(prescription);
-        	System.out.println("success add:"+JsonHelper.toJSON(prescription));
+//        	prescription = new Prescription(
+//        			id, name, department, doctor, checker, patient,
+//        			drugmap, status, date, clinical_diagnosis);
+//        	        
+//        	prescriptionlist.add(prescription);
+//        	System.out.println("success add:"+JsonHelper.toJSON(prescription));
         }
     }
     
-	public static void AddPrescription(Prescription2 item){
-		Prescription2 prescription_inDB = getPrescriptionByName(item.getName());
+	public static void AddPrescription(Prescription item){
+		Prescription prescription_inDB = getPrescriptionByName(item.getName());
 
 		if(prescription_inDB == null){
 			item.setId(MAX_ID);
@@ -125,23 +125,23 @@ public class PrescriptionWebService {
 		}
 	}
 	
-	public static void updatePrescription(Prescription2 item){
-		Prescription2 presciption = getPrescriptionByName(item.getName());
+	public static void updatePrescription(Prescription item){
+		Prescription presciption = getPrescriptionByName(item.getName());
     	int index = prescriptionlist.indexOf(presciption);
     	prescriptionlist.set(index, item);
 	}
 
-	public static List<Prescription2> getAllPrescription()
+	public static List<Prescription> getAllPrescription()
 	{
 		return prescriptionlist;
 	}
 	
-	public static List<Prescription2> getPrescriptionbyStatus(int status)
+	public static List<Prescription> getPrescriptionbyStatus(int status)
 	{   
 		//List<Prescription> prescriptionsaved,prescriptioncommited,prescriptionapproved,prescriptionrefused; 
-		List<Prescription2> prescription_result_lt = new ArrayList<Prescription2>(); 
-		List<Prescription2> prescriptionlist = getAllPrescription();
-		for(Prescription2 item :prescriptionlist){
+		List<Prescription> prescription_result_lt = new ArrayList<Prescription>(); 
+		List<Prescription> prescriptionlist = getAllPrescription();
+		for(Prescription item :prescriptionlist){
 			
 			if(item.getStatus() == status){
 				prescription_result_lt.add(item);
@@ -153,8 +153,8 @@ public class PrescriptionWebService {
 	
 	}
 	
-	public static Prescription2 getPrescriptionByName(String name){
-		for(Prescription2 item :prescriptionlist){
+	public static Prescription getPrescriptionByName(String name){
+		for(Prescription item :prescriptionlist){
 			if(item.getName().equals(name)){
 				return item;
 			}
@@ -164,7 +164,7 @@ public class PrescriptionWebService {
 	
 	public static List<String> getAllPrescriptionName(){
     	List<String> namelist = new ArrayList<String>();
-    	for(Prescription2 item : prescriptionlist){
+    	for(Prescription item : prescriptionlist){
     		namelist.add(item.getName());
     	}
     	return namelist;

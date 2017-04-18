@@ -82,7 +82,8 @@ public class PrescriptionTemplateWebService {
     public static void updatePrescriptionTemplate(PrescriptionTemplate item){
     	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
     	int index = templatelt.indexOf(presciption);
-    	presciption.setDrugmap(item.getDrugmap());
+    	//presciption.setDrugmap(item.getDrugmap());
+    	presciption.setDruglist(item.getDruglist());
     	templatelt.set(index, presciption);
     }
     

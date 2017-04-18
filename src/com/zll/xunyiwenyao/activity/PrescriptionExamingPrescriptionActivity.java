@@ -10,6 +10,7 @@ import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.ListViewUtils;
 import com.zll.xunyiwenyao.util.MyListView;
@@ -134,20 +135,21 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 					else 
 					{examing_checker_name_et.setText(" ");}
 					
-					Map<Drug, Integer> drugmap = prescription.getDrugmap();
+					//Map<Drug, Integer> drugmap = prescription.getDrugmap();
+				    List<Prescription_drugmap> druglist = prescription.getDruglist();
 					
 					List<Map<String, String>> datas = (List<Map<String, String>>) ((ExamingScrollAdapter)examing_drugs_lv.getAdapter()).getData();
 					if(datas == null){
 						datas = new ArrayList<Map<String,String>>();
 					}
-					for(Drug drug : drugmap.keySet()){
+					for(Prescription_drugmap drugitem : druglist){
 						Map<String, String> tempdata = new HashMap<String, String>();
-						tempdata.put("title", String.valueOf(drug.getId()));
-						tempdata.put("data_" + 1, drug.getName());
-						tempdata.put("data_" + 2, drug.getSpecification());
-						tempdata.put("data_" + 3, drugmap.get(drug)+"");
-						tempdata.put("data_" + 4, drug.getPrice());
-						tempdata.put("data_" + 5, drug.getDescription());
+						tempdata.put("title", String.valueOf(drugitem.getDrug().getId()));
+						tempdata.put("data_" + 1, drugitem.getDrug().getName());
+						tempdata.put("data_" + 2, drugitem.getDrug().getSpecification());
+						tempdata.put("data_" + 3, drugitem.getCount()+"");
+						tempdata.put("data_" + 4, drugitem.getDrug().getDosage_form());
+						tempdata.put("data_" + 5, drugitem.getDescription());
 						datas.add(tempdata);
 					}
 					((ExamingScrollAdapter)examing_drugs_lv.getAdapter()).setData(datas);

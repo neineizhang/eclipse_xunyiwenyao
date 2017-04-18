@@ -2,6 +2,7 @@ package com.zll.xunyiwenyao.webservice;
 
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
 import com.zll.xunyiwenyao.dbitem.Utils;
 
 import java.util.ArrayList;
@@ -22,20 +23,30 @@ public class PrescriptionTemplateWebService {
         List<Drug> resultDruglt = DrugWebService.getAllDrug();
         PrescriptionTemplate template = null;
 
+		List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "111"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "222"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(2), 3, "333"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(3), 2, "444"));
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(4), 1, "555"));
 
-        template = new PrescriptionTemplate( 1, "template 1", Utils.DEPARTMENT.NEIKE.ordinal(), new HashMap<Drug, Integer>());
-        template.getDrugmap().put(resultDruglt.get(0), 10);
-        template.getDrugmap().put(resultDruglt.get(1), 2);
+        template = new PrescriptionTemplate( 1, "template 1", Utils.DEPARTMENT.NEIKE.ordinal(), druglist);
         templatelt.add(template);
 
-        template = new PrescriptionTemplate( 2, "template 2", Utils.DEPARTMENT.NEIKE.ordinal(), new HashMap<Drug, Integer>());
-        template.getDrugmap().put(resultDruglt.get(0), 10);
-        template.getDrugmap().put(resultDruglt.get(1), 20);
+		druglist = new ArrayList<Prescription_drugmap>();
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "aaa"));
+		
+        template = new PrescriptionTemplate( 2, "template 2", Utils.DEPARTMENT.NEIKE.ordinal(), druglist);
+//        template.getDrugmap().put(resultDruglt.get(0), 10);
+//        template.getDrugmap().put(resultDruglt.get(1), 20);
         templatelt.add(template);
 
-        template = new PrescriptionTemplate( 3, "template 3", Utils.DEPARTMENT.WAIKE.ordinal(), new HashMap<Drug, Integer>());
-        template.getDrugmap().put(resultDruglt.get(2), 10);
-        template.getDrugmap().put(resultDruglt.get(1), 2);
+		druglist = new ArrayList<Prescription_drugmap>();
+		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "bbb"));
+
+        template = new PrescriptionTemplate( 3, "template 3", Utils.DEPARTMENT.WAIKE.ordinal(), druglist);
+//        template.getDrugmap().put(resultDruglt.get(2), 10);
+//        template.getDrugmap().put(resultDruglt.get(1), 2);
         templatelt.add(template);
 
     }
@@ -60,7 +71,8 @@ public class PrescriptionTemplateWebService {
     public static void updatePrescriptionTemplate(PrescriptionTemplate item){
     	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
     	int index = templatelt.indexOf(presciption);
-    	presciption.setDrugmap(item.getDrugmap());
+//    	presciption.setDrugmap(item.getDrugmap());
+    	presciption.setDruglist(item.getDruglist());
     	templatelt.set(index, presciption);
     }
     
