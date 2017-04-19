@@ -24,7 +24,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -487,9 +490,9 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();
 				}
 
-				else if (list.contains(prescription_name)) {
-					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
-				}
+//				else if (list.contains(prescription_name)) {
+//					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
+//				}
 
 				else {
 					//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
@@ -682,7 +685,7 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 		private String[] from;
 		private int[] to;
 		private Context context;
-		//private List<View[]> holders_lt = new ArrayList<View[]>();
+		private List<View[]> holders_lt = new ArrayList<View[]>();
 		
 		public ScrollAdapter(Context context,
 				List<? extends Map<String, ?>> data, int resource,
@@ -693,47 +696,35 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 			this.res = resource;
 			this.from = from;
 			this.to = to;
-//			for(int i = 0; i < data.size(); i++){
-//				holders_lt.add(null);
-//			}
+			for(int i = 0; i < data.size(); i++){
+				holders_lt.add(null);
+			}
 		}
 		
 		public void notifyDataSetChanged(){
 			super.notifyDataSetChanged();
-			List<View> view_lt = ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
-//			for(int index = 0; index < view_lt.size(); index++){
-//				View v = view_lt.get(index);
-//			//for(View v : view_lt){
-//				View[] views = new View[to.length];
-//				for(int i = 0; i < to.length; i++) {
-//					View tv = v.findViewById(to[i]);;
-//					tv.setOnClickListener(clickListener);
-//					views[i] = tv;
-//				}
-//				v.setTag(views);
-//				holders_lt.set(index, views);
-//			}
+			//ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
 		}
 		
 		public List<? extends Map<String, ?>> getData(){
-//			for(int position = 0; position < holders_lt.size(); position++){
-//				View[] holders = holders_lt.get(position);
-//				int len = holders.length;
-//				for(int i = 0 ; i < len; i++) {
-//					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
-//					String value = ((TextView)holders[i]).getText().toString();
-//					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
-//					((Map<String, String>)this.datas.get(position)).put(from[i], value);
-//				}
-//			}
+			for(int position = 0; position < holders_lt.size(); position++){
+				View[] holders = holders_lt.get(position);
+				int len = holders.length;
+				for(int i = 0 ; i < len; i++) {
+					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
+					String value = ((TextView)holders[i]).getText().toString();
+					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
+					((Map<String, String>)this.datas.get(position)).put(from[i], value);
+				}
+			}
 			return datas;
 		}
 		
 		public void  setData(List<? extends Map<String, ?>> new_data){
 			datas = new_data;
-//			for(int i = 0; i < new_data.size(); i++){
-//				holders_lt.add(null);
-//			}
+			for(int i = 0; i < new_data.size(); i++){
+				holders_lt.add(null);
+			}
 		}
 		
 		@Override
@@ -748,12 +739,42 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					View tv = v.findViewById(to[i]);;
 					tv.setOnClickListener(clickListener);
 					views[i] = tv;
+				    if (tv instanceof EditText && tv.getId() == R.id.item_data3)
+				    {
+				     final int pos = position;
+				     EditText et =(EditText) tv;
+				     et.addTextChangedListener(new TextWatcher()
+				    		 {
+
+								@Override
+								public void afterTextChanged(Editable s) {
+									// TODO Auto-generated method stub
+									if (s!=null)
+									{String strNum =s.toString();
+									 
+									}
+								}
+
+								@Override
+								public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onTextChanged(CharSequence s, int start, int before, int count) {
+									// TODO Auto-generated method stub
+									
+								}
+				    	 
+				    		 });
+				    }
 				}
 				v.setTag(views);
-//				if(holders_lt.get(position) == null){
-//					holders_lt.set(position, views);
-//
-//				}
+				if(holders_lt.get(position) == null){
+					holders_lt.set(position, views);
+
+				}
 			}
 			View[] holders = (View[]) v.getTag();
 			int len = holders.length;
@@ -773,9 +794,16 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 	};
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 //		// TODO Auto-generated method stub
-//		
+//		Intent i = new Intent(this, PrescriptionExamingPrescriptionActivity.class);
+		if(parent.getAdapter()!=null)
+		{
+		final Drug data = (Drug) parent.getItemAtPosition(position);
+		Toast.makeText(PrescriptionCreateMainActivity.this, data.getId(),
+				Toast.LENGTH_SHORT).show();
+		}
+		
 	return false;
 	}
 
