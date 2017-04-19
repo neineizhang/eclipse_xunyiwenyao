@@ -682,7 +682,7 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 		private String[] from;
 		private int[] to;
 		private Context context;
-		private List<View[]> holders_lt = new ArrayList<View[]>();
+		//private List<View[]> holders_lt = new ArrayList<View[]>();
 		
 		public ScrollAdapter(Context context,
 				List<? extends Map<String, ?>> data, int resource,
@@ -693,35 +693,47 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 			this.res = resource;
 			this.from = from;
 			this.to = to;
-			for(int i = 0; i < data.size(); i++){
-				holders_lt.add(null);
-			}
+//			for(int i = 0; i < data.size(); i++){
+//				holders_lt.add(null);
+//			}
 		}
 		
 		public void notifyDataSetChanged(){
 			super.notifyDataSetChanged();
-			//ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
+			List<View> view_lt = ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
+//			for(int index = 0; index < view_lt.size(); index++){
+//				View v = view_lt.get(index);
+//			//for(View v : view_lt){
+//				View[] views = new View[to.length];
+//				for(int i = 0; i < to.length; i++) {
+//					View tv = v.findViewById(to[i]);;
+//					tv.setOnClickListener(clickListener);
+//					views[i] = tv;
+//				}
+//				v.setTag(views);
+//				holders_lt.set(index, views);
+//			}
 		}
 		
 		public List<? extends Map<String, ?>> getData(){
-			for(int position = 0; position < holders_lt.size(); position++){
-				View[] holders = holders_lt.get(position);
-				int len = holders.length;
-				for(int i = 0 ; i < len; i++) {
-					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
-					String value = ((TextView)holders[i]).getText().toString();
-					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
-					((Map<String, String>)this.datas.get(position)).put(from[i], value);
-				}
-			}
+//			for(int position = 0; position < holders_lt.size(); position++){
+//				View[] holders = holders_lt.get(position);
+//				int len = holders.length;
+//				for(int i = 0 ; i < len; i++) {
+//					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
+//					String value = ((TextView)holders[i]).getText().toString();
+//					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
+//					((Map<String, String>)this.datas.get(position)).put(from[i], value);
+//				}
+//			}
 			return datas;
 		}
 		
 		public void  setData(List<? extends Map<String, ?>> new_data){
 			datas = new_data;
-			for(int i = 0; i < new_data.size(); i++){
-				holders_lt.add(null);
-			}
+//			for(int i = 0; i < new_data.size(); i++){
+//				holders_lt.add(null);
+//			}
 		}
 		
 		@Override
@@ -738,10 +750,10 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					views[i] = tv;
 				}
 				v.setTag(views);
-				if(holders_lt.get(position) == null){
-					holders_lt.set(position, views);
-
-				}
+//				if(holders_lt.get(position) == null){
+//					holders_lt.set(position, views);
+//
+//				}
 			}
 			View[] holders = (View[]) v.getTag();
 			int len = holders.length;

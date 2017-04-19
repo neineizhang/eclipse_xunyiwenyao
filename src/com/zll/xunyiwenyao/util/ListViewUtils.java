@@ -1,4 +1,7 @@
 package com.zll.xunyiwenyao.util;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
@@ -8,13 +11,15 @@ import android.widget.ListView;
 
 public class ListViewUtils{
 	/**
-	 * ¸ù¾Ý×ÓitemÀ´¼ÆËãlistviewµÄ¸ß¶È
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½itemï¿½ï¿½ï¿½ï¿½ï¿½ï¿½listviewï¿½Ä¸ß¶ï¿½
 	 * @param listView
 	 */
-	public static void setListViewHeightBasedOnChildren(ListView listView) {
+	public static List<View> setListViewHeightBasedOnChildren(ListView listView) {
+		List<View> view_lt = new ArrayList<View>();
+		
 	    ListAdapter listAdapter = listView.getAdapter();
 	    if (listAdapter == null)
-	        return;
+	        return null;
 
 	    int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.UNSPECIFIED);
 	    int totalHeight = 0;
@@ -26,9 +31,14 @@ public class ListViewUtils{
 
 	        view.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
 	        totalHeight += view.getMeasuredHeight();
+	        
+	        ////rxz
+	        view_lt.add(view);
 	    }
 	    ViewGroup.LayoutParams params = listView.getLayoutParams();
 	    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 	    listView.setLayoutParams(params);
+	    
+	    return view_lt;
 	}
 }
