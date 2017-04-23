@@ -1,14 +1,23 @@
 package com.zll.xunyiwenyao.webservice;
 
-import com.zll.xunyiwenyao.dbitem.Drug;
-import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
-import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
-import com.zll.xunyiwenyao.dbitem.Utils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.zll.xunyiwenyao.dbitem.Doctor;
+import com.zll.xunyiwenyao.dbitem.Drug;
+import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
+import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
+import com.zll.xunyiwenyao.dbitem.RecipeTemplate;
+import com.zll.xunyiwenyao.util.HttpHelper;
+import com.zll.xunyiwenyao.util.JsonHelper;
+import com.zll.xunyiwenyao.webitem.ResponseItem;
 
 /**
  * Created by rxz on 2017/3/22.
@@ -18,42 +27,60 @@ public class PrescriptionTemplateWebService {
 
     public static List<PrescriptionTemplate> templatelt = new ArrayList<PrescriptionTemplate>();
 
-    static{
-
-        List<Drug> resultDruglt = DrugWebService.getAllDrug();
-        PrescriptionTemplate template = null;
-
-		List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "111"));
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "222"));
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(2), 3, "333"));
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(3), 2, "444"));
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(4), 1, "555"));
-
-        template = new PrescriptionTemplate( 1, "template 1", Utils.DEPARTMENT.NEIKE.ordinal(), druglist);
-        templatelt.add(template);
-
-		druglist = new ArrayList<Prescription_drugmap>();
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "aaa"));
+    public static void initDB() throws JSONException{
+		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do?" ;
 		
-        template = new PrescriptionTemplate( 2, "template 2", Utils.DEPARTMENT.NEIKE.ordinal(), druglist);
-//        template.getDrugmap().put(resultDruglt.get(0), 10);
-//        template.getDrugmap().put(resultDruglt.get(1), 20);
-        templatelt.add(template);
+		String s = HttpHelper.sendGet(url, "");
+        Map m = JsonHelper.toMap(s);
+        ResponseItem responditem = new  ResponseItem();
+        responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
+        System.out.println(JsonHelper.toJSON(responditem));
+        System.out.println("___________");
+        
+        
+        JSONObject jo = new JSONObject(s);
+        JSONArray ja = jo.getJSONArray("data");
+        System.out.println(ja.length());
 
-		druglist = new ArrayList<Prescription_drugmap>();
-		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "bbb"));
-
-        template = new PrescriptionTemplate( 3, "template 3", Utils.DEPARTMENT.WAIKE.ordinal(), druglist);
-//        template.getDrugmap().put(resultDruglt.get(2), 10);
-//        template.getDrugmap().put(resultDruglt.get(1), 2);
-        templatelt.add(template);
-
+        ////////
+        PrescriptionTemplate  prescriptiontemplate = null;
+        templatelt = new ArrayList<PrescriptionTemplate>();
+        for(int i = 0; i < ja.length(); i++){
+        	JSONObject jsonobj = (JSONObject) ja.get(i);
+        	
+        	int id = jsonobj.getInt("recipeTemplate_id");
+        	String name = jsonobj.getString("template_name"); 
+        	int department = jsonobj.getInt("department");
+        	Doctor doctor = DoctorWebService.getDoctorByID(jsonobj.getInt("creator_id"));
+        	Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>(); 
+        	JSONArray jsonarray = jsonobj.getJSONArray("detailList");
+        	List<Prescription_drugmap> drugmaps=new ArrayList<Prescription_drugmap>();
+        	for(int j = 0; j < jsonarray.length(); j++){
+        		JSONObject tmpobj = (JSONObject) jsonarray.get(j);
+        		Drug tmpdrug = DrugWebService.getDrugByID(tmpobj.getInt("drug_id")); 
+        		int cnt = tmpobj.getInt("count");
+        		String description=tmpobj.getString("how_to_use");
+        		drugmaps.add(new Prescription_drugmap(tmpdrug, cnt, description));
+        		drugmap.put(tmpdrug, cnt);
+        	}
+        	
+        	prescriptiontemplate = new 	PrescriptionTemplate(id, name, department,drugmaps);
+        	templatelt.add(prescriptiontemplate);
+        }
     }
-
+    public static void main(String[] args) {
+		try {
+			PrescriptionTemplateWebService.initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
     public static List<PrescriptionTemplate> getAllTemplate(){
         return templatelt;
     }
+    
     
     public static List<String> getAllTemplateName(){
     	List<String> namelist = new ArrayList<String>();
@@ -65,13 +92,23 @@ public class PrescriptionTemplateWebService {
     
     
     public static void addPrescriptionTemplate(PrescriptionTemplate item){
-    	templatelt.add(item);
+//    	net.sf.json.JSONObject fromObject2 = net.sf.json.JSONObject.fromObject(item);
+//    	net.sf.json.JSONArray fromObject = net.sf.json.JSONArray.fromObject(item);
+    	RecipeTemplate recipeTemplate=new RecipeTemplate();
+    	recipeTemplate.setRecipeTemplate_id(item.getId());
+    	recipeTemplate.setTemplate_name(item.getName());
+    	recipeTemplate.setDepartment(item.getDepartment()+"");
+    	recipeTemplate.setDetailList(item.getDruglist());
+    	List<RecipeTemplate> templates=new ArrayList<RecipeTemplate>();
+    	templates.add(recipeTemplate);
+    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do";
+    	String s = HttpHelper.sendPost(url,new Gson().toJson(recipeTemplate));
     }
     
     public static void updatePrescriptionTemplate(PrescriptionTemplate item){
     	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
     	int index = templatelt.indexOf(presciption);
-//    	presciption.setDrugmap(item.getDrugmap());
+    	//presciption.setDrugmap(item.getDrugmap());
     	presciption.setDruglist(item.getDruglist());
     	templatelt.set(index, presciption);
     }

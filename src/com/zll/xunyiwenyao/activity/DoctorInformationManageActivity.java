@@ -14,8 +14,6 @@ import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.TopBarView;
 
-import org.apache.http.cookie.CookieIdentityComparator;
-
 /**
  * Created by kejund on 17/4/6.
  */
@@ -82,7 +80,7 @@ public class DoctorInformationManageActivity extends Activity implements TopBarV
         btn_update = (Button)findViewById(R.id.button_update);
         btn_ok = (Button)findViewById(R.id.button_ok);
 
-        //更新按钮
+        //鏇存柊鎸夐挳
         btn_update.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -94,7 +92,7 @@ public class DoctorInformationManageActivity extends Activity implements TopBarV
                 profile.setEnabled(true);
             }
         });
-        //确定按钮
+        //纭畾鎸夐挳
         btn_ok.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -104,10 +102,10 @@ public class DoctorInformationManageActivity extends Activity implements TopBarV
                     Utils.LOGIN_DOCTOR.setPasswd(passwrd.getText().toString());
                     Utils.LOGIN_DOCTOR.setGoodat(goodat.getText().toString());
                     Utils.LOGIN_DOCTOR.setProfile(profile.getText().toString());
-                    Toast.makeText(DoctorInformationManageActivity.this, "用户信息修改成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DoctorInformationManageActivity.this, "鐢ㄦ埛淇℃伅淇敼鎴愬姛锛�", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
-                    Toast.makeText(DoctorInformationManageActivity.this, "两次输入的密码不一致！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DoctorInformationManageActivity.this, "涓ゆ杈撳叆鐨勫瘑鐮佷笉涓�鑷达紒", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -119,7 +117,7 @@ public class DoctorInformationManageActivity extends Activity implements TopBarV
     }
     @Override
     public void onRightClick() {
-        Toast.makeText(DoctorInformationManageActivity.this, "你点击了右侧按钮", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DoctorInformationManageActivity.this, "浣犵偣鍑讳簡鍙充晶鎸夐挳", Toast.LENGTH_SHORT).show();
 
     }
 }

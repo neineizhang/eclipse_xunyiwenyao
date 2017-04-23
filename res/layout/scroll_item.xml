@@ -54,9 +54,18 @@
             <EditText
                 android:id="@+id/item_data5"
                 android:layout_width="100dip"
-                android:layout_height="fill_parent"
-                
+                android:layout_height="fill_parent"    
                 android:gravity="center" />
+            
+            <ImageView
+                android:id="@+id/item_delete_btn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"    
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                android:src="@drawable/icn_trashcan"
+                />
 
             
         </LinearLayout>

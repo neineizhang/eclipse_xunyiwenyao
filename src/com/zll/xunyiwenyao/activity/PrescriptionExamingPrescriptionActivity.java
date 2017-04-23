@@ -105,7 +105,7 @@ public class PrescriptionExamingPrescriptionActivity extends Activity {
 		  Bundle extras = getIntent().getExtras(); 
 			String prescription_name = extras.getString("prescription_name");
 //			Toast.makeText(PrescriptionExamingPrescriptionActivity.this, prescription_name, Toast.LENGTH_SHORT).show();
-			if(!prescription_name.trim().equals("")){
+			if(!"".equals(prescription_name)){
 				prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
 				if(prescription == null){
 					Toast.makeText(PrescriptionExamingPrescriptionActivity.this, "该处方单表为空", Toast.LENGTH_SHORT).show();

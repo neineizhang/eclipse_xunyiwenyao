@@ -27,7 +27,7 @@ public class PrescriptionTemplateWebService {
     public static List<PrescriptionTemplate> templatelt = new ArrayList<PrescriptionTemplate>();
 
     public static void initDB() throws JSONException{
-		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do";
+		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do?";
 		
 		String s = HttpHelper.sendGet(url, "");
         Map m = JsonHelper.toMap(s);

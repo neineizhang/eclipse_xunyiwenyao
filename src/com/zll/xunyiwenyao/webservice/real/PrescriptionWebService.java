@@ -16,6 +16,7 @@ import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.util.HttpHelper;
 import com.zll.xunyiwenyao.util.JsonHelper;
 import com.zll.xunyiwenyao.webitem.ResponseItem;
+import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 public class PrescriptionWebService {
 	
@@ -57,6 +58,15 @@ public class PrescriptionWebService {
 //		prescriptionlist.add(prescription);
 //		MAX_ID = 3;
 //	}
+	 public static void main(String[] args) {
+			try {
+				PrescriptionWebService.initDB();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	    
 	public static void initDB() throws JSONException{
 		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getRecipe.do";
 		
@@ -112,6 +122,8 @@ public class PrescriptionWebService {
 //        	System.out.println("success add:"+JsonHelper.toJSON(prescription));
         }
     }
+	
+	 
     
 	public static void AddPrescription(Prescription item){
 		Prescription prescription_inDB = getPrescriptionByName(item.getName());

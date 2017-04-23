@@ -25,6 +25,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +37,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
@@ -50,7 +54,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PrescriptionCreateMainActivity extends Activity implements OnItemLongClickListener {
+public class PrescriptionCreateMainActivity extends Activity {
 
 	private Button save, savetotemplate, commit;
 	private EditText patient_name_text, chufangmingcheng;
@@ -76,7 +80,7 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 	protected List<PrescriptionCreateScrollView> mHScrollViews = new ArrayList<PrescriptionCreateScrollView>();
 
 	private int prescription_id = 0;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -162,6 +166,7 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				}
 
 				Map<String, String> tempdata = new HashMap<String, String>();
+				tempdata.put("id", drug.getId() + "");
 				tempdata.put("title", String.valueOf(drug.getId()));
 				tempdata.put("data_" + 1, drug.getName());
 				tempdata.put("data_" + 2, drug.getSpecification());
@@ -212,32 +217,32 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				} else {
 					// chufangmingcheng.setText(template_name);
 
-					//Map<Drug, Integer> drugmap = prescriptionTemplate.getDrugmap();
-				    List<Prescription_drugmap> druglist = prescriptionTemplate.getDruglist();
-				    
+					// Map<Drug, Integer> drugmap =
+					// prescriptionTemplate.getDrugmap();
+					List<Prescription_drugmap> druglist = prescriptionTemplate.getDruglist();
+
 					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv
 							.getAdapter()).getData();
 					if (datas == null) {
 						datas = new ArrayList<Map<String, String>>();
 					}
-					//for (Drug drug : drugmap.keySet()) {
-					for(Prescription_drugmap drugitem : druglist){
+					// for (Drug drug : drugmap.keySet()) {
+					for (Prescription_drugmap drugitem : druglist) {
 						Map<String, String> tempdata = new HashMap<String, String>();
-						
 
 						tempdata.put("title", String.valueOf(drugitem.getDrug().getId()));
 						tempdata.put("data_" + 1, drugitem.getDrug().getName());
 						tempdata.put("data_" + 2, drugitem.getDrug().getSpecification());
-						tempdata.put("data_" + 3, drugitem.getCount()+"");
+						tempdata.put("data_" + 3, drugitem.getCount() + "");
 						tempdata.put("data_" + 4, drugitem.getDrug().getDosage_form());
 						tempdata.put("data_" + 5, drugitem.getDescription());
-						
-//						tempdata.put("title", String.valueOf(drug.getId()));
-//						tempdata.put("data_" + 1, drug.getName());
-//						tempdata.put("data_" + 2, drug.getSpecification());
-//						tempdata.put("data_" + 3, drugmap.get(drug) + "");
-//						tempdata.put("data_" + 4, drug.getDosage_form());
-//						tempdata.put("data_" + 5, "");
+
+						// tempdata.put("title", String.valueOf(drug.getId()));
+						// tempdata.put("data_" + 1, drug.getName());
+						// tempdata.put("data_" + 2, drug.getSpecification());
+						// tempdata.put("data_" + 3, drugmap.get(drug) + "");
+						// tempdata.put("data_" + 4, drug.getDosage_form());
+						// tempdata.put("data_" + 5, "");
 						datas.add(tempdata);
 					}
 					((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
@@ -251,7 +256,7 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 		String prescription_name = extras.getString("prescription_name");
 		if (prescription_name != null) {
 			Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
-			
+
 			if (prescription == null) {
 				Toast.makeText(mContext, "处方名称无效", Toast.LENGTH_SHORT).show();
 
@@ -278,26 +283,26 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				// doctor_name_et.setText(doctor_name);
 				// prescription_data_et.setText(prescription_date);
 				clinical_diagnosis_et.setText(clinical_diagnosis);
-				//Map<Drug, Integer> drugmap = prescription.getDrugmap();
-			    List<Prescription_drugmap> druglist = prescription.getDruglist();
-			    
+				// Map<Drug, Integer> drugmap = prescription.getDrugmap();
+				List<Prescription_drugmap> druglist = prescription.getDruglist();
+
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				if (datas == null) {
 					datas = new ArrayList<Map<String, String>>();
 				}
 
-				for(Prescription_drugmap drugitem : druglist){
+				for (Prescription_drugmap drugitem : druglist) {
 					Map<String, String> tempdata = new HashMap<String, String>();
 					tempdata.put("title", String.valueOf(drugitem.getDrug().getId()));
 					tempdata.put("data_" + 1, drugitem.getDrug().getName());
 					tempdata.put("data_" + 2, drugitem.getDrug().getSpecification());
-					tempdata.put("data_" + 3, drugitem.getCount()+"");
+					tempdata.put("data_" + 3, drugitem.getCount() + "");
 					tempdata.put("data_" + 4, drugitem.getDrug().getDosage_form());
 					tempdata.put("data_" + 5, drugitem.getDescription());
 					datas.add(tempdata);
 				}
-				
+
 				((ScrollAdapter) drugs_lv.getAdapter()).setData(datas);
 				((ScrollAdapter) drugs_lv.getAdapter()).notifyDataSetChanged();
 
@@ -322,52 +327,53 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
 
-				//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-			    List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
+				// Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+				List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
 
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				for (Map<String, String> item : datas) {
 					Prescription_drugmap prescription_frug = new Prescription_drugmap();
-					
+
 					Drug drug = DrugWebService.getDrugByID(Integer.parseInt(item.get("title")));
-					//drug.setId(Integer.parseInt(item.get("title")));
-					//drug.setDescription(item.get("data_5"));
-					//drug.setPrice(item.get("data_4"));
-					//drug.setName(item.get("data_1"));
-					//drug.setSpecification(item.get("data_2"));
-					//int count = Integer.valueOf(item.get("data_3"));
-					
+					// drug.setId(Integer.parseInt(item.get("title")));
+					// drug.setDescription(item.get("data_5"));
+					// drug.setPrice(item.get("data_4"));
+					// drug.setName(item.get("data_1"));
+					// drug.setSpecification(item.get("data_2"));
+					// int count = Integer.valueOf(item.get("data_3"));
+
 					prescription_frug.setDrug(drug);
 					prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
 					prescription_frug.setDescription(item.get("data_5"));
-					Log.d("rxz", "001:"+prescription_frug.getDescription());
-					
+					Log.d("rxz", "001:" + prescription_frug.getDescription());
+					Log.d("rxz", "002:" + prescription_frug.getDescription());
 					druglist.add(prescription_frug);
-					//drugmap.put(drug, count);
+					// drugmap.put(drug, count);
 				}
-//				List<String> list = new ArrayList<String>();
-//				list = PrescriptionWebService.getAllPrescriptionName();
-//				if (list.contains(prescription_name)) {
-//					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
-//				} else {
-					Prescription prescription = new Prescription();
-					prescription.setId(prescription_id);
-					prescription.setPatient(patient);
-					prescription.setName(prescription_name);
-					//prescription.setDrugmap(drugmap);
-					prescription.setDruglist(druglist);
-					prescription.setStatus(Utils.STATUS.SAVED.ordinal());
-					prescription.setDate(prescription_date);
-					prescription.setClinical_diagnosis(clinical_diagnosis);
-					prescription.setDoctor(Utils.LOGIN_DOCTOR);
+				// List<String> list = new ArrayList<String>();
+				// list = PrescriptionWebService.getAllPrescriptionName();
+				// if (list.contains(prescription_name)) {
+				// Toast.makeText(mContext, "该处方名称已存在",
+				// Toast.LENGTH_SHORT).show();
+				// } else {
+				Prescription prescription = new Prescription();
+				prescription.setId(prescription_id);
+				prescription.setPatient(patient);
+				prescription.setName(prescription_name);
+				// prescription.setDrugmap(drugmap);
+				prescription.setDruglist(druglist);
+				prescription.setStatus(Utils.STATUS.SAVED.ordinal());
+				prescription.setDate(prescription_date);
+				prescription.setClinical_diagnosis(clinical_diagnosis);
+				prescription.setDoctor(Utils.LOGIN_DOCTOR);
 
-					Log.d("rxz", "001:"+prescription.getId());
-					PrescriptionWebService.AddPrescription(prescription);
+				Log.d("rxz", "003:" + prescription.getId());
+				PrescriptionWebService.AddPrescription(prescription);
 
-					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
-					finish();
-//				}
+				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
+				finish();
+				// }
 			}
 		});
 		savetotemplate.setOnClickListener(new OnClickListener() {
@@ -385,28 +391,28 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 				// return;
 				// }
 				//
-				//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-			    List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
-			    
+				// Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
+				List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
+
 				List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv.getAdapter())
 						.getData();
 				for (Map<String, String> item : datas) {
 					Prescription_drugmap prescription_frug = new Prescription_drugmap();
-					
+
 					Drug drug = DrugWebService.getDrugByID(Integer.parseInt(item.get("title")));
-					//drug.setId(Integer.parseInt(item.get("title")));
-					//drug.setDescription(item.get("data_5"));
-					//drug.setPrice(item.get("data_4"));
-					//drug.setName(item.get("data_1"));
-					//drug.setSpecification(item.get("data_2"));
-					//int count = Integer.valueOf(item.get("data_3"));
-					
+					// drug.setId(Integer.parseInt(item.get("title")));
+					// drug.setDescription(item.get("data_5"));
+					// drug.setPrice(item.get("data_4"));
+					// drug.setName(item.get("data_1"));
+					// drug.setSpecification(item.get("data_2"));
+					// int count = Integer.valueOf(item.get("data_3"));
+
 					prescription_frug.setDrug(drug);
 					prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
 					prescription_frug.setDescription(item.get("data_5"));
-					
+
 					druglist.add(prescription_frug);
-					//drugmap.put(drug, count);
+					// drugmap.put(drug, count);
 				}
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionTemplateWebService.getAllTemplateName();
@@ -446,17 +452,16 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.cancel();
-							Toast.makeText(mContext, "SAVE SUCCESS",Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 							finish();
 						}
 					});
 					builder.create().show();
 					prescriptionTemplate.setName(prescription_name);
-					//prescriptionTemplate.setDrugmap(drugmap);
+					// prescriptionTemplate.setDrugmap(drugmap);
 					prescriptionTemplate.setDruglist(druglist);
 					PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
 
-					
 				}
 			}
 		});
@@ -485,50 +490,49 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 					Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();
 				} else if (prescription_name.equals("")) {
 					Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();
-				}
-
-				else if (list.contains(prescription_name)) {
+				} else if (list.contains(prescription_name)) {
 					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
 				}
 
 				else {
-					//Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
-				    List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
+					// Map<Drug, Integer> drugmap = new HashMap<Drug,
+					// Integer>();
+					List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
 					// List<Drug> druglt = new ArrayList<Drug>();
 					List<Map<String, String>> datas = (List<Map<String, String>>) ((ScrollAdapter) drugs_lv
 							.getAdapter()).getData();
 					for (Map<String, String> item : datas) {
-//						Drug drug = new Drug();
-//						drug.setId(Integer.parseInt(item.get("title")));
-//						drug.setDescription(item.get("data_5"));
-//						drug.setPrice(item.get("data_4"));
-//						drug.setName(item.get("data_1"));
-//						drug.setSpecification(item.get("data_2"));
-//						int count = Integer.valueOf(item.get("data_3"));
-//						drugmap.put(drug, count);
-						
+						// Drug drug = new Drug();
+						// drug.setId(Integer.parseInt(item.get("title")));
+						// drug.setDescription(item.get("data_5"));
+						// drug.setPrice(item.get("data_4"));
+						// drug.setName(item.get("data_1"));
+						// drug.setSpecification(item.get("data_2"));
+						// int count = Integer.valueOf(item.get("data_3"));
+						// drugmap.put(drug, count);
+
 						Prescription_drugmap prescription_frug = new Prescription_drugmap();
-						
+
 						Drug drug = DrugWebService.getDrugByID(Integer.parseInt(item.get("title")));
-						//drug.setId(Integer.parseInt(item.get("title")));
-						//drug.setDescription(item.get("data_5"));
-						//drug.setPrice(item.get("data_4"));
-						//drug.setName(item.get("data_1"));
-						//drug.setSpecification(item.get("data_2"));
-						//int count = Integer.valueOf(item.get("data_3"));
-						
+						// drug.setId(Integer.parseInt(item.get("title")));
+						// drug.setDescription(item.get("data_5"));
+						// drug.setPrice(item.get("data_4"));
+						// drug.setName(item.get("data_1"));
+						// drug.setSpecification(item.get("data_2"));
+						// int count = Integer.valueOf(item.get("data_3"));
+
 						prescription_frug.setDrug(drug);
 						prescription_frug.setCount(Integer.valueOf(item.get("data_3")));
 						prescription_frug.setDescription(item.get("data_5"));
-						
+
 						druglist.add(prescription_frug);
-						//drugmap.put(drug, count);
+						// drugmap.put(drug, count);
 					}
 
 					Prescription prescription = new Prescription();
 					prescription.setPatient(patient);
 					prescription.setName(prescription_name);
-//					prescription.setDrugmap(drugmap);
+					// prescription.setDrugmap(drugmap);
 					prescription.setDruglist(druglist);
 					prescription.setStatus(Utils.STATUS.COMMITED.ordinal());
 					prescription.setDate(prescription_date);
@@ -638,15 +642,15 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 
 		mHScrollViews.add(headerScroll);
 		drugs_lv = (ListView) findViewById(R.id.drugs_lv);
-		
-		//重写listview解决listview和scollview不兼容的问题
-	//	ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
-		
+
+		// 重写listview解决listview和scollview不兼容的问题
+		// ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
+
 		ScrollAdapter adapter = new ScrollAdapter(this, datas, R.layout.scroll_item,
 				new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5" }, new int[] { R.id.item_title,
 						R.id.item_data1, R.id.item_data2, R.id.item_data3, R.id.item_data4, R.id.item_data5 });
 		drugs_lv.setAdapter(adapter);
-		drugs_lv.setOnItemLongClickListener(this);
+		
 
 	}
 
@@ -675,108 +679,139 @@ public class PrescriptionCreateMainActivity extends Activity implements OnItemLo
 		}
 	}
 
-	class ScrollAdapter extends SimpleAdapter {
+	class ScrollAdapter extends SimpleAdapter implements View.OnClickListener {
 
 		private List<? extends Map<String, ?>> datas;
 		private int res;
 		private String[] from;
 		private int[] to;
 		private Context context;
-		//private List<View[]> holders_lt = new ArrayList<View[]>();
-		
-		public ScrollAdapter(Context context,
-				List<? extends Map<String, ?>> data, int resource,
-				String[] from, int[] to) {
+
+		public ScrollAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from,
+				int[] to) {
 			super(context, data, resource, from, to);
 			this.context = context;
 			this.datas = data;
 			this.res = resource;
 			this.from = from;
 			this.to = to;
-//			for(int i = 0; i < data.size(); i++){
-//				holders_lt.add(null);
-//			}
 		}
-		
-		public void notifyDataSetChanged(){
+
+		public void notifyDataSetChanged() {
 			super.notifyDataSetChanged();
 			List<View> view_lt = ListViewUtils.setListViewHeightBasedOnChildren(drugs_lv);
-//			for(int index = 0; index < view_lt.size(); index++){
-//				View v = view_lt.get(index);
-//			//for(View v : view_lt){
-//				View[] views = new View[to.length];
-//				for(int i = 0; i < to.length; i++) {
-//					View tv = v.findViewById(to[i]);;
-//					tv.setOnClickListener(clickListener);
-//					views[i] = tv;
-//				}
-//				v.setTag(views);
-//				holders_lt.set(index, views);
-//			}
 		}
-		
-		public List<? extends Map<String, ?>> getData(){
-//			for(int position = 0; position < holders_lt.size(); position++){
-//				View[] holders = holders_lt.get(position);
-//				int len = holders.length;
-//				for(int i = 0 ; i < len; i++) {
-//					//Log.d("rxz", "get-i:"+position+":"+i+":"+((TextView)holders[i]).getText().toString());
-//					String value = ((TextView)holders[i]).getText().toString();
-//					//Log.d("rxz", "get:"+position+":"+value+":"+this.datas.get(position).get(from[3]).toString());
-//					((Map<String, String>)this.datas.get(position)).put(from[i], value);
-//				}
-//			}
+
+		public List<? extends Map<String, ?>> getData() {
 			return datas;
 		}
-		
-		public void  setData(List<? extends Map<String, ?>> new_data){
-			datas = new_data;
-//			for(int i = 0; i < new_data.size(); i++){
-//				holders_lt.add(null);
-//			}
+
+		public void setData(List<? extends Map<String, ?>> new_data) {
+			if (new_data == null) {
+				datas = new ArrayList<Map<String, ?>>();
+			} else {
+				datas = new_data;
+			}
+			notifyDataSetChanged();
 		}
-		
+
+		public void removeItem(int position) {
+			if (position < 0 || position > datas.size()) {
+				return;
+			}
+			datas.remove(position);
+			notifyDataSetChanged();
+		}
+
+		public void removeItem(Map<String, ?> obj) {
+			datas.remove(obj);
+			notifyDataSetChanged();
+		}
+
+		public class ListTextWatcher extends SimpleTextWatcher {
+			private EditText mEt;
+			private int pos;
+
+			public ListTextWatcher(EditText et, int pos) {
+				mEt = et;
+				this.pos = pos;
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO 自动生成的方法存根
+				
+				if (mEt.getId() == R.id.item_data3) {
+					try {
+						if (s == null || s.length() == 0) {
+							return;
+						}
+						Integer num = Integer.valueOf(s.toString());
+						@SuppressWarnings("unchecked")
+						Map<String,String> data = (Map<String, String>) datas.get(pos);
+						data.put("data_3",num.toString());
+						Log.d("rxz", "data_3:" + num.toString());
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (mEt.getId() == R.id.item_data5) {
+					// 改备注
+					@SuppressWarnings("unchecked")
+					Map<String,String> data = (Map<String, String>) datas.get(pos);
+					data.put("data_5",s==null?"":s.toString());
+					Log.d("rxz", "data_5:" + s.toString());
+				}
+			}
+		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
-			if(v == null) {
+			if (v == null) {
 				v = LayoutInflater.from(context).inflate(res, null);
-				//锟斤拷一锟轿筹拷始锟斤拷锟斤拷时锟斤拷装锟斤拷锟斤拷
 				addHViews((PrescriptionCreateScrollView) v.findViewById(R.id.item_scroll));
 				View[] views = new View[to.length];
-				for(int i = 0; i < to.length; i++) {
-					View tv = v.findViewById(to[i]);;
-					tv.setOnClickListener(clickListener);
+				for (int i = 0; i < to.length; i++) {
+					View tv = v.findViewById(to[i]);
+					//tv.setOnClickListener(clickListener);
+					if (tv instanceof EditText){
+						EditText et =(EditText) tv;
+					    et.addTextChangedListener(new ListTextWatcher(et, position));
+					}
 					views[i] = tv;
 				}
+				ImageView mDeleteBtn = (ImageView) v.findViewById(R.id.item_delete_btn);
+				mDeleteBtn.setOnClickListener(this);
+				mDeleteBtn.setTag(position);
 				v.setTag(views);
-//				if(holders_lt.get(position) == null){
-//					holders_lt.set(position, views);
-//
-//				}
 			}
+
 			View[] holders = (View[]) v.getTag();
 			int len = holders.length;
-			for(int i = 0 ; i < len; i++) {
-				((TextView)holders[i]).setText(this.datas.get(position).get(from[i]).toString());
+			for (int i = 0; i < len; i++) {
+				((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
 			}
 			return v;
 		}
-	}
 
-	protected View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// Toast.makeText(PrescriptionCreateMainActivity.this, ((TextView)
-			// v).getText(), Toast.LENGTH_SHORT).show();
+			if (v.getId() == R.id.item_delete_btn) {
+				if (v.getTag() instanceof Integer) {
+					Integer pos = (Integer) v.getTag();
+					removeItem(pos);
+				}
+			}
 		}
-	};
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//		// TODO Auto-generated method stub
-//		
-	return false;
 	}
+
+//	protected View.OnClickListener clickListener = new View.OnClickListener() {
+//		@Override
+//		public void onClick(View v) {
+//			// Toast.makeText(PrescriptionCreateMainActivity.this, ((TextView)
+//			// v).getText(), Toast.LENGTH_SHORT).show();
+//		}
+//	};
 
 }

@@ -9,6 +9,9 @@ import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.webservice.DoctorWebService;
+import com.zll.xunyiwenyao.webservice.DrugWebService;
+import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
+import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,6 +49,10 @@ public class LoginActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		try {
 			DoctorWebService.initDB();
+			DrugWebService.initDB();
+			PrescriptionTemplateWebService.initDB();
+			PrescriptionWebService.initDB();
+			
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
