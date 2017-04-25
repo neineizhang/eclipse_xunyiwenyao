@@ -736,6 +736,9 @@ public class PrescriptionCreateMainActivity extends Activity {
 				mEt = et;
 				this.pos = pos;
 			}
+			public void setPosition(int pos){
+				this.pos = pos;
+			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -768,29 +771,40 @@ public class PrescriptionCreateMainActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
+			View[] holders  = null;
 			if (v == null) {
 				v = LayoutInflater.from(context).inflate(res, null);
 				addHViews((PrescriptionCreateScrollView) v.findViewById(R.id.item_scroll));
-				View[] views = new View[to.length];
+				holders = new View[to.length];
 				for (int i = 0; i < to.length; i++) {
 					View tv = v.findViewById(to[i]);
-					//tv.setOnClickListener(clickListener);
 					if (tv instanceof EditText){
 						EditText et =(EditText) tv;
-					    et.addTextChangedListener(new ListTextWatcher(et, position));
+						ListTextWatcher watcher = new ListTextWatcher(et, position);
+					    et.addTextChangedListener(watcher);
+					    et.setTag(watcher);
 					}
-					views[i] = tv;
+					holders[i] = tv;
 				}
 				ImageView mDeleteBtn = (ImageView) v.findViewById(R.id.item_delete_btn);
 				mDeleteBtn.setOnClickListener(this);
 				mDeleteBtn.setTag(position);
-				v.setTag(views);
+				v.setTag(holders);
+			}else{
+				holders= (View[]) v.getTag();
 			}
-
-			View[] holders = (View[]) v.getTag();
 			int len = holders.length;
 			for (int i = 0; i < len; i++) {
-				((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
+				if(holders[i] instanceof EditText){
+					EditText et = (EditText) holders[i];
+					ListTextWatcher watcher = (ListTextWatcher) et.getTag();
+					if(watcher != null){
+						watcher.setPosition(position);
+					}
+				}
+				Map<String,Object> map =(Map<String, Object>) this.datas.get(position);
+				Object obj =map.get(from[i]);
+				((TextView) holders[i]).setText(obj.toString());
 			}
 			return v;
 		}
