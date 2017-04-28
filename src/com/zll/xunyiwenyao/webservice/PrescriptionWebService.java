@@ -61,6 +61,8 @@ public class PrescriptionWebService {
 //	}
 	 public static void main(String[] args) {
 			try {
+				DoctorWebService.initDB();
+				DrugWebService.initDB();
 				PrescriptionWebService.initDB();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
