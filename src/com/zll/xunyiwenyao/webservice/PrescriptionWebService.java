@@ -1,7 +1,8 @@
 package com.zll.xunyiwenyao.webservice;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +15,10 @@ import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.Patient;
 import com.zll.xunyiwenyao.dbitem.Prescription;
 import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
+import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.HttpHelper;
 import com.zll.xunyiwenyao.util.JsonHelper;
 import com.zll.xunyiwenyao.webitem.ResponseItem;
-import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 /**
  * 
@@ -138,15 +139,47 @@ public class PrescriptionWebService {
 	 
     
 	public static void AddPrescription(Prescription item){
-		Prescription prescription_inDB = getPrescriptionByName(item.getName());
 
-		if(prescription_inDB == null){
-			item.setId(MAX_ID);
-	    	MAX_ID++;
-			prescriptionlist.add(item);
-		}else{
-			prescriptionlist.set(prescriptionlist.indexOf(prescription_inDB), item);
-		}
+    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecpice.do";
+    	StringBuilder itemStr = new StringBuilder();
+    	itemStr.append("recipe_name="+item.getName());
+    	itemStr.append("&creator_id="+Utils.LOGIN_DOCTOR.getId());
+    	itemStr.append("&user_name="+item.getPatient().getName());
+    	itemStr.append("&user_age="+item.getPatient().getAge());
+    	itemStr.append("&user_sex="+item.getPatient().getSex());
+    	itemStr.append("&content="+item.getClinical_diagnosis());
+    	itemStr.append("&status="+item.getStatus());
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String timestr = df.format(new Date());
+    	itemStr.append("&create_time_text="+timestr);
+
+    	JSONArray jsonArray = new JSONArray();
+    	for(Prescription_drugmap drugmap : item.getDruglist()){
+    		JSONObject jsonObject = new JSONObject();
+    		try {
+				jsonObject.put("count", drugmap.getCount());
+	    		jsonObject.put("how_to_use", drugmap.getDescription());
+	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		jsonArray.put(jsonObject);
+    	}
+    	itemStr.append("&details_json="+jsonArray.toString());
+    	System.out.println(itemStr.toString());
+    	String result = HttpHelper.sendPost(url, itemStr.toString());
+    	System.out.println(result);
+		
+//		Prescription prescription_inDB = getPrescriptionByName(item.getName());
+//
+//		if(prescription_inDB == null){
+//			item.setId(MAX_ID);
+//	    	MAX_ID++;
+//			prescriptionlist.add(item);
+//		}else{
+//			prescriptionlist.set(prescriptionlist.indexOf(prescription_inDB), item);
+//		}
 	}
 	
 	public static void updatePrescription(Prescription item){
