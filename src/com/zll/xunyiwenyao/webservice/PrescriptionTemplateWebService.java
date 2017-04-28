@@ -123,20 +123,95 @@ public class PrescriptionTemplateWebService {
     	System.out.println(itemStr.toString());
     	String result = HttpHelper.sendPost(url, itemStr.toString());
     	System.out.println(result);
+    	
+    	/// 
+    	try {
+			initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void updatePrescriptionTemplate(PrescriptionTemplate item){
-    	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
-    	int index = templatelt.indexOf(presciption);
-    	//presciption.setDrugmap(item.getDrugmap());
-    	presciption.setDruglist(item.getDruglist());
-    	templatelt.set(index, presciption);
+//    	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
+//    	int index = templatelt.indexOf(presciption);
+//    	//presciption.setDrugmap(item.getDrugmap());
+//    	presciption.setDruglist(item.getDruglist());
+//    	templatelt.set(index, presciption);
+    	
+    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/updateRecipeTemplate.do";
+    	StringBuilder itemStr = new StringBuilder();
+    	itemStr.append("recipeTemplate_id="+item.getId());
+    	itemStr.append("&template_name="+item.getName());
+    	itemStr.append("&creator_id="+Utils.LOGIN_DOCTOR.getId());
+    	itemStr.append("&department="+item.getDepartment());
+
+    	JSONArray jsonArray = new JSONArray();
+    	for(Prescription_drugmap drugmap : item.getDruglist()){
+    		JSONObject jsonObject = new JSONObject();
+    		try {
+				jsonObject.put("count", drugmap.getCount());
+	    		jsonObject.put("how_to_use", drugmap.getDescription());
+	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		jsonArray.put(jsonObject);
+    	}
+    	itemStr.append("&details_json="+jsonArray.toString());
+    	System.out.println(itemStr.toString());
+    	String result = HttpHelper.sendPost(url, itemStr.toString());
+    	System.out.println(result);
+    	
+    	/// 
+    	try {
+			initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void deletePrescriptionTemplate(PrescriptionTemplate item){
-    	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
-    	int index = templatelt.indexOf(presciption);
-    	templatelt.remove(index);
+    	
+    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/deleteRecipeTemplate.do";
+    	StringBuilder itemStr = new StringBuilder();
+    	itemStr.append("recipeTemplate_id="+item.getId());
+//    	itemStr.append("&template_name="+item.getName());
+//    	itemStr.append("&creator_id="+Utils.LOGIN_DOCTOR.getId());
+//    	itemStr.append("&department="+item.getDepartment());
+//
+//    	JSONArray jsonArray = new JSONArray();
+//    	for(Prescription_drugmap drugmap : item.getDruglist()){
+//    		JSONObject jsonObject = new JSONObject();
+//    		try {
+//				jsonObject.put("count", drugmap.getCount());
+//	    		jsonObject.put("how_to_use", drugmap.getDescription());
+//	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    		jsonArray.put(jsonObject);
+//    	}
+//    	itemStr.append("&details_json="+jsonArray.toString());
+    	System.out.println(itemStr.toString());
+    	String result = HttpHelper.sendPost(url, itemStr.toString());
+    	System.out.println(result);
+    	
+    	/// 
+    	try {
+			initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+//    	PrescriptionTemplate presciption = getPrescriptionTemplateByName(item.getName());
+//    	int index = templatelt.indexOf(presciption);
+//    	templatelt.remove(index);
     }
     
     public static PrescriptionTemplate getPrescriptionTemplateByName(String name){

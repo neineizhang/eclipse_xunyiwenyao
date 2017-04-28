@@ -170,6 +170,14 @@ public class PrescriptionWebService {
     	System.out.println(itemStr.toString());
     	String result = HttpHelper.sendPost(url, itemStr.toString());
     	System.out.println(result);
+    	
+    	/// 
+    	try {
+			initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		Prescription prescription_inDB = getPrescriptionByName(item.getName());
 //
@@ -183,9 +191,49 @@ public class PrescriptionWebService {
 	}
 	
 	public static void updatePrescription(Prescription item){
-		Prescription presciption = getPrescriptionByName(item.getName());
-    	int index = prescriptionlist.indexOf(presciption);
-    	prescriptionlist.set(index, item);
+		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/updateRecpice.do";
+    	StringBuilder itemStr = new StringBuilder();
+    	itemStr.append("recipe_id="+item.getId());
+    	itemStr.append("&recipe_name="+item.getName());
+    	itemStr.append("&creator_id="+Utils.LOGIN_DOCTOR.getId());
+    	itemStr.append("&user_name="+item.getPatient().getName());
+    	itemStr.append("&user_age="+item.getPatient().getAge());
+    	itemStr.append("&user_sex="+item.getPatient().getSex());
+    	itemStr.append("&content="+item.getClinical_diagnosis());
+    	itemStr.append("&status="+item.getStatus());
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String timestr = df.format(new Date());
+    	itemStr.append("&create_time_text="+timestr);
+
+    	JSONArray jsonArray = new JSONArray();
+    	for(Prescription_drugmap drugmap : item.getDruglist()){
+    		JSONObject jsonObject = new JSONObject();
+    		try {
+				jsonObject.put("count", drugmap.getCount());
+	    		jsonObject.put("how_to_use", drugmap.getDescription());
+	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		jsonArray.put(jsonObject);
+    	}
+    	itemStr.append("&details_json="+jsonArray.toString());
+    	System.out.println(itemStr.toString());
+    	String result = HttpHelper.sendPost(url, itemStr.toString());
+    	System.out.println(result);
+    	
+    	/// 
+    	try {
+			initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+//		Prescription presciption = getPrescriptionByName(item.getName());
+//    	int index = prescriptionlist.indexOf(presciption);
+//    	prescriptionlist.set(index, item);
 	}
 
 	public static List<Prescription> getAllPrescription()
