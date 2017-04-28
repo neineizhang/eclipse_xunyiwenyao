@@ -9,12 +9,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
 import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
-import com.zll.xunyiwenyao.dbitem.RecipeTemplate;
+import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.HttpHelper;
 import com.zll.xunyiwenyao.util.JsonHelper;
 import com.zll.xunyiwenyao.webitem.ResponseItem;
@@ -101,22 +100,29 @@ public class PrescriptionTemplateWebService {
     
     
     public static void addPrescriptionTemplate(PrescriptionTemplate item){
-//    	net.sf.json.JSONObject fromObject2 = net.sf.json.JSONObject.fromObject(item);
-//    	net.sf.json.JSONArray fromObject = net.sf.json.JSONArray.fromObject(item);
-    	RecipeTemplate recipeTemplate = new RecipeTemplate();
-    	recipeTemplate.setRecipeTemplate_id(item.getId());
-    	recipeTemplate.setTemplate_name(item.getName());
-    	recipeTemplate.setDepartment(item.getDepartment()+"");
-    	recipeTemplate.setDetailList(item.getDruglist());
-    	List<RecipeTemplate> templates=new ArrayList<RecipeTemplate>();
-    	templates.add(recipeTemplate);
-    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do";
-    	String s = HttpHelper.sendPost(url,new Gson().toJson(recipeTemplate));
-    	
-//    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecipeTemplate.do";
-//    	StringBuilder itemStr = new StringBuilder();
-//    	itemStr.append("template_name="+item.getName());
-//    	itemStr.append("&creator_id="+item.get);
+    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecipeTemplate.do";
+    	StringBuilder itemStr = new StringBuilder();
+    	itemStr.append("template_name="+item.getName());
+    	itemStr.append("&creator_id="+Utils.LOGIN_DOCTOR.getId());
+    	itemStr.append("&department="+item.getDepartment());
+
+    	JSONArray jsonArray = new JSONArray();
+    	for(Prescription_drugmap drugmap : item.getDruglist()){
+    		JSONObject jsonObject = new JSONObject();
+    		try {
+				jsonObject.put("count", drugmap.getCount());
+	    		jsonObject.put("how_to_use", drugmap.getDescription());
+	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		jsonArray.put(jsonObject);
+    	}
+    	itemStr.append("&details_json="+jsonArray.toString());
+    	System.out.println(itemStr.toString());
+    	String result = HttpHelper.sendPost(url, itemStr.toString());
+    	System.out.println(result);
     }
     
     public static void updatePrescriptionTemplate(PrescriptionTemplate item){
