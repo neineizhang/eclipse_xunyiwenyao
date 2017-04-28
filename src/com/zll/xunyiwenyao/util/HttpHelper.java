@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
-import java.util.Map;
 
 /**
  * reference code: 
@@ -17,6 +17,13 @@ import java.util.Map;
  *
  */
 public class HttpHelper {
+	
+	static{
+		CookieManager cookieManager = new CookieManager();  
+		CookieHandler.setDefault(cookieManager);
+		System.out.println("start session");
+	}
+	
 	/**
      * 向指定URL发送GET方法的请求
      * 
