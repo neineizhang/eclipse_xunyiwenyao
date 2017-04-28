@@ -1,5 +1,6 @@
 package com.zll.xunyiwenyao.webservice.backup;
 
+import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Drug;
 import com.zll.xunyiwenyao.dbitem.PrescriptionTemplate;
 import com.zll.xunyiwenyao.dbitem.Prescription_drugmap;
@@ -29,14 +30,16 @@ public class PrescriptionTemplateWebService {
 		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(2), 3, "333"));
 		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(3), 2, "444"));
 		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(4), 1, "555"));
+		Doctor doctor = DoctorWebService.getAllDoctor().get(0);
 
-        template = new PrescriptionTemplate( 1, "template 1", Utils.DEPARTMENT.NEIKE.ordinal(), druglist);
+        template = new PrescriptionTemplate( 1, "template 1", Utils.DEPARTMENT.NEIKE.ordinal(), druglist, doctor);
         templatelt.add(template);
 
 		druglist = new ArrayList<Prescription_drugmap>();
 		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(0), 1, "aaa"));
 		
-        template = new PrescriptionTemplate( 2, "template 2", Utils.DEPARTMENT.NEIKE.ordinal(), druglist);
+		doctor = DoctorWebService.getAllDoctor().get(0);
+        template = new PrescriptionTemplate( 2, "template 2", Utils.DEPARTMENT.NEIKE.ordinal(), druglist, doctor);
 //        template.getDrugmap().put(resultDruglt.get(0), 10);
 //        template.getDrugmap().put(resultDruglt.get(1), 20);
         templatelt.add(template);
@@ -44,7 +47,8 @@ public class PrescriptionTemplateWebService {
 		druglist = new ArrayList<Prescription_drugmap>();
 		druglist.add(new Prescription_drugmap(DrugWebService.getAllDrug().get(1), 2, "bbb"));
 
-        template = new PrescriptionTemplate( 3, "template 3", Utils.DEPARTMENT.WAIKE.ordinal(), druglist);
+		doctor = DoctorWebService.getAllDoctor().get(0);
+        template = new PrescriptionTemplate( 3, "template 3", Utils.DEPARTMENT.WAIKE.ordinal(), druglist, doctor);
 //        template.getDrugmap().put(resultDruglt.get(2), 10);
 //        template.getDrugmap().put(resultDruglt.get(1), 2);
         templatelt.add(template);

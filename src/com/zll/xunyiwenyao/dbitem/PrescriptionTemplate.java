@@ -13,17 +13,19 @@ public class PrescriptionTemplate {
     private String name;
     private int department;
     //private Map<Drug, Integer> drugmap;
+    private Doctor doctor;
     private List<Prescription_drugmap> druglist;
 
     public PrescriptionTemplate(){
 
     }
 
-    public PrescriptionTemplate(int id, String name, int department, List<Prescription_drugmap> druglist) {
+    public PrescriptionTemplate(int id, String name, int department, List<Prescription_drugmap> druglist, Doctor doctor) {
         this.id = id;
         this.name = name;
         this.department = department;
         this.druglist = druglist;
+        this.doctor = doctor;
     }
 
     public int getId() {
@@ -57,4 +59,13 @@ public class PrescriptionTemplate {
     public void setDruglist(List<Prescription_drugmap> druglist) {
         this.druglist = druglist;
     }
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+    
 }

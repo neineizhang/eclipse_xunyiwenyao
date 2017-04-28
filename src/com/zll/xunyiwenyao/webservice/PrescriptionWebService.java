@@ -19,6 +19,15 @@ import com.zll.xunyiwenyao.util.JsonHelper;
 import com.zll.xunyiwenyao.webitem.ResponseItem;
 import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
+/**
+ * 
+ * @author rxz
+ * 
+ * change
+ * AddPrescription
+ * updatePrescription
+ *
+ */
 public class PrescriptionWebService {
 	
 	private static List<Prescription> prescriptionlist;

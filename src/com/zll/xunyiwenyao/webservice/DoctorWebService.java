@@ -15,6 +15,8 @@ import com.zll.xunyiwenyao.webitem.ResponseItem;
 
 /**
  * Created by rxz on 2017/3/21.
+ * 
+ * only should change addDoctor
  */
 
 public class DoctorWebService {

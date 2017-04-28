@@ -21,6 +21,12 @@ import com.zll.xunyiwenyao.webitem.ResponseItem;
 
 /**
  * Created by rxz on 2017/3/22.
+ * 
+ * change : 
+ * addPrescriptionTemplate
+ * updatePrescriptionTemplate
+ * deletePrescriptionTemplate
+ * 
  */
 
 public class PrescriptionTemplateWebService {
@@ -28,7 +34,7 @@ public class PrescriptionTemplateWebService {
     public static List<PrescriptionTemplate> templatelt = new ArrayList<PrescriptionTemplate>();
 
     public static void initDB() throws JSONException{
-		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do?" ;
+		String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do" ;
 		
 		String s = HttpHelper.sendGet(url, "");
         Map m = JsonHelper.toMap(s);
@@ -64,7 +70,7 @@ public class PrescriptionTemplateWebService {
         		drugmap.put(tmpdrug, cnt);
         	}
         	
-        	prescriptiontemplate = new 	PrescriptionTemplate(id, name, department,drugmaps);
+        	prescriptiontemplate = new 	PrescriptionTemplate(id, name, department,drugmaps, doctor);
         	templatelt.add(prescriptiontemplate);
         }
     }
@@ -97,7 +103,7 @@ public class PrescriptionTemplateWebService {
     public static void addPrescriptionTemplate(PrescriptionTemplate item){
 //    	net.sf.json.JSONObject fromObject2 = net.sf.json.JSONObject.fromObject(item);
 //    	net.sf.json.JSONArray fromObject = net.sf.json.JSONArray.fromObject(item);
-    	RecipeTemplate recipeTemplate=new RecipeTemplate();
+    	RecipeTemplate recipeTemplate = new RecipeTemplate();
     	recipeTemplate.setRecipeTemplate_id(item.getId());
     	recipeTemplate.setTemplate_name(item.getName());
     	recipeTemplate.setDepartment(item.getDepartment()+"");
@@ -106,6 +112,11 @@ public class PrescriptionTemplateWebService {
     	templates.add(recipeTemplate);
     	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getAllRecipeTemplate.do";
     	String s = HttpHelper.sendPost(url,new Gson().toJson(recipeTemplate));
+    	
+//    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecipeTemplate.do";
+//    	StringBuilder itemStr = new StringBuilder();
+//    	itemStr.append("template_name="+item.getName());
+//    	itemStr.append("&creator_id="+item.get);
     }
     
     public static void updatePrescriptionTemplate(PrescriptionTemplate item){
