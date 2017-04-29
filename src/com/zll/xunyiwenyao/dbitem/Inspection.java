@@ -1,52 +1,61 @@
 package com.zll.xunyiwenyao.dbitem;
 
 /**
- * Created by kejund on 17/3/23.
+ * Created by kejund on 17/4/20.
  */
 
-
-
 public class Inspection {
-    private int id;     //系统自增的唯一id
-    private String name;//检查单名称，必填项
+    private int inspection_id;     //系统自增的唯一id
+    private String inspection_name;//检查单名称，必填项
+    private String inspection_type;//检查单类别，枚举类型，目前包括：心电图、X光、B超，以后可以添加
     private String pname;//患者名称，必填项
     private int psex;//患者性别
-    private String page;//患者年龄
-    private String diagnose;//临床诊断
-    private String content;//检查单内容，必填项
-    private String date;//开具日期
+    private String psex_text;//性别名称 !!!
+    private int page;//患者年龄
+    private String history;//病史摘要
+    private String location;//申请检查部位，必填项
+    private long create_date;//开具日期 !!!
+    private String create_date_text;//日期字串
     private String comment;//备注信息
-    private int state;//状态，未提交，已提交
-    private Doctor doctor;//开具检查单的医师，必填项
-    private boolean checked;
+    private int status;//状态，未提交，已提交
+    private String status_text;//日期字串 !!!
+    private int doctor_id;
+    private String doctor_name;
 
-    public Inspection(){
-
-    };
-    public Inspection(String ins_name, String pat_name, int pat_sex, String pat_age,
-                      String pat_diag, String ins_text, String ins_date, String ins_comment,
-                      int ins_state, Doctor doctor){
+    public Inspection(){};
+    public Inspection(int id, String inspection_name, String inspection_type, String pname,
+                      int psex,  int page, String history, String location, long create_date,
+                      String create_date_text, String comment, int status, int doctor_id,
+                      String doctor_name){
         super();
-        this.name = ins_name;
-        this.pname = pat_name;
-        this.psex = pat_sex;
-        this.page = pat_age;
-        this.diagnose = pat_diag;
-        this.content = ins_text;
-        this.date = ins_date;
-        this.comment = ins_comment;
-        this.state = ins_state;
-        this.doctor = doctor;
+        this.inspection_id=id;
+        this.inspection_name=inspection_name;
+        this.inspection_type=inspection_type;
+        this.pname=pname;
+        this.psex=psex;
+        this.page=page;
+        this.history=history;
+        this.location=location;
+        this.create_date=create_date;
+        this.create_date_text=create_date_text;
+        this.comment=comment;
+        this.status=status;
+        this.doctor_id=doctor_id;
+        this.doctor_name=doctor_name;
     }
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
+
+    public int getInspectionID(){return this.inspection_id;}
+    public void setInspectionID(int id){this.inspection_id=id;}
+
     public String getInspectionName() {
-        return name;
+        return inspection_name;
     }
     public void setInspectionName(String ins_name) {
-        this.name = ins_name;
+        this.inspection_name = ins_name;
     }
+
+    public String getType(){return inspection_type;}
+    public void setType(String type){this.inspection_type=type;}
 
     public String getPatientName() {
         return pname;
@@ -62,32 +71,35 @@ public class Inspection {
         this.psex = sex;
     }
 
-    public String getPatientAge() {
+    public int getPatientAge() {
         return page;
     }
-    public void setPatientAge(String age) {
+    public void setPatientAge(int age) {
         this.page = age;
     }
 
-    public String getPatientDiag() {
-        return diagnose;
+    public String getPatientHistory() {
+        return history;
     }
-    public void setPatientDiag(String diag) {
-        this.diagnose = diag;
+    public void setPatientHistory(String history) {
+        this.history = history;
     }
 
-    public String getInspectionText() {
-        return content;
+    public String getInspectionLoaction() {
+        return location;
     }
-    public void setInspectionText(String text) {
-        this.content = text;
+    public void setInspectionLocation(String location) {
+        this.location = location;
     }
+
+    public long getDateLong(){return create_date;}
+    public void setDateLong(long date){this.create_date=date;}
 
     public String getInspectionDate() {
-        return date;
+        return this.create_date_text;
     }
     public void setInspectionDate(String ins_date) {
-        this.date = ins_date;
+        this.create_date_text = ins_date;
     }
 
     public String getInspectionComment() {
@@ -98,20 +110,16 @@ public class Inspection {
     }
 
     public int getInspectionState() {
-        return state;
+        return status;
     }
     public void setInspectionState(int state) {
-        this.state = state;
+        this.status = state;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
-    }
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
+    public int getDoctorID() {return this.doctor_id;}
+    public void setDoctorID(int id){this.doctor_id=id;}
 
-    public boolean isChecked() {
-        return checked;
-    }
+    public String getDoctorName() {return this.doctor_name;}
+    public void setDoctorName(String name){this.doctor_name=name;}
+
 }

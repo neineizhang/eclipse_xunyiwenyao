@@ -120,7 +120,9 @@ public class RegisterActivity extends Activity implements TopBarView.onTitleBarC
         });
         //Spinner-department
         spinner_department = (Spinner)findViewById(R.id.spinner_department);
-        arrs_department = getResources().getStringArray(R.array.listDepartmentArr);
+//        arrs_department = getResources().getStringArray(R.array.listDepartmentArr);
+        arrs_department = DoctorWebService.listAllDepartment();
+
         ArrayAdapter<String> arrsDepartmentAdapter = new ArrayAdapter<String>(
                 RegisterActivity.this, android.R.layout.simple_list_item_1,arrs_department);
         spinner_department.setAdapter(arrsDepartmentAdapter);
@@ -211,7 +213,7 @@ public class RegisterActivity extends Activity implements TopBarView.onTitleBarC
     }
     @Override
     public void onRightClick() {
-        Toast.makeText(RegisterActivity.this, "你点击了右侧按钮", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(RegisterActivity.this, "你点击了右侧按钮", Toast.LENGTH_SHORT).show();
 
     }
 

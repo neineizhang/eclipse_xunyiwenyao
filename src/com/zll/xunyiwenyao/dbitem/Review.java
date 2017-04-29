@@ -11,14 +11,26 @@ public class Review {
     private String drug_name;// 评价的药品name，必填项
     private String content;//评价的内容，必填项
     private String date;//提交的时间
-    private Doctor doctor;//提交的医生，必填项
+    private int doctor_id;
+    private String doctor_name;
     private String comment;//备注
 
     public Review(){}
-    public Review(String name, String content){
+
+    public Review(int id, String name, int drug_id, String drug_name, String content, String date, int doctor_id, String doctor_name, String comment){
+        this.id=id;
         this.name=name;
+        this.drug_id =drug_id;
+        this.drug_name=drug_name;
         this.content=content;
+        this.date=date;
+        this.doctor_id=doctor_id;
+        this.doctor_name=doctor_name;
+        this.comment=comment;
     }
+
+    public int getReviewID(){return id;};
+    public void setReviewID(int id){this.id=id;}
 
     public String getName(){
         return this.name;
@@ -37,9 +49,12 @@ public class Review {
     public String getDate(){return date;}
     public void setDate(String date){this.date=date;}
 
-    public Doctor getDoctor(){return doctor;}
-    public void setDoctor(Doctor d){this.doctor=d;}
-
     public String getComment(){return comment;}
     public void setComment(String c){this.comment=c;}
+
+    public int getDoctorID(){return doctor_id;}
+    public void setDoctorID(int id){this.doctor_id=id;}
+
+    public String getDoctorName(){return this.doctor_name;}
+    public void setDoctorName(String name){this.doctor_name=name;}
 }

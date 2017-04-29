@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.zll.xunyiwenyao.dbitem.Doctor;
+import com.zll.xunyiwenyao.dbitem.Inspection;
 import com.zll.xunyiwenyao.util.HttpHelper;
 import com.zll.xunyiwenyao.util.JsonHelper;
 import com.zll.xunyiwenyao.webitem.ResponseItem;
@@ -23,6 +24,9 @@ public class DoctorWebService {
 
     private static int MAX_ID = 1;
     private static List<Doctor> doctorlist;
+    private static List<String> hospitalList;
+    private static List<String> titleList;
+    private static List<String> departmentList;
 
 //    static {
 //        Doctor doctor = null;
@@ -62,10 +66,35 @@ public class DoctorWebService {
         			jsonobj.getInt("type"), 
         			jsonobj.get("hospital").toString(), 
         			jsonobj.getString("reg_name"), 
-        			jsonobj.get("password").toString());
+                    jsonobj.get("password").toString(),
+                    jsonobj.getInt("sex"),
+                    jsonobj.getString("title"),
+                    jsonobj.getString("department"),
+                    jsonobj.getString("goodat"),
+                    jsonobj.getString("profile"));
+
         	doctorlist.add(doctor);
         	System.out.println("success add:"+JsonHelper.toJSON(doctor));
         }
+            //获取部门列表
+            String dep_url = "http://222.29.100.155/b2b2c/api/mobile/doctor/getAllDepartment.do?";
+            departmentList =  new ArrayList<String>();
+            s = HttpHelper.sendGet(dep_url, "");
+            m = JsonHelper.toMap(s);
+            responditem = new  ResponseItem();
+            responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
+            System.out.println(JsonHelper.toJSON(responditem));
+            System.out.println("___________");
+            jo = new JSONObject(s);
+            ja = jo.getJSONArray("data");
+            System.out.println(ja.length());
+
+            for(int i = 0; i < ja.length(); i++){
+                JSONObject jsonobj = (JSONObject) ja.get(i);
+                departmentList.add(jsonobj.getString("department_name"));
+//            arrs_type[i]=jsonobj.getString("type_name");
+                System.out.println("success add:"+jsonobj.getString("department_name"));
+            }
     }
     
     public static void main(String[] args) {
@@ -102,9 +131,30 @@ public class DoctorWebService {
 
     ////// 
     public static void addDoctor(Doctor item){
-    	item.setId(MAX_ID);
-    	MAX_ID++;
-		doctorlist.add(item);
+//    	item.setId(MAX_ID);
+//    	MAX_ID++;
+//		doctorlist.add(item);
+        try {
+            String jsString = getJsonString(item);
+            String url = "http://222.29.100.155/b2b2c/api/mobile/doctor/addDoctor.do";
+            System.out.println(url+"?"+jsString);
+//            jsString = URLEncoder.encode(jsString,"UTF-8");
+//            String s = HttpHelper.sendGet(url, jsString);
+            String s = HttpHelper.sendPost(url,jsString);
+            System.out.println(s);
+
+            //更新本地list
+            initDB();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static String[] listAllDepartment(){
+        String[] arrs_department =  new String[departmentList.size()];
+        departmentList.toArray(arrs_department);
+        return arrs_department;
     }
     
     public static Doctor isSuccessLogin(String username, String passwd, int type){
@@ -126,5 +176,14 @@ public class DoctorWebService {
     }
 
 
+    public static String getJsonString(Doctor item){
+        String jsonString = "doctor_id="+item.getId()+"&real_name="+item.getRealName()
+                +"&type="+item.getType()+"&hospital="+item.getHospital()
+                +"&reg_name="+item.getUsername()+"&password="+item.getPasswd()
+                +"&sex="+item.getSex()
+                +"&title="+item.getTitle()+"&department="+item.getDepartment()
+                +"&goodat="+item.getGoodat()+"&profile="+item.getProfile();
+        return jsonString;
+    }
 
 }

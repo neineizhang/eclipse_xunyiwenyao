@@ -5,14 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.zll.xunyiwenyao.R;
-import com.zll.xunyiwenyao.activity.InspectionQueryActivity;
 import com.zll.xunyiwenyao.dbitem.Inspection;
 import com.zll.xunyiwenyao.dbitem.Utils;
-import com.zll.xunyiwenyao.webservice.InspectionWebService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +69,7 @@ public class InspectionAdapter extends BaseAdapter{
             ins_list_state.setText("未提交");
         else
             ins_list_state.setText("已提交");
-        ins_list_doctor.setText(itemlist.get(position).getDoctor().getRealName().toString());
+        ins_list_doctor.setText(itemlist.get(position).getDoctorName());
         return view;
     }
 }

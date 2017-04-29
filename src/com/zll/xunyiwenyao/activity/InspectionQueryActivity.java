@@ -1,5 +1,17 @@
 package com.zll.xunyiwenyao.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.adapter.InspectionAdapter;
 import com.zll.xunyiwenyao.dbitem.Inspection;
@@ -7,41 +19,20 @@ import com.zll.xunyiwenyao.util.TopBarView;
 import com.zll.xunyiwenyao.util.TopBarView.onTitleBarClickListener;
 import com.zll.xunyiwenyao.webservice.InspectionWebService;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class InspectionQueryActivity extends Activity implements onTitleBarClickListener{
-	private  TopBarView topbar;
+;
+
+public class InspectionQueryActivity extends Activity implements onTitleBarClickListener {
+	private TopBarView topbar;
 	private ListView ins_listview;
     private InspectionAdapter ins_adapter;
     private List<Inspection> inspectionList = new ArrayList<Inspection>();
     private AutoCompleteTextView autotext;
     private ArrayAdapter arrayAdapter;
     private ImageView im_search;
+    private TextView textView;
 
 
 
@@ -99,8 +90,8 @@ public class InspectionQueryActivity extends Activity implements onTitleBarClick
 	}
 	@Override
 	public void onRightClick() {
-        onResume();
-		Toast.makeText(InspectionQueryActivity.this, "数据已更新", Toast.LENGTH_SHORT).show();
+//        onResume();
+//		Toast.makeText(InspectionQueryActivity.this, "数据已更新", Toast.LENGTH_SHORT).show();
 		
 	}
 
@@ -119,7 +110,7 @@ public class InspectionQueryActivity extends Activity implements onTitleBarClick
     protected void onResume() {
         // TODO Auto-generated method stub
         inspectionList = new ArrayList<Inspection>();
-        inspectionList=InspectionWebService.getAllInspection();
+        inspectionList= InspectionWebService.getAllInspection();
 //        ins_listview.setAdapter(ins_adapter);
         ins_adapter.notifyDataSetChanged();
         super.onResume();

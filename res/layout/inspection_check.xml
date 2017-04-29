@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,7 +19,7 @@
             android:id="@+id/topbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:titleText="检查单信息查看"
+            custom:titleText="检查单信息管理"
             custom:titleSize="6sp"
             custom:titleColor="@android:color/white"
             custom:leftBtn="@drawable/back_page"
@@ -31,7 +35,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="*检查单名称：" />
+            android:text="*检查单名称" />
 
         <View
             android:layout_width="1px"
@@ -49,6 +53,23 @@
 
             <requestFocus />
         </EditText>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*检查单类别" />
+
+        <EditText
+            android:id="@+id/type_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="11"
+            android:enabled="false"/>
 
     </LinearLayout>
 
@@ -80,30 +101,62 @@
             android:layout_height="1px"
             android:background="#BFBFBF" />
 
+        android:background="#BFBFBF" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/name_view"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="*姓名" />
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:background="#BFBFBF" />
+                android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/name_text"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/name_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="*姓名" />
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#BFBFBF" />
+
+                <EditText
+                    android:id="@+id/name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:enabled="false"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:enabled="false"/>
+                android:layout_weight="1">
 
+                <TextView
+                    android:id="@+id/age_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="年龄" />
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#BFBFBF" />
+
+                <EditText
+                    android:id="@+id/age_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:enabled="false"/>
+
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -161,36 +214,7 @@
 
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#BFBFBF" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/age_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="年龄" />
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:background="#BFBFBF" />
-
-            <EditText
-                android:id="@+id/age_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:enabled="false"/>
-
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -207,7 +231,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="临床诊断" />
+                android:text="病史摘要" />
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
@@ -215,7 +239,7 @@
                 android:background="#BFBFBF" />
 
             <EditText
-                android:id="@+id/clinical_diagnosis_text"
+                android:id="@+id/history_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -240,7 +264,7 @@
             android:id="@+id/textView3"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="*检查信息"
+            android:text="*申请检查部位"
             android:textColor="#000000"
             android:textStyle="bold"
             android:background="#B0B0B0"
@@ -252,9 +276,9 @@
             android:background="#BFBFBF"/>
 
         <EditText
-            android:id="@+id/inspection_text"
+            android:id="@+id/inspection_location_text"
             android:layout_width="match_parent"
-            android:layout_height="73dp"
+            android:layout_height="80dp"
             android:ems="10"
             android:inputType="textMultiLine"
             android:enabled="false">
@@ -290,7 +314,7 @@
                 android:id="@+id/date_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="开具日期"
+                android:text="申请时间"
                 android:layout_weight="1"/>
             <View
                 android:layout_width="1px"
@@ -327,7 +351,7 @@
                 android:id="@+id/doctor_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="医师"
+                android:text="申请医师"
                 android:layout_weight="1"
                 />
             <View
@@ -393,7 +417,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="确定" />
+            android:text="保存" />
         <Button
             android:id="@+id/button_delete"
             android:layout_width="wrap_content"
@@ -413,3 +437,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</ScrollView>

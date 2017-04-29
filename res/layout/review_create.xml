@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,7 +19,7 @@
         android:id="@+id/topbar"  
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content"  
-        custom:titleText="用户药品评价浏览"   
+        custom:titleText="提交药品评价"
         custom:titleSize="6sp"   
         custom:titleColor="@android:color/white"   
         custom:leftBtn="@drawable/back_page"   
@@ -72,8 +76,7 @@
             android:id="@+id/drug_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2.53"
-            android:inputType="date"/>
+            android:layout_weight="2.53"/>
         <Button
             android:id="@+id/drug_choose"
             android:layout_width="wrap_content"
@@ -143,7 +146,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="提交日期"
-                android:layout_weight="1"/>
+                android:layout_weight="1.5"/>
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
@@ -154,13 +157,7 @@
                 android:id="@+id/date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2.2"
-                android:inputType="date"/>
-            <Button
-                android:id="@+id/date_choose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择" />
+                android:layout_weight="3"/>
 
         </LinearLayout>
         <View  android:layout_height="1px"
@@ -226,9 +223,6 @@
         android:layout_height="wrap_content" >
 
 
-
-
-
         <Button
             android:id="@+id/button_commit"
             android:layout_width="wrap_content"
@@ -242,3 +236,4 @@
 
 
 </LinearLayout>
+</ScrollView>

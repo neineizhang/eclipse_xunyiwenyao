@@ -69,5 +69,23 @@ public class AccessorMainActivity extends Activity {
 
             }
         });
+        review_query.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent i9=new Intent(AccessorMainActivity.this,ReviewQueryActivity.class);
+                startActivity(i9);
+            }
+        });
+        report_query.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent i=new Intent(AccessorMainActivity.this,ReportQueryActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
      xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
- 
-    <LinearLayout
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical" >
+
+	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" 
@@ -31,10 +35,10 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="*检查单名称：" />
-        
-        <View  
-    	android:layout_width="1px" 
+            android:text="*检查单名称" />
+
+        <View
+    	android:layout_width="1px"
     	android:layout_height="match_parent"
     	android:background="#BFBFBF"
     	android:layout_gravity="center_horizontal" />
@@ -50,6 +54,21 @@
         </EditText>
 
     </LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="*检查单类别" />
+
+		<Spinner
+			android:id="@+id/spinner_type"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+	</LinearLayout>
    
     <View  android:layout_height="1px" 
            android:layout_width="match_parent"
@@ -78,6 +97,10 @@
 			 android:layout_width="match_parent"
 			 android:layout_height="1px"
 			 android:background="#BFBFBF" />
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
 
          <LinearLayout
 			 android:layout_width="match_parent"
@@ -103,6 +126,35 @@
 				 android:layout_weight="3" />
 
          </LinearLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1">
+
+				<TextView
+					android:id="@+id/age_view"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:layout_gravity="center"
+					android:text="年龄" />
+				<View
+					android:layout_width="1px"
+					android:layout_height="match_parent"
+					android:layout_gravity="center_horizontal"
+					android:background="#BFBFBF" />
+
+				<NumberPicker
+					android:id="@+id/age_text"
+					android:layout_width="wrap_content"
+					android:layout_height="35dp"
+					android:layout_weight="3"/>
+					<!--android:inputType="number"/>-->
+
+			</LinearLayout>
+			</LinearLayout>
+
+
 
 
 
@@ -161,30 +213,9 @@
 			 android:layout_height="1px"
 			 android:background="#BFBFBF" />
 
-         <LinearLayout
-			 android:layout_width="match_parent"
-			 android:layout_height="wrap_content"
-			 android:layout_weight="1">
 
-             <TextView
-				 android:id="@+id/age_view"
-				 android:layout_width="0dp"
-				 android:layout_height="wrap_content"
-				 android:layout_weight="1"
-				 android:text="年龄" />
-             <View
-				 android:layout_width="1px"
-				 android:layout_height="match_parent"
-				 android:layout_gravity="center_horizontal"
-				 android:background="#BFBFBF" />
 
-             <EditText
-				 android:id="@+id/age_text"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"
-				 android:layout_weight="3" />
 
-             </LinearLayout>
 
              <View
 				 android:layout_width="match_parent"
@@ -201,7 +232,7 @@
 					 android:layout_width="0dp"
 					 android:layout_height="wrap_content"
 					 android:layout_weight="1"
-					 android:text="临床诊断" />
+					 android:text="病史摘要" />
                   <View
 					  android:layout_width="1px"
 					  android:layout_height="match_parent"
@@ -209,7 +240,7 @@
 					  android:background="#BFBFBF" />
 
                  <EditText
-					 android:id="@+id/clinical_diagnosis_text"
+					 android:id="@+id/history_text"
 					 android:layout_width="wrap_content"
 					 android:layout_height="wrap_content"
 					 android:layout_weight="3" />
@@ -220,8 +251,9 @@
                  <View
 					 android:layout_height="1px"
 					 android:layout_width="match_parent"
-					 android:background="#BFBFBF" />
-         </LinearLayout>
+		android:background="#BFBFBF" />
+	</LinearLayout>
+
 
 	<!-- 检验信息 -->
          <LinearLayout
@@ -233,7 +265,7 @@
 	            android:id="@+id/textView3"
 	            android:layout_width="fill_parent"
 	            android:layout_height="0dp"
-	            android:text="*检查信息"
+	            android:text="*申请检查部位"
 	            android:textColor="#000000"
 	        	android:textStyle="bold"
 	        	android:background="#B0B0B0"
@@ -245,11 +277,11 @@
 	           android:background="#BFBFBF"/>    
 	           
 	        <EditText
-		        android:id="@+id/inspection_text"
+		        android:id="@+id/inspection_location_text"
 		        android:layout_width="match_parent"
-		        android:layout_height="73dp"
+		        android:layout_height="80dp"
 		        android:ems="10"
-		        android:inputType="textMultiLine" >
+		        android:inputType="textMultiLine">
 			  </EditText>
 	    </LinearLayout> 
 	    <!-- 其他信息 -->
@@ -282,8 +314,8 @@
 	                android:id="@+id/date_view"
 	                android:layout_width="0dp"
 	                android:layout_height="wrap_content"
-	                android:text="开具日期" 
-	                android:layout_weight="1"/>
+	                android:text="申请时间"
+	                android:layout_weight="1.5"/>
 	             <View  
 			    	android:layout_width="1px" 
 			    	android:layout_height="match_parent"
@@ -294,13 +326,9 @@
 	                android:id="@+id/date_text"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_weight="2.2"
+	                android:layout_weight="3"
 	                android:inputType="date"/>
-				<Button
-					android:id="@+id/date_choose"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="选择" />
+
 	
 	        </LinearLayout>
 
@@ -318,7 +346,7 @@
 						 android:id="@+id/doctor_view"
 						 android:layout_width="0dp"
 						 android:layout_height="wrap_content"
-						 android:text="医师"
+						 android:text="申请医师"
 						 android:layout_weight="1"/>
 					 <View
 						 android:layout_width="1px"
@@ -390,3 +418,4 @@
     </LinearLayout>
 
 </LinearLayout>
+	</ScrollView>

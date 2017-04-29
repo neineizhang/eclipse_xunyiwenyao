@@ -7,11 +7,14 @@ import org.json.JSONException;
 
 import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.dbitem.Doctor;
+import com.zll.xunyiwenyao.dbitem.Inspection;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.webservice.DoctorWebService;
 import com.zll.xunyiwenyao.webservice.DrugWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionTemplateWebService;
 import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
+import com.zll.xunyiwenyao.webservice.InspectionWebService;
+import com.zll.xunyiwenyao.webservice.ReviewWebService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,6 +55,8 @@ public class LoginActivity extends Activity {
 			DrugWebService.initDB();
 			PrescriptionTemplateWebService.initDB();
 			PrescriptionWebService.initDB();
+			InspectionWebService.initDB();
+			ReviewWebService.initDB();
 			
 			
 		} catch (JSONException e) {

@@ -2,6 +2,7 @@ package com.zll.xunyiwenyao.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,9 +28,9 @@ import java.util.List;
  */
 
 public class InspectionCheckActivity extends Activity implements TopBarView.onTitleBarClickListener {
-    private  TopBarView topbar;
+    private TopBarView topbar;
     private Button btn_update, btn_ok;
-    private EditText i_name, p_name, p_age, diagnosis, content, date, comment, doctor_name;
+    private EditText i_name, p_name, p_age, history, location, date, comment, doctor_name,type;
     private RadioGroup sex_rg;
     private RadioButton sex_r1, sex_r2;
     private Button date_choose;
@@ -38,8 +39,12 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
     private List<Inspection> inspectionList = new ArrayList<Inspection>();
     int sex = Utils.SEX.MAN.ordinal();
     int state = Utils.INSPECTION_STATUS.UNCOMMITED.ordinal();
-    Doctor currDoctor = new Doctor();
+    int currDoctorID;
     private Button btn_delete, btn_commit;
+
+    private RadioGroup sex_rg_new;
+    private RadioButton sex_r1_new, sex_r2_new;
+
 
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
 
@@ -74,22 +79,27 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
         i_name = (EditText)findViewById(R.id.editText1);
         p_name = (EditText)findViewById(R.id.name_text);
         p_age = (EditText)findViewById(R.id.age_text);
-        diagnosis = (EditText)findViewById(R.id.clinical_diagnosis_text);
-        content = (EditText)findViewById(R.id.inspection_text);
+        history = (EditText)findViewById(R.id.history_text);
+        location = (EditText)findViewById(R.id.inspection_location_text);
         date = (EditText)findViewById(R.id.date_text);
         comment = (EditText)findViewById(R.id.comment_text);
         doctor_name = (EditText)findViewById(R.id.doctor_text);
+        type = (EditText)findViewById(R.id.type_text);
 
 
         i_name.setText(inspectionList.get(temp).getInspectionName().toString());
         p_name.setText(inspectionList.get(temp).getPatientName().toString());
-        p_age.setText(inspectionList.get(temp).getPatientAge().toString());
-        diagnosis.setText(inspectionList.get(temp).getPatientDiag().toString());
-        content.setText(inspectionList.get(temp).getInspectionText().toString());
+
+// !!!!       p_age.setText(inspectionList.get(temp).getPatientAge().toString());
+        p_age.setText(String.valueOf(inspectionList.get(temp).getPatientAge()));
+
+        history.setText(inspectionList.get(temp).getPatientHistory().toString());
+        location.setText(inspectionList.get(temp).getInspectionLoaction().toString());
         date.setText(inspectionList.get(temp).getInspectionDate().toString());
         comment.setText(inspectionList.get(temp).getInspectionComment().toString());
-        doctor_name.setText(inspectionList.get(temp).getDoctor().getRealName().toString());
-        currDoctor = inspectionList.get(temp).getDoctor();
+        doctor_name.setText(inspectionList.get(temp).getDoctorName());
+        currDoctorID = inspectionList.get(temp).getDoctorID();
+        type.setText(inspectionList.get(temp).getType().toString());
 
         sex_rg = (RadioGroup)findViewById(R.id.sex_rg);
         sex_r1 = (RadioButton)findViewById(R.id.sex_rb1);
@@ -126,14 +136,14 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                if(state==Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
-                    if(currDoctor==Utils.LOGIN_DOCTOR){
+                if(state== Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
+                    if(currDoctorID== Utils.LOGIN_DOCTOR.getId()){
                         p_name.setEnabled(true);
                         sex_r1.setEnabled(true);
                         sex_r2.setEnabled(true);
                         p_age.setEnabled(true);
-                        diagnosis.setEnabled(true);
-                        content.setEnabled(true);
+                        history.setEnabled(true);
+                        location.setEnabled(true);
                         date.setEnabled(true);
                         comment.setEnabled(true);
                     }
@@ -153,8 +163,8 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 //获得修改后的性别
-                if(state==Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
-
+                if(state== Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
+                    if(currDoctorID== Utils.LOGIN_DOCTOR.getId()){
                         sex_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
                             @Override
@@ -170,23 +180,34 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
 
 
                         Inspection newins = new Inspection();
+                        newins = inspectionList.get(temp);
+
                         newins.setInspectionName(i_name.getText().toString());
+                        newins.setType(type.getText().toString());
+
                         newins.setPatientName(p_name.getText().toString());
 
                         newins.setPatientSex(sex);
-                        newins.setPatientAge(p_age.getText().toString());
-                        newins.setPatientDiag(diagnosis.getText().toString());
-                        newins.setInspectionText(content.getText().toString());
+//                        newins.setPatientAge(p_age.getText().toString());
+                        newins.setPatientAge(Integer.parseInt(p_age.getText().toString()));
+
+                        newins.setPatientHistory(history.getText().toString());
+                        newins.setInspectionLocation(location.getText().toString());
                         newins.setInspectionDate(date.getText().toString());
                         newins.setInspectionComment(comment.getText().toString());
 
-                        state=Utils.INSPECTION_STATUS.UNCOMMITED.ordinal();
-                        newins.setInspectionState(state);
-                        newins.setDoctor(currDoctor);
+                        newins.setInspectionState(Utils.INSPECTION_STATUS.UNCOMMITED.ordinal());
+                        newins.setDoctorID(currDoctorID);
 
-                        InspectionWebService.updateInspectionByPosition(temp,newins);
+                        InspectionWebService.updateInspectionByPosition(newins);
+//                        InspectionWebService.updateInspection(newins);
                         Toast.makeText(InspectionCheckActivity.this, "检查单修改成功！", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent i8=new Intent(InspectionCheckActivity.this,InspectionQueryActivity.class);
+                        startActivity(i8);
+//                        finish();
+                    }else{
+                        Toast.makeText(InspectionCheckActivity.this, "您没有权利保存此检查单！", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -196,12 +217,47 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                if(state==Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
-                    if(currDoctor==Utils.LOGIN_DOCTOR){
+                if(state== Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
+                    if(currDoctorID== Utils.LOGIN_DOCTOR.getId()){
 
-                        InspectionWebService.deleteInspectionByPosition(temp);
+
+                        sex_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+                            @Override
+                            public void onCheckedChanged(RadioGroup arg0, int arg1) {
+                                // TODO Auto-generated method stub
+                                if (arg1 == sex_r1.getId()) {
+                                    sex = Utils.SEX.MAN.ordinal();
+                                } else {
+                                    sex = Utils.SEX.WOMAN.ordinal();
+                                }
+                            }
+                        });
+                        Inspection newins = new Inspection();
+                        newins = inspectionList.get(temp);
+
+                        newins.setInspectionName(i_name.getText().toString());
+                        newins.setType(type.getText().toString());
+
+                        newins.setPatientName(p_name.getText().toString());
+
+                        newins.setPatientSex(sex);
+//                        newins.setPatientAge(p_age.getText().toString());
+                        newins.setPatientAge(Integer.parseInt(p_age.getText().toString()));
+
+                        newins.setPatientHistory(history.getText().toString());
+                        newins.setInspectionLocation(location.getText().toString());
+                        newins.setInspectionDate(date.getText().toString());
+                        newins.setInspectionComment(comment.getText().toString());
+
+                        newins.setInspectionState(Utils.INSPECTION_STATUS.UNCOMMITED.ordinal());
+                        newins.setDoctorID(currDoctorID);
+                        InspectionWebService.deleteInspectionByPosition(newins);
+//                        InspectionWebService.deleteInspection(newins);
                         Toast.makeText(InspectionCheckActivity.this, "检查单删除成功！", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent i8=new Intent(InspectionCheckActivity.this,InspectionQueryActivity.class);
+                        startActivity(i8);
+//                        finish();
                     }
                     else{
                         Toast.makeText(InspectionCheckActivity.this, "您没有权利删除此检查单！", Toast.LENGTH_SHORT).show();
@@ -220,14 +276,17 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                if(state==Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
-                    if(currDoctor==Utils.LOGIN_DOCTOR){
+                if(state== Utils.INSPECTION_STATUS.UNCOMMITED.ordinal()){
+                    if(currDoctorID== Utils.LOGIN_DOCTOR.getId()){
                        Inspection updateins = new Inspection();
                         updateins=inspectionList.get(temp);
                         updateins.setInspectionState(Utils.INSPECTION_STATUS.COMMITED.ordinal());
-                        InspectionWebService.updateInspectionByPosition(temp,updateins);
+//                        InspectionWebService.updateInspection(updateins);
+//                        InspectionWebService.updateInspectionByPosition(temp,updateins);
                         Toast.makeText(InspectionCheckActivity.this, "检查单提交成功！", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent i8=new Intent(InspectionCheckActivity.this,InspectionQueryActivity.class);
+                        startActivity(i8);
+//                        finish();
                     }
                     else{
                         Toast.makeText(InspectionCheckActivity.this, "您没有权利提交此检查单！", Toast.LENGTH_SHORT).show();
@@ -248,7 +307,7 @@ public class InspectionCheckActivity extends Activity implements TopBarView.onTi
     }
     @Override
     public void onRightClick() {
-        Toast.makeText(InspectionCheckActivity.this, "你点击了右侧按钮", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(InspectionCheckActivity.this, "你点击了右侧按钮", Toast.LENGTH_SHORT).show();
 
     }
 }

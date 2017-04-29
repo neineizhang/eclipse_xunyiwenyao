@@ -78,7 +78,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="药物评价查询" />
+            android:text="药品评价查询" />
 
     </LinearLayout>
 
@@ -97,7 +97,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="反应报告查询" />
+            android:text="不良反应报告查询" />
         <Button
             android:id="@+id/information_manage"
             android:layout_width="0dp"

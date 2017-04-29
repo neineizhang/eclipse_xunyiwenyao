@@ -34,6 +34,21 @@ public class Doctor {
         this.user_name = username;
         this.passwd = passwd;
     }
+    public Doctor(int id, String name, int type, String hospital, String username, String passwd,
+                  int sex, String title, String department, String goodat, String profile) {
+        super();
+        this.id = id;
+        this.real_name = name;
+        this.type = type;
+        this.hospital = hospital;
+        this.user_name = username;
+        this.passwd = passwd;
+        this.sex=sex;
+        this.title=title;
+        this.department=department;
+        this.goodat=goodat;
+        this.profile=profile;
+    }
     public int getId() {
         return id;
     }

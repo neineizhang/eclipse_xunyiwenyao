@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
 
 	private Button prescription_create, prescription_query, prescription_template, prescription_examine;
 	private Button inspection_create, inspection_template, inspection_query, review, report;
-	private Button information_manage;
+	private Button information_manage,review_query, report_query;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -37,6 +37,8 @@ public class MainActivity extends Activity {
 		review = (Button) findViewById(R.id.review);
 		report = (Button) findViewById(R.id.report);
 		information_manage = (Button)findViewById(R.id.information_manage);
+		review_query = (Button)findViewById(R.id.review_query);
+		report_query = (Button)findViewById(R.id.report_query);
 		
 		prescription_create.setOnClickListener(new OnClickListener() {
 
@@ -143,6 +145,15 @@ public class MainActivity extends Activity {
 				startActivity(i10);
 			}
 		});
+		report_query.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i=new Intent(MainActivity.this,ReportQueryActivity.class);
+				startActivity(i);
+			}
+		});
 		information_manage.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -150,6 +161,15 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i11=new Intent(MainActivity.this,DoctorInformationManageActivity.class);
 				startActivity(i11);
+			}
+		});
+		review_query.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i9=new Intent(MainActivity.this,ReviewQueryActivity.class);
+				startActivity(i9);
 			}
 		});
 	}

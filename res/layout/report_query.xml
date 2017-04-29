@@ -14,7 +14,7 @@
             android:id="@+id/topbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:titleText="药品评价查询"
+            custom:titleText="药物不良反应报告查询"
             custom:titleSize="6sp"
             custom:titleColor="@android:color/white"
             custom:leftBtn="@drawable/back_page"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="药品名称"
+                android:text="报告名称"
                 android:gravity="center"
                 android:textColor="#ffffff" />
 
@@ -51,16 +51,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="日期"
+                android:text="报告提交日期"
                 android:gravity="center"
                 android:textColor="#ffffff" />
             <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="状态"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="#ffffff" />-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="状态"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="#ffffff" />-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
