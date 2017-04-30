@@ -39,18 +39,18 @@
 		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamineApprovedActivity"></activity>
 		<activity android:name="com.zll.xunyiwenyao.activity.PrescriptionExamingPrescriptionActivity"></activity>
 
-        <activity android:name=".activity.InspectionCreateActivity"></activity>
-        <activity android:name=".activity.InspectionQueryActivity"></activity>
-        <activity android:name=".activity.ReviewCreateActivity"></activity>
-        <activity android:name=".activity.ReportCreateActivity"></activity>
-        <activity android:name=".activity.RegisterActivity"></activity>
-        <activity android:name=".activity.InspectionCheckActivity"></activity>
-        <activity android:name=".activity.DoctorInformationManageActivity"></activity>
-        <activity android:name=".activity.AccessorMainActivity"></activity>
-        <activity android:name=".activity.ReviewQueryActivity"></activity>
-        <activity android:name=".activity.ReviewCheckActivity"></activity>
-        <activity android:name=".activity.ReportQueryActivity"></activity>
-        <activity android:name=".activity.ReportCheckActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.InspectionCreateActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.InspectionQueryActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.ReviewCreateActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.ReportCreateActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.RegisterActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.InspectionCheckActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.DoctorInformationManageActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.AccessorMainActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.ReviewQueryActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.ReviewCheckActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.ReportQueryActivity"></activity>
+        <activity android:name="com.zll.xunyiwenyao.activity.ReportCheckActivity"></activity>
 
 
     </application>
