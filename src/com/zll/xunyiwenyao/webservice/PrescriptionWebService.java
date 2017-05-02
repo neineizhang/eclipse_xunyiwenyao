@@ -85,7 +85,7 @@ public class PrescriptionWebService {
 		
 		String s = HttpHelper.sendGet(url, "");
         Map m = JsonHelper.toMap(s);
-        ResponseItem responditem = new  ResponseItem();
+        ResponseItem responditem = new ResponseItem();
         responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
         System.out.println(JsonHelper.toJSON(responditem));
         System.out.println("___________");
@@ -102,7 +102,7 @@ public class PrescriptionWebService {
         	JSONObject jsonobj = (JSONObject) ja.get(i);
         	
         	int id = jsonobj.getInt("recipe_id");
-//        	 String name = jsonobj.getString("name"); /////?
+        	String name = jsonobj.getString("recipe_name"); 
         	int department = 0;//////?
         	Doctor doctor = DoctorWebService.getDoctorByID(jsonobj.getInt("creator_id"));
         	Doctor checker = null;
@@ -132,7 +132,7 @@ public class PrescriptionWebService {
         	String clinical_diagnosis = jsonobj.getString("content");; //////?
         	
         	prescription = new Prescription(
-        			id, null, department, doctor, checker, patient,
+        			id, name, department, doctor, checker, patient,
         			drugmaps, status, date, clinical_diagnosis);
         	        
         	prescriptionlist.add(prescription);
