@@ -422,6 +422,11 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 					final PrescriptionTemplate prescriptionTemplate = new PrescriptionTemplate();
 					final String[] departments = Utils.DEPARTMENT_ARRAY;
+
+					prescriptionTemplate.setName(prescription_name);
+					// prescriptionTemplate.setDrugmap(drugmap);
+					prescriptionTemplate.setDruglist(druglist);
+					
 					AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionCreateMainActivity.this);
 					builder.setTitle("请选择模板分类");
 					/**
@@ -447,6 +452,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 							Toast.makeText(PrescriptionCreateMainActivity.this, "选择了--->>" + select_item,
 									Toast.LENGTH_SHORT).show();
 							prescriptionTemplate.setDepartment(which);
+							PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
 						}
 					});
 					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -457,10 +463,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 						}
 					});
 					builder.create().show();
-					prescriptionTemplate.setName(prescription_name);
-					// prescriptionTemplate.setDrugmap(drugmap);
-					prescriptionTemplate.setDruglist(druglist);
-					PrescriptionTemplateWebService.addPrescriptionTemplate(prescriptionTemplate);
 
 				}
 			}
