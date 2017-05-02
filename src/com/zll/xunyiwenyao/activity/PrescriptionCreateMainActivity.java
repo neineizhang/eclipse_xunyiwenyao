@@ -80,8 +80,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	protected List<PrescriptionCreateScrollView> mHScrollViews = new ArrayList<PrescriptionCreateScrollView>();
 
 	private int prescription_id = 0;
-	private boolean isFirst = true;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -211,7 +210,6 @@ public class PrescriptionCreateMainActivity extends Activity {
 		String template_name = extras.getString("template_name");
 		if (template_name != null) {
 			if (!template_name.trim().equals("")) {
-				isFirst = false;
 				PrescriptionTemplate prescriptionTemplate = PrescriptionTemplateWebService
 						.getPrescriptionTemplateByName(template_name);
 				if (prescriptionTemplate == null) {
@@ -418,7 +416,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				}
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionTemplateWebService.getAllTemplateName();
-				if (list.contains(prescription_name) && isFirst) {
+				if (list.contains(prescription_name)) {
 					Toast.makeText(mContext, "该模板名称已存在", Toast.LENGTH_SHORT).show();
 				} else {
 
@@ -494,7 +492,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 					Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();
 				} else if (prescription_name.equals("")) {
 					Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();
-				} else if (list.contains(prescription_name) && isFirst) {
+				} else if (list.contains(prescription_name)) {
 					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
 				}
 
