@@ -144,7 +144,7 @@ public class PrescriptionWebService {
     
 	public static void AddPrescription(Prescription item){
 
-    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecpice.do";
+    	String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecipe.do";
     	StringBuilder itemStr = new StringBuilder();
     	itemStr.append("recipe_name="+item.getName());
     	itemStr.append("&creator_id="+Utils.LOGIN_DOCTOR.getId());
