@@ -64,5 +64,6 @@ public class PrescriptionQueryToSubmitActivity extends Activity implements OnIte
 		String prescription_name = prescriptionlist.get(position).getName();
 		i.putExtra("prescription_name", prescription_name);
 		startActivity(i);
+		finish();
 	}
 	}
