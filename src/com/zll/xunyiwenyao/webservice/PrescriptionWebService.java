@@ -105,18 +105,22 @@ public class PrescriptionWebService {
 //        	 String name = jsonobj.getString("name"); /////?
         	int department = 0;//////?
         	Doctor doctor = DoctorWebService.getDoctorByID(jsonobj.getInt("creator_id"));
-        	Doctor checker = DoctorWebService.getDoctorByID(jsonobj.getInt("reviewer_id"));
+        	Doctor checker = null;
+        	if(!jsonobj.get("reviewer_id").toString().equals("null")){
+        		checker = DoctorWebService.getDoctorByID(jsonobj.getInt("reviewer_id"));
+        	}
         	//String patient_name =jsonobj.getString("user_name");
         	Patient patient = new Patient();
         	patient.setName(jsonobj.getString("user_name"));
         	patient.setAge(jsonobj.getInt("user_age"));
         	patient.setSex(jsonobj.getInt("user_sex"));
-        	patient.setId(jsonobj.getInt("user_id"));
+        	//patient.setId(jsonobj.getInt("user_id"));
         	
         	List<Prescription_drugmap> drugmaps=new ArrayList<Prescription_drugmap>();
         	JSONArray jsonarray = jsonobj.getJSONArray("detailList");
         	for(int j = 0; j < jsonarray.length(); j++){
         		JSONObject tmpobj = (JSONObject) jsonarray.get(j);
+        		System.out.println(tmpobj.toString());
         		Drug tmpdrug = DrugWebService.getDrugByID(tmpobj.getInt("drug_id")); 
         		int cnt = tmpobj.getInt("amount");
         		String description=tmpobj.getString("how_to_use");

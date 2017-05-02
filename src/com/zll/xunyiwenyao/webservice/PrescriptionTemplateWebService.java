@@ -62,6 +62,7 @@ public class PrescriptionTemplateWebService {
         	List<Prescription_drugmap> drugmaps=new ArrayList<Prescription_drugmap>();
         	for(int j = 0; j < jsonarray.length(); j++){
         		JSONObject tmpobj = (JSONObject) jsonarray.get(j);
+        		System.out.println(tmpobj.toString());
         		Drug tmpdrug = DrugWebService.getDrugByID(tmpobj.getInt("drug_id")); 
         		int cnt = tmpobj.getInt("amount");
         		String description=tmpobj.getString("how_to_use");
@@ -77,7 +78,7 @@ public class PrescriptionTemplateWebService {
 		try {
 			DoctorWebService.initDB();
 			DrugWebService.initDB();
-			PrescriptionWebService.initDB();
+			//PrescriptionWebService.initDB();
 			PrescriptionTemplateWebService.initDB();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
