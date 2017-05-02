@@ -118,7 +118,7 @@ public class PrescriptionWebService {
         	for(int j = 0; j < jsonarray.length(); j++){
         		JSONObject tmpobj = (JSONObject) jsonarray.get(j);
         		Drug tmpdrug = DrugWebService.getDrugByID(tmpobj.getInt("drug_id")); 
-        		int cnt = tmpobj.getInt("count");
+        		int cnt = tmpobj.getInt("amount");
         		String description=tmpobj.getString("how_to_use");
         		drugmaps.add(new Prescription_drugmap(tmpdrug, cnt, description));
         	}
@@ -157,7 +157,7 @@ public class PrescriptionWebService {
     	for(Prescription_drugmap drugmap : item.getDruglist()){
     		JSONObject jsonObject = new JSONObject();
     		try {
-				jsonObject.put("count", drugmap.getCount());
+				jsonObject.put("amount", drugmap.getCount());
 	    		jsonObject.put("how_to_use", drugmap.getDescription());
 	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
 			} catch (JSONException e) {
@@ -209,7 +209,7 @@ public class PrescriptionWebService {
     	for(Prescription_drugmap drugmap : item.getDruglist()){
     		JSONObject jsonObject = new JSONObject();
     		try {
-				jsonObject.put("count", drugmap.getCount());
+				jsonObject.put("amount", drugmap.getCount());
 	    		jsonObject.put("how_to_use", drugmap.getDescription());
 	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
 			} catch (JSONException e) {
