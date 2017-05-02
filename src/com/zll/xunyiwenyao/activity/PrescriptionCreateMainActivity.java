@@ -80,6 +80,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 	protected List<PrescriptionCreateScrollView> mHScrollViews = new ArrayList<PrescriptionCreateScrollView>();
 
 	private int prescription_id = 0;
+	private int modify = 0;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -255,6 +256,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 		String prescription_name = extras.getString("prescription_name");
 		if (prescription_name != null) {
+			modify = 1;
 			Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
 
 			if (prescription == null) {
@@ -369,7 +371,12 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription.setDoctor(Utils.LOGIN_DOCTOR);
 
 				Log.d("rxz", "003:" + prescription.getId());
-				PrescriptionWebService.AddPrescription(prescription);
+				if(modify == 0){
+					PrescriptionWebService.AddPrescription(prescription);
+				}else{
+	    			PrescriptionWebService.updatePrescription(prescription);
+	     		};
+				//PrescriptionWebService.AddPrescription(prescription);
 
 				Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 				finish();
@@ -492,8 +499,8 @@ public class PrescriptionCreateMainActivity extends Activity {
 					Toast.makeText(mContext, "病人信息填写不完整", Toast.LENGTH_SHORT).show();
 				} else if (prescription_name.equals("")) {
 					Toast.makeText(mContext, "请填写处方名称", Toast.LENGTH_SHORT).show();
-				} else if (list.contains(prescription_name)) {
-					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
+//				} else if (list.contains(prescription_name)) {
+//					Toast.makeText(mContext, "该处方名称已存在", Toast.LENGTH_SHORT).show();
 				}
 
 				else {
@@ -532,6 +539,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 					}
 
 					Prescription prescription = new Prescription();
+					prescription.setId(prescription_id);
 					prescription.setPatient(patient);
 					prescription.setName(prescription_name);
 					// prescription.setDrugmap(drugmap);
@@ -541,7 +549,13 @@ public class PrescriptionCreateMainActivity extends Activity {
 					prescription.setClinical_diagnosis(clinical_diagnosis);
 					prescription.setDoctor(Utils.LOGIN_DOCTOR);
 
-					PrescriptionWebService.AddPrescription(prescription);
+					System.out.println("rxz++++++++++"+modify+"-"+prescription.getStatus());
+					if(modify == 0){
+						PrescriptionWebService.AddPrescription(prescription);
+					}else{
+		    			PrescriptionWebService.updatePrescription(prescription);
+		     		};
+					//PrescriptionWebService.AddPrescription(prescription);
 
 					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 					finish();
