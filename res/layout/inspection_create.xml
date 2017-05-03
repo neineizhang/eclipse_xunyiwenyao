@@ -111,7 +111,7 @@
 				 android:id="@+id/name_view"
 				 android:layout_width="0dp"
 				 android:layout_height="wrap_content"
-				 android:layout_weight="1"
+				 android:layout_weight="1.5"
 				 android:text="*姓名" />
               <View
 				  android:layout_width="1px"

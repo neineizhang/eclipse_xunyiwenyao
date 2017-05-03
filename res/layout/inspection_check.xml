@@ -116,7 +116,7 @@
                     android:id="@+id/name_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:text="*姓名" />
                 <View
                     android:layout_width="1px"
@@ -178,37 +178,43 @@
                 android:id="@+id/sexy_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.92"
+                android:layout_weight="1"
                 android:text="性别" />
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:background="#BFBFBF" />
-            <RadioGroup
-                android:id="@+id/sex_rg"
-                android:layout_width="287dp"
+            <!--<RadioGroup-->
+                <!--android:id="@+id/sex_rg"-->
+                <!--android:layout_width="287dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_weight="0.36"-->
+                <!--&gt;-->
+
+                <!--<RadioButton-->
+                    <!--android:id="@+id/sex_rb1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:checked="true"-->
+                    <!--android:text="男"-->
+                    <!--android:enabled="false"/>-->
+
+                <!--<RadioButton-->
+                    <!--android:id="@+id/sex_rb2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="女"-->
+                    <!--android:enabled="false"/>-->
+            <!--</RadioGroup>-->
+            <EditText
+                android:id="@+id/sex_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_weight="0.36"
-                >
-
-                <RadioButton
-                    android:id="@+id/sex_rb1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="男"
-                    android:enabled="false"/>
-
-                <RadioButton
-                    android:id="@+id/sex_rb2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="女"
-                    android:enabled="false"/>
-            </RadioGroup>
+                android:layout_weight="3"
+                android:enabled="false"/>
 
         </LinearLayout>
 

@@ -120,11 +120,11 @@
             android:text="药品评价提交" />
 
         <Button
-            android:id="@+id/report"
+            android:id="@+id/review_query"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="不良反应报告提交" />
+            android:text="药品评价查询" />
 
 
     </LinearLayout>
@@ -135,11 +135,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/review_query"
+                android:id="@+id/report"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="药品评价查询" />
+                android:text="不良反应报告提交" />
 
             <Button
                 android:id="@+id/report_query"
