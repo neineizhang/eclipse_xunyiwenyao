@@ -59,7 +59,7 @@ public class ReportAdapter  extends BaseAdapter {
 
         list_name.setText(itemlist.get(position).getName().toString());
         list_date.setText(itemlist.get(position).getReportDate().toString());
-        list_doctor.setText(itemlist.get(position).getDoctor().getRealName().toString());
+        list_doctor.setText(itemlist.get(position).getDoctorName().toString());
         return view;
     }
 }

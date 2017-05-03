@@ -13,14 +13,38 @@ public class Report {
     private List<Integer> drugIDList;//涉及的药品id，必填项
     private List<String> drugNameList;//涉及的药品名称，必填项
     private String lever;//严重程度
+    private long event_date_long;
     private String event_date;//事件发生的时间
+    private long report_date_long;
     private String report_date;//提交的时间
     private Doctor doctor;//提交的医生，必填项
     private int doctor_id;
     private String doctor_name;
     private String comment;//备注
 
+    public Report(int id, String name, String feature, List<Integer> drugIDList,
+                  List<String> drugNameList, String lever, long eventDateLong,
+                  String event_date, long reportDateLong, String report_date, int doctor_id,
+                  String doctor_name, String comment){
+        this.id=id;
+        this.name=name;
+        this.feature=feature;
+        this.drugIDList=drugIDList;
+        this.drugNameList=drugNameList;
+        this.lever=lever;
+        this.event_date_long=eventDateLong;
+        this.event_date=event_date;
+        this.report_date_long=reportDateLong;
+        this.report_date=report_date;
+        this.doctor_id=doctor_id;
+        this.doctor_name=doctor_name;
+        this.comment=comment;
+    }
+
     public Report(){}
+
+    public int getId(){return id;}
+    public void setId(int id){this.id=id;}
 
     public String getName(){
         return this.name;
@@ -34,8 +58,14 @@ public class Report {
     public String getLever(){return this.lever;}
     public void setLever(String lever){this.lever=lever;}
 
+    public long getEventDateLong(){return event_date_long;}
+    public void setEventDateLong(long date){event_date_long=date;}
+
     public String getEvent_Date(){return event_date;}
     public void setEventDate(String date){this.event_date=date;}
+
+    public long getReportDateLong(){return report_date_long;}
+    public void setReportDateLong(long date){this.report_date_long=date;}
 
     public String getReportDate(){return report_date;}
     public void setReportDate(String date){this.report_date=date;}

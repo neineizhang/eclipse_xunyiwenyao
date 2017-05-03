@@ -13,6 +13,7 @@ import com.zll.xunyiwenyao.R;
 import com.zll.xunyiwenyao.dbitem.Doctor;
 import com.zll.xunyiwenyao.dbitem.Utils;
 import com.zll.xunyiwenyao.util.TopBarView;
+import com.zll.xunyiwenyao.webservice.DoctorWebService;
 
 /**
  * Created by kejund on 17/4/6.
@@ -99,13 +100,18 @@ public class DoctorInformationManageActivity extends Activity implements TopBarV
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 if(passwrd.getText().toString().equals(passwrd_verify.getText().toString())){
-                    Utils.LOGIN_DOCTOR.setPasswd(passwrd.getText().toString());
-                    Utils.LOGIN_DOCTOR.setGoodat(goodat.getText().toString());
-                    Utils.LOGIN_DOCTOR.setProfile(profile.getText().toString());
-                    Toast.makeText(DoctorInformationManageActivity.this, "鐢ㄦ埛淇℃伅淇敼鎴愬姛锛�", Toast.LENGTH_SHORT).show();
+//                    Utils.LOGIN_DOCTOR.setPasswd(passwrd.getText().toString());
+//                    Utils.LOGIN_DOCTOR.setGoodat(goodat.getText().toString());
+//                    Utils.LOGIN_DOCTOR.setProfile(profile.getText().toString());
+                    currDoctor.setPasswd(passwrd.getText().toString());
+                    currDoctor.setGoodat(goodat.getText().toString());
+                    currDoctor.setProfile(profile.getText().toString());
+                    DoctorWebService.updateDoctor(currDoctor);
+
+                    Toast.makeText(DoctorInformationManageActivity.this, "个人信息修改成功！", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
-                    Toast.makeText(DoctorInformationManageActivity.this, "涓ゆ杈撳叆鐨勫瘑鐮佷笉涓�鑷达紒", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DoctorInformationManageActivity.this, "两次输入的密码不一致！", Toast.LENGTH_SHORT).show();
                 }
 
             }

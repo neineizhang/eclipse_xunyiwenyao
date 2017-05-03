@@ -54,19 +54,7 @@ public class InspectionWebService {
             inspectionList.add(inspection);
             System.out.println("success add:"+JsonHelper.toJSON(inspection));
         }
-//        JSONObject jsonobj1 = (JSONObject) ja.get(1);
-//        jasonS=jsonobj1.getString("inspection_name");
-//        for(int i = 0; i < ja.length(); i++){
-//            Inspection inspection = new Inspection();
-//            JSONObject jsonobj = (JSONObject) ja.get(i);
-//            inspection.setInspectionName(jsonobj.getString("inspection_name"));
-//            inspection.setType(jsonobj.getString("inspection_type"));
-//            inspection.setInspectionLocation(jsonobj.getString("location"));
-//            inspection.setPatientSex(jsonobj.getInt("psex"));
-//
-//            inspectionList.add(inspection);
-//            System.out.println("success add:"+JsonHelper.toJSON(inspection));
-//        }
+
 
         //获取检查单的所有类别
         String listURL = "http://222.29.100.155/b2b2c/api/mobile/recipe/listAllInspectionType.do?";
@@ -118,6 +106,16 @@ public class InspectionWebService {
 
             //更新本地list
             initDB();
+
+/*            String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/addRecipeTemplate.do";
+            String jsString = "template_name=test&creator_id=1&department=1&details_json" +
+                    "=[{\"recipedetail_id\":1234,\"drug_id\":1,\"drug_name\":\"六味地黄丸\",\"count\":9," +
+                    "\"how_to_use\":\"口服\",\"per_count\":2}]";
+            System.out.println(url+"?"+jsString);
+//            jsString = URLEncoder.encode(jsString,"UTF-8");
+//            String s = HttpHelper.sendGet(url, jsString);
+            String s = HttpHelper.sendPost(url,jsString);
+            System.out.println(s);*/
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -128,7 +126,7 @@ public class InspectionWebService {
 
 
 
-    public static void updateInspectionByPosition(Inspection item){
+    public static void updateInspection(Inspection item){
 
         try {
             //远程更新
@@ -146,8 +144,8 @@ public class InspectionWebService {
         }
 
     }
-    public static void deleteInspectionByPosition(Inspection item){
-
+    public static void deleteInspection(Inspection item){
+        inspectionList.remove(item);
         try {
             //远程删除
             String jsString = getJsonString(item);

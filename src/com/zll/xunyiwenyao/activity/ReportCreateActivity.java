@@ -203,6 +203,28 @@ public class ReportCreateActivity extends Activity implements onTitleBarClickLis
 		String date = sDateFormat.format(new java.util.Date());
 		report_date.setText(date);
 		report_date.setEnabled(false);
+		//默认填写event事件
+		SimpleDateFormat sDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+		String date2 = sDateFormat2.format(new java.util.Date());
+		event_date.setText(date2);
+
+		//日期选择按钮
+		calendar = Calendar.getInstance();
+		int year = calendar.get(calendar.YEAR);
+		int month = calendar.get(calendar.MONTH);
+		int day = calendar.get(calendar.DAY_OF_MONTH);
+		eventDatePD = new DatePickerDialog(ReportCreateActivity.this, eventDatelistener, year, month, day);
+		btn_event_choose.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				eventDatePD.show();
+			}
+		});
+
+
+
 		//提交按钮
 		btn_commit.setOnClickListener(new View.OnClickListener() {
 
@@ -226,9 +248,15 @@ public class ReportCreateActivity extends Activity implements onTitleBarClickLis
 			report.setName(report_name.getText().toString());
 			report.setLever(level);
 			report.setFeature(feature.getText().toString());
-			report.setEventDate(event_date.getText().toString());
+			if(event_date.getText().toString().equals(""))
+				report.setEventDate("0000-00-00 00:00");
+			else{
+				report.setEventDate(event_date.getText().toString()+" 00:00");
+			}
 			report.setReportDate(report_date.getText().toString());
 			report.setDoctor(Utils.LOGIN_DOCTOR);
+			report.setDoctorID(Utils.LOGIN_DOCTOR.getId());
+			report.setDoctorName(Utils.LOGIN_DOCTOR.getRealName());
 			report.setComment(comment.getText().toString());
 			report.setDrugIDList(drug_id_list);
 			report.setDrugNameList(drug_name_list);
