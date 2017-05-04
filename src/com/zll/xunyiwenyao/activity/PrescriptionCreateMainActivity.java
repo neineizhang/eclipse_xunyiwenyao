@@ -552,6 +552,9 @@ public class PrescriptionCreateMainActivity extends Activity {
 					System.out.println("rxz++++++++++"+modify+"-"+prescription.getStatus());
 					if(modify == 0){
 						PrescriptionWebService.AddPrescription(prescription);
+						Prescription prescription_new = PrescriptionWebService.getPrescriptionByName(prescription_name);
+						prescription_new.setStatus(Utils.STATUS.COMMITED.ordinal());
+		    			PrescriptionWebService.updatePrescription(prescription_new);
 					}else{
 		    			PrescriptionWebService.updatePrescription(prescription);
 		     		};
