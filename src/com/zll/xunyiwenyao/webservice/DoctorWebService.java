@@ -1,24 +1,21 @@
 package com.zll.xunyiwenyao.webservice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.zll.xunyiwenyao.dbitem.Doctor;
+import com.zll.xunyiwenyao.util.HttpHelper;
+import com.zll.xunyiwenyao.util.JsonHelper;
+import com.zll.xunyiwenyao.webitem.ResponseItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.zll.xunyiwenyao.dbitem.Doctor;
-import com.zll.xunyiwenyao.dbitem.Inspection;
-import com.zll.xunyiwenyao.util.HttpHelper;
-import com.zll.xunyiwenyao.util.JsonHelper;
-import com.zll.xunyiwenyao.webitem.ResponseItem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rxz on 2017/3/21.
- * 
- * only should change addDoctor
  */
 
 public class DoctorWebService {
@@ -41,12 +38,12 @@ public class DoctorWebService {
 //        MAX_ID = 4;
 //    }
 
-    public static void initDB() throws JSONException{
+    public static void initDB() throws JSONException {
 		String url = "http://222.29.100.155/b2b2c/api/mobile/doctor/getAllDoctor.do";
 		
 		String s = HttpHelper.sendGet(url, "");
         Map m = JsonHelper.toMap(s);
-        ResponseItem responditem = new  ResponseItem();
+        ResponseItem responditem = new ResponseItem();
         responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
         System.out.println(JsonHelper.toJSON(responditem));
         System.out.println("___________");
@@ -62,27 +59,33 @@ public class DoctorWebService {
         doctorlist = new ArrayList<Doctor>();
         for(int i = 0; i < ja.length(); i++){
         	JSONObject jsonobj = (JSONObject) ja.get(i);
-        	doctor = new Doctor(jsonobj.getInt("doctor_id"), 
-        			jsonobj.getString("real_name"), 
-        			jsonobj.getInt("type"), 
-        			jsonobj.get("hospital").toString(), 
-        			jsonobj.getString("reg_name"), 
+//        	doctor = new Doctor(jsonobj.getInt("doctor_id"),
+//        			jsonobj.getString("real_name"),
+//        			jsonobj.getInt("type"),
+//        			jsonobj.get("hospital").toString(),
+//        			jsonobj.getString("reg_name"),
+//        			jsonobj.get("password").toString());
+            doctor = new Doctor(jsonobj.getInt("doctor_id"),
+                    jsonobj.getString("real_name"),
+                    jsonobj.getInt("type"),
+                    jsonobj.get("hospital").toString(),
+                    jsonobj.getString("reg_name"),
                     jsonobj.get("password").toString(),
                     jsonobj.getInt("sex"),
                     jsonobj.getString("title"),
                     jsonobj.getString("department"),
-                    jsonobj.getString("goodat"),
-                    jsonobj.get("profile").toString());
+                    jsonobj.getString("goodAt"),
+                    jsonobj.getString("profile"));
 
         	doctorlist.add(doctor);
-        	System.out.println("success add:"+JsonHelper.toJSON(doctor));
+        	System.out.println("success add:"+ JsonHelper.toJSON(doctor));
         }
             //获取部门列表
             String dep_url = "http://222.29.100.155/b2b2c/api/mobile/doctor/getAllDepartment.do?";
             departmentList =  new ArrayList<String>();
             s = HttpHelper.sendGet(dep_url, "");
             m = JsonHelper.toMap(s);
-            responditem = new  ResponseItem();
+            responditem = new ResponseItem();
             responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
             System.out.println(JsonHelper.toJSON(responditem));
             System.out.println("___________");
@@ -102,7 +105,7 @@ public class DoctorWebService {
         hospitalList =  new ArrayList<String>();
         s = HttpHelper.sendGet(hsp_url, "");
         m = JsonHelper.toMap(s);
-        responditem = new  ResponseItem();
+        responditem = new ResponseItem();
         responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
         System.out.println(JsonHelper.toJSON(responditem));
         System.out.println("___________");
@@ -113,8 +116,27 @@ public class DoctorWebService {
         for(int i = 0; i < ja.length(); i++){
             JSONObject jsonobj = (JSONObject) ja.get(i);
             hospitalList.add(jsonobj.getString("hospital_name"));
-//            arrs_type[i]=jsonobj.getString("type_name");
             System.out.println("success add:"+jsonobj.getString("hospital_name"));
+        }
+
+        //获取职位列表
+        String title_url = "http://222.29.100.155/b2b2c/api/mobile/doctor/getAllDoctorTitle.do?";
+        titleList =  new ArrayList<String>();
+        s = HttpHelper.sendGet(title_url, "");
+        m = JsonHelper.toMap(s);
+        responditem = new ResponseItem();
+        responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
+        System.out.println(JsonHelper.toJSON(responditem));
+        System.out.println("___________");
+        jo = new JSONObject(s);
+        ja = jo.getJSONArray("data");
+        System.out.println(ja.length());
+
+        for(int i = 0; i < ja.length(); i++){
+            JSONObject jsonobj = (JSONObject) ja.get(i);
+            titleList.add(jsonobj.getString("title_name"));
+//            arrs_type[i]=jsonobj.getString("type_name");
+            System.out.println("success add:"+jsonobj.getString("title_name"));
         }
     }
     
@@ -184,7 +206,7 @@ public class DoctorWebService {
             String s = HttpHelper.sendPost(regUrl,jsString);
             System.out.println(s);
             Map m = JsonHelper.toMap(s);
-            ResponseItem responditem = new  ResponseItem();
+            ResponseItem responditem = new ResponseItem();
             responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
             JSONObject jo = new JSONObject(s);
             String result = jo.getString("result");
@@ -213,6 +235,13 @@ public class DoctorWebService {
         String[] arrs_hospital =  new String[hospitalList.size()];
         hospitalList.toArray(arrs_hospital);
         return arrs_hospital;
+    }
+
+    public static String[] listAllTitle(){
+        String[] arrs_title =  new String[titleList.size()];
+        titleList.toArray(arrs_title);
+        System.out.println("test:"+arrs_title.toString());
+        return arrs_title;
     }
 
     public static Doctor isSuccessLogin(String username, String passwd, int type){
@@ -268,8 +297,10 @@ public class DoctorWebService {
                 +"&reg_name="+item.getUsername()+"&password="+item.getPasswd()
                 +"&sex="+item.getSex()
                 +"&title="+item.getTitle()+"&department="+item.getDepartment()
-                +"&goodat="+item.getGoodat()+"&profile="+item.getProfile();
+                +"&goodAt="+item.getGoodat()+"&profile="+item.getProfile();
         return jsonString;
     }
+
+
 
 }
