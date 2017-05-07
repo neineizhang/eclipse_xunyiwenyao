@@ -455,6 +455,20 @@
                 android:layout_weight="1"
                 android:text="提交" />
         </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="删除" />
+        </LinearLayout>
+            
     </LinearLayout>
 
 </ScrollView>

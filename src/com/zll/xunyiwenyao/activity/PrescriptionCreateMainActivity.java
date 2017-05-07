@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,7 +57,7 @@ import android.widget.Toast;
 
 public class PrescriptionCreateMainActivity extends Activity {
 
-	private Button save, savetotemplate, commit;
+	private Button save, savetotemplate, commit, delete;
 	private EditText patient_name_text, chufangmingcheng;
 	private EditText prescription_data_et, doctor_name_et, checker_name_et, other_information_et, clinical_diagnosis_et;
 	private RadioGroup radioGroupsex;
@@ -188,6 +189,8 @@ public class PrescriptionCreateMainActivity extends Activity {
 		save = (Button) findViewById(R.id.save);
 		savetotemplate = (Button) findViewById(R.id.savetotemplate);
 		commit = (Button) findViewById(R.id.commit);
+		delete = (Button) findViewById(R.id.delete);
+		delete.setVisibility(View.INVISIBLE);
 		chufangmingcheng = (EditText) findViewById(R.id.editText1);
 		patient_name_text = (EditText) findViewById(R.id.patient_name_text);
 		radioGroupsex = (RadioGroup) findViewById(R.id.radioGroupsex);
@@ -257,6 +260,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 		String prescription_name = extras.getString("prescription_name");
 		if (prescription_name != null) {
 			modify = 1;
+			delete.setVisibility(View.VISIBLE);
 			Prescription prescription = PrescriptionWebService.getPrescriptionByName(prescription_name);
 
 			if (prescription == null) {
@@ -563,6 +567,19 @@ public class PrescriptionCreateMainActivity extends Activity {
 					Toast.makeText(mContext, "SAVE SUCCESS", Toast.LENGTH_SHORT).show();
 					finish();
 				}
+			}
+		});
+		
+		delete.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Prescription prescription = new Prescription();
+				prescription.setId(prescription_id);
+				PrescriptionWebService.delPrescription(prescription);
+				Toast.makeText(mContext, "DEL SUCCESS", Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		});
 	}

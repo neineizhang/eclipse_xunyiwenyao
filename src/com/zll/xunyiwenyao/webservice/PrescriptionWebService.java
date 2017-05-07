@@ -240,6 +240,15 @@ public class PrescriptionWebService {
 //    	prescriptionlist.set(index, item);
 	}
 
+	public static void delPrescription(Prescription item){
+		for(Prescription tmp : prescriptionlist){
+			if(tmp.getId() == item.getId()){
+				prescriptionlist.remove(tmp);
+				break;
+			}
+		}
+	}
+	
 	public static List<Prescription> getAllPrescription()
 	{
 		return prescriptionlist;
