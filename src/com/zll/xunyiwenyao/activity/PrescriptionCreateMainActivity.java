@@ -267,6 +267,15 @@ public class PrescriptionCreateMainActivity extends Activity {
 				Toast.makeText(mContext, "处方名称无效", Toast.LENGTH_SHORT).show();
 
 			} else {
+				//// debug do not modify other prescription
+				if(prescription.getDoctor().getId() != Utils.LOGIN_DOCTOR.getId()){
+					save.setVisibility(View.INVISIBLE);
+					savetotemplate.setVisibility(View.INVISIBLE);
+					commit.setVisibility(View.INVISIBLE);
+					delete.setVisibility(View.INVISIBLE);
+				}
+				////
+				
 				prescription_id = prescription.getId();
 				// chufangmingcheng.setText(template_name);
 				String patient_name = prescription.getPatient().getName().toString();
