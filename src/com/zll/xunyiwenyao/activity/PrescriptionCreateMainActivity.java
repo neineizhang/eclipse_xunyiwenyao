@@ -96,7 +96,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 
 			public void onValueChange(NumberPicker packer, int oldVal, int newVal) {
 				// TODO Auto-generated method stub
-				patient_age = newVal;
+				patient_age = newVal-1;
 			}
 		});
 		prescription_data_et = (EditText) findViewById(R.id.prescription_data_et);
@@ -266,7 +266,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				prescription_id = prescription.getId();
 				// chufangmingcheng.setText(template_name);
 				String patient_name = prescription.getPatient().getName().toString();
-				int patient_age = prescription.getPatient().getAge();
+				patient_age = prescription.getPatient().getAge();
 				int patient_sex = prescription.getPatient().getSex();
 				// String
 				// doctor_name=prescription.getDoctor().getName().toString();
