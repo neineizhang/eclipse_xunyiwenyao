@@ -67,8 +67,7 @@ public class DoctorWebService {
 //        			jsonobj.get("password").toString());
             doctor = new Doctor(jsonobj.getInt("doctor_id"),
                     jsonobj.getString("real_name"),
-                    //jsonobj.getInt("type"),
-                    1,
+                    jsonobj.getInt("type"),
                     jsonobj.get("hospital").toString(),
                     jsonobj.getString("reg_name"),
                     jsonobj.get("password").toString(),
