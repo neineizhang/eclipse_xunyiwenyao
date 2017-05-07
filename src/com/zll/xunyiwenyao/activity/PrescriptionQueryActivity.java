@@ -5,13 +5,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.widget.TabHost;
 import android.app.TabActivity;
 import android.widget.TabHost.TabSpec;
+
+import org.json.JSONException;
+
 import com.zll.xunyiwenyao.R;
+import com.zll.xunyiwenyao.webservice.PrescriptionWebService;
+
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.view.animation.Animation;
@@ -27,6 +33,16 @@ public class PrescriptionQueryActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.prescription_query);
+		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		try {
+			PrescriptionWebService.initDB();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		mContext = PrescriptionQueryActivity.this;
 		query_tabhost = getTabHost();
 
