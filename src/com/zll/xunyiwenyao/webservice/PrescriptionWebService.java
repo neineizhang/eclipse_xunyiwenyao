@@ -114,6 +114,10 @@ public class PrescriptionWebService {
         	patient.setName(jsonobj.getString("user_name"));
         	patient.setAge(jsonobj.getInt("user_age"));
         	patient.setSex(jsonobj.getInt("user_sex"));
+        	if(!jsonobj.get("user_id").toString().equals("null"))
+	        	patient.setId(jsonobj.getInt("user_id"));
+			else
+				patient.setId(0);
         	//patient.setId(jsonobj.getInt("user_id"));
         	
         	List<Prescription_drugmap> drugmaps=new ArrayList<Prescription_drugmap>();
@@ -140,7 +144,28 @@ public class PrescriptionWebService {
         }
     }
 	
-	 
+	public static int getUserIDByName(String username){
+		int user_id=0;
+		try {
+			String url = "http://222.29.100.155/b2b2c/api/mobile/recipe/getUser.do";
+			String s = HttpHelper.sendGet(url, "uname="+username);
+			Map m = JsonHelper.toMap(s);
+			ResponseItem responditem = new ResponseItem();
+			responditem = (ResponseItem) JsonHelper.toJavaBean(responditem, m);
+			JSONObject jo = new JSONObject(s);
+			JSONArray ja = jo.getJSONArray("data");
+			System.out.println("test:---getUser:"+ja.toString());
+			if(ja.length()!=0){//如果存在该用户
+				JSONObject jsonobj = (JSONObject) ja.get(0);
+				user_id=jsonobj.getInt("member_id");
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user_id;
+	}
+
     
 	public static void AddPrescription(Prescription item){
 
@@ -151,6 +176,8 @@ public class PrescriptionWebService {
     	itemStr.append("&user_name="+item.getPatient().getName());
     	itemStr.append("&user_age="+item.getPatient().getAge());
     	itemStr.append("&user_sex="+item.getPatient().getSex());
+    	itemStr.append("&user_id="+item.getPatient().getId());
+
     	itemStr.append("&content="+item.getClinical_diagnosis());
     	itemStr.append("&status="+item.getStatus());
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -164,6 +191,7 @@ public class PrescriptionWebService {
 				jsonObject.put("amount", drugmap.getCount());
 	    		jsonObject.put("how_to_use", drugmap.getDescription());
 	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+	    		jsonObject.put("drug_name", drugmap.getDrug().getName());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -203,6 +231,7 @@ public class PrescriptionWebService {
     	itemStr.append("&user_name="+item.getPatient().getName());
     	itemStr.append("&user_age="+item.getPatient().getAge());
     	itemStr.append("&user_sex="+item.getPatient().getSex());
+    	itemStr.append("&user_id="+item.getPatient().getId());
     	itemStr.append("&content="+item.getClinical_diagnosis());
     	itemStr.append("&status="+item.getStatus());
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -216,6 +245,7 @@ public class PrescriptionWebService {
 				jsonObject.put("amount", drugmap.getCount());
 	    		jsonObject.put("how_to_use", drugmap.getDescription());
 	    		jsonObject.put("drug_id", drugmap.getDrug().getId());
+	    		jsonObject.put("drug_name", drugmap.getDrug().getName());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

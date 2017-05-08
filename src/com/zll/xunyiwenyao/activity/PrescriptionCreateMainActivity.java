@@ -341,7 +341,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				patient.setAge(patient_age);
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
-
+				patient.setId(PrescriptionWebService.getUserIDByName(patient_name));
 				// Map<Drug, Integer> drugmap = new HashMap<Drug, Integer>();
 				List<Prescription_drugmap> druglist = new ArrayList<Prescription_drugmap>();
 
@@ -503,6 +503,7 @@ public class PrescriptionCreateMainActivity extends Activity {
 				patient.setAge(patient_age);
 				patient.setName(patient_name);
 				patient.setSex(patient_sex);
+				patient.setId(PrescriptionWebService.getUserIDByName(patient_name));
 				List<String> list = new ArrayList<String>();
 				list = PrescriptionWebService.getAllPrescriptionName();
 				// 信息完整性及处方名称唯一性验证
